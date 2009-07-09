@@ -9,7 +9,7 @@
 # norootforbuild
 
 Name:           kmagnet
-BuildRequires:  libkdegames4-devel 
+BuildRequires:  libkdegames4-devel libkde4-devel
 License:        GNU General Public License (GPL)
 Group:          Amusements/Games/Board/Puzzle
 Summary:        A kde4 simple puzzle game
