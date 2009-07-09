@@ -75,7 +75,12 @@ void kmagnetScene::newGame()
 
     if (!elli)
     {
-        elli= addEllipse(0,0,14,14, QPen(Qt::NoPen),QBrush(Qt::darkGray));
+	QRadialGradient radialGradient(7, 7, 7, 4, 1);
+	radialGradient.setColorAt(0.0, Qt::white);
+        radialGradient.setColorAt(0.35, Qt::lightGray);
+        radialGradient.setColorAt(0.75, Qt::gray);
+        radialGradient.setColorAt(1.0, Qt::darkGray);
+        elli= addEllipse(0,0,14,14, QPen(Qt::NoPen),radialGradient);
         elli->setPos(startposition);
         elli->setZValue(1000);
         this->update();
