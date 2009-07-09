@@ -116,9 +116,7 @@ void kmagnet::newGame()
     m_gameClock->restart();
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
     advanceMovements(0);
-    m_scene->setMovements(0);//FIXME
-   //m_view->setFixedSize(COLUMNS*25, ROWS*25);
-      m_scene->newGame();
+    m_scene->newGame(0);
 
 }
 
