@@ -208,7 +208,7 @@ void kmagnet::load()
 	m_gameClock->setTime(list.at(0).toInt());
     }
     list.clear();
-    list = configGroup.readEntry ("Elli", notFound);
+    list = configGroup.readEntry ("currentposition", notFound);
     if (list.size()==2)
         m_scene->setElliPos(QPoint(list.at(0).toInt(), list.at(1).toInt()));
     list.clear();
@@ -256,7 +256,6 @@ void kmagnet::gameOver(bool won)
         QPair<QByteArray, QString> group = KGameDifficulty::localizedLevelString();
         scoreDialog.setConfigGroup( group );
         KScoreDialog::FieldInfo scoreInfo;
-        // score-in-seconds will be hidden
         scoreInfo[KScoreDialog::Score].setNum(1000- m_scene->getMovements());
         //score-as-time will be shown
         scoreInfo[KScoreDialog::Time] = m_gameClock->timeString();
@@ -319,7 +318,7 @@ QPointF p =m_scene->getElliPos();
     value.sprintf ("%d",(int)p.y() );
     list.append (value);
 
-    configGroup.writeEntry ("Elli", list);
+    configGroup.writeEntry ("currentposition", list);
 
     list.clear();
     p =m_scene->getstartposition();
