@@ -116,7 +116,7 @@ void kmagnet::newGame()
     m_gameClock->restart();
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
     advanceMovements(0);
-    m_scene->newGame(0);
+    m_scene->newGame();
 
 }
 
@@ -252,6 +252,9 @@ void kmagnet::gameOver(bool won)
     m_gameClock->pause();
     if (won) {
         KScoreDialog scoreDialog(KScoreDialog::Name | KScoreDialog::Time, this);
+	scoreDialog.setConfigGroupWeights(KGameDifficulty::levelWeights());
+        QPair<QByteArray, QString> group = KGameDifficulty::localizedLevelString();
+        scoreDialog.setConfigGroup( group );
         KScoreDialog::FieldInfo scoreInfo;
         // score-in-seconds will be hidden
         scoreInfo[KScoreDialog::Score].setNum(1000- m_scene->getMovements());
