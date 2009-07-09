@@ -23,12 +23,12 @@
 #include <QGraphicsScene>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsItem>
-#include <QDebug>
 #include <QVector>
 #include <QPixmapCache>
 
 #include "common.h"
 #include "kmagnetcell.h"
+
 class kmagnetcell;
 class kmagnetScene : public QGraphicsScene
 {

@@ -22,7 +22,6 @@
 
 #include <QGraphicsView>
 #include <QResizeEvent>
-// class QResizeEvent;
 
 class kmagnetView : public QGraphicsView
 {

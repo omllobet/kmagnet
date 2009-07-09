@@ -19,19 +19,14 @@
 #ifndef KMAGNET_H
 #define KMAGNET_H
 
-
-#include <kxmlguiwindow.h>
-
-//#include "ui_prefs_base.h"
+#include <KXmlGuiWindow>
 #include <KGameClock>
 #include <KGameDifficulty>
+
 #include "kmagnetscene.h"
 #include "kmagnetview.h"
 
-//class kmagnetView;
-class QPrinter;
 class KToggleAction;
-class KUrl;
 
 /**
  * This class serves as the main window for kmagnet.  It handles the
@@ -74,7 +69,7 @@ private:
     void setupActions();
 
 private:
-    // Ui::prefs_base ui_prefs_base ;
+    
     int ROWS;
     int COLUMNS;
     kmagnetView *m_view;

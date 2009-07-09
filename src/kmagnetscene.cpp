@@ -16,16 +16,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-
-#include "kmagnetscene.h"
-#include <qpalette.h>
-#include <kstandarddirs.h>
-
-#include <QPainter>
-#include <QDebug>
-#include <QPixmapCache>
+#include <KStandardDirs>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
+
+#include "kmagnetscene.h"
 
 kmagnetScene::kmagnetScene(QObject * parent, int rows, int columns) :
         QGraphicsScene(parent),

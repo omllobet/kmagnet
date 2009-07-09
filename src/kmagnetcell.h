@@ -20,10 +20,10 @@
 #ifndef KMAGNETCELL_H
 #define KMAGNETCELL_H
 
+#include <QGraphicsItem>
+
 #include "common.h"
 #include "kmagnetscene.h"
-
-#include <QGraphicsItem>
 
 class kmagnetcell : public QGraphicsItem
 {

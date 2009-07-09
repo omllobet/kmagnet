@@ -16,40 +16,26 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
+#include <QHBoxLayout>
+
+#include <KConfigDialog>
+#include <KStatusBar>
+#include <KAction>
+#include <KActionCollection>
+#include <KDE/KLocale>
+#include <KToolBar>
+#include <KMessageBox>
+#include <KFileDialog>
+#include <KMenuBar>
+#include <KScoreDialog>
+#include <KStandardGameAction>
+#include <KGameDifficulty>
+#include <KStandardDirs>
+
 #include "kmagnet.h"
 #include "settings.h"
 #include "common.h"
 #include "kmagnetcell.h"
-
-#include <QtGui/QDropEvent>
-#include <QtGui/QPainter>
-#include <QtGui/QPrinter>
-#include <QHBoxLayout>
-#include <QSignalMapper>
-#include <QBitmap>
-
-#include <kconfigdialog.h>
-#include <kstatusbar.h>
-
-#include <kaction.h>
-#include <kactioncollection.h>
-//#include <kstandardaction.h>
-
-#include <KDE/KLocale>
-#include <KToolBar>
-//General
-#include <KMessageBox>
-#include <KFileDialog>
-#include <QPushButton>
-#include <KMenuBar>
-//Game
-#include <KScoreDialog>
-#include <KStandardGameAction>
-#include <KMessageBox>
-#include <KGameDifficulty>
-#include <KStandardDirs>
-#include <KXmlGuiWindow>
-
 
 kmagnet::kmagnet() : KXmlGuiWindow()
 {

@@ -16,11 +16,12 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include "kmagnet.h"
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <KApplication>
+#include <KAboutData>
+#include <KCmdLineArgs>
 #include <KDE/KLocale>
+
+#include "kmagnet.h"
 
 static const char description[] =
     I18N_NOOP("A KDE 4 Puzzle-like Game");
