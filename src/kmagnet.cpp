@@ -156,7 +156,7 @@ void kmagnet::configureSettings()
 void kmagnet::load()
 {
     newGame();
-    QString loadFilename = KFileDialog::getOpenFileName (KUrl(KStandardDirs::locate("appdata", "kmagnet")),
+    QString loadFilename = KFileDialog::getOpenFileName (KUrl(KGlobal::dirs()->findResourceDir("appdata", "") + "data"),
                            "*.kmp", this, i18n("Load Puzzle"));
     if (loadFilename.isNull()) {
         return;
