@@ -16,32 +16,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-
-#ifndef KMAGNETVIEW_H
-#define KMAGNETVIEW_H
-
-#include <QGraphicsView>
-#include <QResizeEvent>
-// class QResizeEvent;
-
-class kmagnetView : public QGraphicsView
+#ifndef COMMON_H
+#define COMMON_H
+namespace Moves
 {
-    Q_OBJECT
-public:
-    /**
-     * Default Constructor
-     */
-    kmagnetView(QWidget * parent = 0);
-
-    /**
-     * Default Destructor
-     */
-    virtual ~kmagnetView();
-signals:
-    void resizeScene( int w, int h);
-private:
-    virtual void resizeEvent( QResizeEvent *ev );
-
+enum Move { UP, DOWN,LEFT,RIGHT };
 };
 
-#endif // KMAGNETVIEW_H
+#endif // MOVES_H

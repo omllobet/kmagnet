@@ -1,3 +1,21 @@
+/*************************************************************************************
+ *  Copyright (C) 2009 by Oscar Martinez <omllobet@gmail.com>                        *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 3                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
+
 #include "kmagnet.h"
 #include <kapplication.h>
 #include <kaboutdata.h>
@@ -5,22 +23,23 @@
 #include <KDE/KLocale>
 
 static const char description[] =
-    I18N_NOOP("A KDE 4 Application");
+    I18N_NOOP("A KDE 4 Puzzle-like Game");
 
-static const char version[] = "%{VERSION}";
+static const char version[] = "0.01beta";
 
 int main(int argc, char **argv)
 {
     KAboutData about("kmagnet", 0, ki18n("kmagnet"), version, ki18n(description),
-                     KAboutData::License_GPL, ki18n("(C) 2007 %{AUTHOR}"), KLocalizedString(), 0, "%{EMAIL}");
-    about.addAuthor( ki18n("%{AUTHOR}"), KLocalizedString(), "%{EMAIL}" );
+                     KAboutData::License_GPL, ki18n("(C) 2007 Oscar Martinez"), KLocalizedString(), 0, "omllobet@gmail.com");
+    about.addAuthor( ki18n("Oscar Martinez"), KLocalizedString(), "omllobet@gmail.com" );
     KCmdLineArgs::init(argc, argv, &about);
 
-    KCmdLineOptions options;
-    options.add("+[URL]", ki18n( "Document to open" ));
-    KCmdLineArgs::addCmdLineOptions(options);
+    //KCmdLineOptions options;
+    //options.add("+[URL]", ki18n( "Document to open" ));
+    //KCmdLineArgs::addCmdLineOptions(options);
     KApplication app;
 
+    KGlobal::locale()->insertCatalog("libkdegames");
     kmagnet *widget = new kmagnet;
 
     // see if we are starting with session management
@@ -31,10 +50,10 @@ int main(int argc, char **argv)
     else
     {
         // no session.. just start up normally
-        KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+       /* KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
         if (args->count() == 0)
         {
-            //kmagnet *widget = new kmagnet;
+            kmagnet *widget = new kmagnet;
             widget->show();
         }
         else
@@ -42,11 +61,12 @@ int main(int argc, char **argv)
             int i = 0;
             for (; i < args->count(); i++)
             {
-                //kmagnet *widget = new kmagnet;
+                kmagnet *widget = new kmagnet;
                 widget->show();
             }
         }
-        args->clear();
+        args->clear();*/
+	widget->show();
     }
 
     return app.exec();

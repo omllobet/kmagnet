@@ -1,16 +1,18 @@
-set(kmagnet_SRCS
+set(kmagnet_SRCS 
+   kmagnetscene.cpp
+   kmagnetview.cpp
    kmagnet.cpp
    main.cpp
-   kmagnetview.cpp
+   kmagnetcell.cpp
  )
 
-kde4_add_ui_files(kmagnet_SRCS kmagnetview_base.ui prefs_base.ui)
+kde4_add_ui_files(kmagnet_SRCS)
 
 kde4_add_kcfg_files(kmagnet_SRCS settings.kcfgc )
 
 kde4_add_executable(kmagnet ${kmagnet_SRCS})
 
-target_link_libraries(kmagnet ${KDE4_KDEUI_LIBS} )
+target_link_libraries(kmagnet ${KDE4_KDEUI_LIBS} kdegames )
 
 install(TARGETS kmagnet ${INSTALL_TARGETS_DEFAULT_ARGS} )
 

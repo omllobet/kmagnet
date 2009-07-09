@@ -17,31 +17,52 @@
  *************************************************************************************/
 
 
-#ifndef KMAGNETVIEW_H
-#define KMAGNETVIEW_H
+#ifndef KMAGNETCELL_H
+#define KMAGNETCELL_H
 
-#include <QGraphicsView>
-#include <QResizeEvent>
-// class QResizeEvent;
+#include "common.h"
+#include "kmagnetscene.h"
 
-class kmagnetView : public QGraphicsView
+#include <QGraphicsItem>
+
+class kmagnetcell : public QGraphicsItem
 {
-    Q_OBJECT
 public:
-    /**
-     * Default Constructor
-     */
-    kmagnetView(QWidget * parent = 0);
+    kmagnetcell(QGraphicsItem* parent=0, QGraphicsScene * scene=0);
 
-    /**
-     * Default Destructor
-     */
-    virtual ~kmagnetView();
-signals:
-    void resizeScene( int w, int h);
+    virtual QRectF boundingRect() const;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+    bool getisfree();
+    bool getisfinal();
+    bool getvisited();
+
+    void setisfree(bool b);
+    void setisfinal(bool b);
+    void setvisited(bool b);
+
+    void reset();
+
+// enable use of qgraphicsitem_cast
+    enum { Type = UserType + 1 };
+    virtual int type() const {
+        return Type;
+    }
+
+protected:
+
 private:
-    virtual void resizeEvent( QResizeEvent *ev );
+    bool isfree;
+    bool isfinal;
+    bool visited;//not useful yet
 
+    int x_pos;
+    int y_pos;
+    int corx;
+    int cory;
+
+    QGraphicsScene* myscene;
+    QPixmapCache* cache;
 };
 
-#endif // KMAGNETVIEW_H
+#endif // KMAGNETCELL_H

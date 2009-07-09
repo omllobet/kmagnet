@@ -1,8 +1,15 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <kpartgui name="kmagnet" version="1">
 <MenuBar>
-  <Menu name="move"><text>&amp;Move</text>
-    <Action name="switch_action" />
+  <Menu name="settings">
+    <Action name="editmode" />
   </Menu>
 </MenuBar>
+
+<ToolBar name="mainToolBar"><text>Main Toolbar</text>
+  <Action name="game_new" />
+  <Action name="game_load" />
+  <Action name="game_pause" />
+</ToolBar>
+
 </kpartgui>

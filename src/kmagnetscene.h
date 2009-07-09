@@ -16,74 +16,95 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#ifndef KMAGNET_H
-#define KMAGNET_H
 
+#ifndef KMAGNETSCENE_H
+#define KMAGNETSCENE_H
 
-#include <kxmlguiwindow.h>
+#include <QGraphicsScene>
+#include <QGraphicsEllipseItem>
+#include <QGraphicsItem>
+#include <QDebug>
+#include <QVector>
+#include <QPixmapCache>
 
-//#include "ui_prefs_base.h"
-#include <KGameClock>
-#include <KGameDifficulty>
-#include "kmagnetscene.h"
-#include "kmagnetview.h"
-
-//class kmagnetView;
-class QPrinter;
-class KToggleAction;
-class KUrl;
-
-/**
- * This class serves as the main window for kmagnet.  It handles the
- * menus, toolbars, and status bars.
- *
- * @short Main window class
- * @author Oscar Martinez omllobet@gmail.com
- * @version 0.01
- */
-class kmagnet : public KXmlGuiWindow
+#include "common.h"
+#include "kmagnetcell.h"
+class kmagnetcell;
+class kmagnetScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
     /**
-     * Default Constructor
+     * Constructor
      */
-    kmagnet();
+    kmagnetScene(QObject * parent = 0, int rows = 25, int columns = 20 );
 
+    QPixmapCache* getcache() {
+        return cache;
+    };
     /**
      * Default Destructor
      */
-    virtual ~kmagnet();
+    virtual ~kmagnetScene();
+    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     virtual void keyReleaseEvent ( QKeyEvent * keyEvent); 
-
-private slots:
     void newGame();
-    void showHighscores();
-    void configureSettings();
-    void load();
-    void advanceTime(const QString& timeStr);
-    void advanceMovements(int movement);
-    void gameOver(bool won);
-    void editingMode(bool b);
-    void save();
+    int getMovements() {
+        return movements;
+    };
+    void setMovements(int p) {
+	movements=p;
+    };
+    void toogleEditorMode(bool b) {
+	Q_UNUSED(b);
+        editorMode=!editorMode;
+    };
+    QPointF getElliPos() {
+        return elli->pos();
+    };
+    void setElliPos(QPoint p) {
+        elli->setPos(p);
+        currentposition=p;
+    };
+    void setstartposition(QPoint p){
+	startposition=p;
+    };
+    QPoint getstartposition(){
+	return startposition;
+    };
+    bool getEditorMode(){
+	return editorMode;
+    };
+    void setsize(int r, int c){
+	ROWS=r;
+	COLUMNS=c;
+    };
+    void setfinalposition(QPoint p);
+    void setnotfreeposition(QPoint p);
     void restart();
-    void pause(bool b);
-    void levelChanged(KGameDifficulty::standardLevel);
+
+public slots:
+    void resizeScene(int width, int height);
+    void process(int mov);
+
+signals:
+    void advanceMovements(int m);
+    void itsover(bool haswon);
 
 private:
-    void setupActions();
 
-private:
-    // Ui::prefs_base ui_prefs_base ;
-    int ROWS;
+    QVector<kmagnetcell*> m_cells;
     int COLUMNS;
-    kmagnetView *m_view;
-    QPrinter   *m_printer;
-    KToggleAction *m_toolbarAction;
-    KToggleAction *m_statusbarAction;
-    KGameClock* m_gameClock;
-    int	moves;
-    kmagnetScene *m_scene;
+    int ROWS;
+    bool haslost;
+    bool haswon;
+    bool editorMode;
+    int movements;
+    QPoint startposition;
+    QPoint currentposition;
+    QPixmapCache* cache;
+    QGraphicsEllipseItem* elli;
+    void movement(int x, int y);
 };
 
-#endif // _KMAGNET_H_
+#endif // KMAGNETSCENE_H

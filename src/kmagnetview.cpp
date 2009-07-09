@@ -1,46 +1,35 @@
-/*
- * kmagnetview.cpp
- *
- * Copyright (C) 2008 %{AUTHOR} <%{EMAIL}>
- */
+/*************************************************************************************
+ *  Copyright (C) 2009 by Oscar Martinez <omllobet@gmail.com>                        *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 3                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
+
+
 #include "kmagnetview.h"
-#include "settings.h"
 
-#include <klocale.h>
-#include <QtGui/QLabel>
-
-kmagnetView::kmagnetView(QWidget *)
+kmagnetView::kmagnetView(QWidget * parent): QGraphicsView(parent)
 {
-    ui_kmagnetview_base.setupUi(this);
-    settingsChanged();
-    setAutoFillBackground(true);
+    this->setFocusPolicy(Qt::NoFocus);
+    this->setCacheMode(CacheBackground);
 }
 
 kmagnetView::~kmagnetView()
 {
-
 }
 
-void kmagnetView::switchColors()
+void kmagnetView::resizeEvent( QResizeEvent *ev )
 {
-    // switch the foreground/background colors of the label
-    QColor color = Settings::col_background();
-    Settings::setCol_background( Settings::col_foreground() );
-    Settings::setCol_foreground( color );
-
-    settingsChanged();
+    emit resizeScene( ev->size().width(), ev->size().height() );
 }
-
-void kmagnetView::settingsChanged()
-{
-    QPalette pal;
-    pal.setColor( QPalette::Window, Settings::col_background());
-    pal.setColor( QPalette::WindowText, Settings::col_foreground());
-    ui_kmagnetview_base.kcfg_sillyLabel->setPalette( pal );
-
-    // i18n : internationalization
-    ui_kmagnetview_base.kcfg_sillyLabel->setText( i18n("This project is %1 days old",Settings::val_time()) );
-    emit signalChangeStatusbar( i18n("Settings changed") );
-}
-
-#include "kmagnetview.moc"
