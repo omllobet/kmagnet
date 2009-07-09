@@ -73,60 +73,8 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     m_view->setScene(m_scene);
     m_view->setFocus(Qt::OtherFocusReason);
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
-/* at first I had some ugly butttons jus for some testing
-    QSignalMapper* signalMapper = new QSignalMapper(this);
-//buttons
-//boto amunt
-    QPushButton* pb_up = new QPushButton();
-    pb_up->setText("^");
-    pb_up->setFocusPolicy(Qt::NoFocus);
-    signalMapper->setMapping(pb_up,Moves::UP);
-    connect(pb_up,SIGNAL(clicked()),signalMapper, SLOT (map()));
-//boto esquerra
-    QPushButton* pb_left = new QPushButton();
-    pb_left->setText("<");
-    pb_left->setFocusPolicy(Qt::NoFocus);
-    signalMapper->setMapping(pb_left,Moves::LEFT);
-    connect(pb_left,SIGNAL(clicked()),signalMapper, SLOT (map()));
-//boto dret
-    QPushButton* pb_right = new QPushButton();
-    pb_right->setText(">");
-    pb_right->setFocusPolicy(Qt::NoFocus);
-    signalMapper->setMapping(pb_right,Moves::RIGHT);
-    connect(pb_right,SIGNAL(clicked()),signalMapper, SLOT (map()));
-//boto avall
-    QPushButton* pb_down = new QPushButton();
-    pb_down->setText("v");
-    pb_down->setFocusPolicy(Qt::NoFocus);
-    signalMapper->setMapping(pb_down,Moves::DOWN);
-    connect(pb_down,SIGNAL(clicked()),signalMapper, SLOT (map()));
-//mapa
-    connect(signalMapper, SIGNAL(mapped(int )),m_scene, SLOT(process(int )));
-//Layouts
-//Hor_top
-    QHBoxLayout *bl_top=new QHBoxLayout();
-    bl_top->addSpacing(100);
-    bl_top->addWidget(pb_up);
-    bl_top->addSpacing(100);
-//Hor_Down
-    QHBoxLayout *bl_bottom=new QHBoxLayout();
-    bl_bottom->addSpacing(100);
-    bl_bottom->addWidget(pb_down);
-    bl_bottom->addSpacing(100);
-//Grid
-    QGridLayout *gl=new QGridLayout();
-//top
-    gl->addLayout(bl_top,0,1,Qt::AlignHCenter);
-//central
-    gl->addWidget(pb_left,1,0);
-    gl->addWidget(m_view, 1, 1);
-    gl->addWidget(pb_right,1,2);
-//bottom
-    gl->addLayout(bl_bottom,2,1,Qt::AlignHCenter);
-
-*/
     QWidget *contenidor = new QWidget(this);
-     
+    
     QHBoxLayout * gl = new QHBoxLayout();
     gl->addSpacing(0);
     gl->addWidget(m_view);
