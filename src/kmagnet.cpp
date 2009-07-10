@@ -238,7 +238,8 @@ void kmagnet::gameOver(bool won)
     m_gameClock->pause();
     if (won) {
         KScoreDialog scoreDialog(KScoreDialog::Name | KScoreDialog::Time, this);
-	scoreDialog.setConfigGroupWeights(KGameDifficulty::levelWeights());
+	scoreDialog.setConfigGroup(KGameDifficulty::localizedLevelString());
+	//scoreDialog.setConfigGroupWeights(KGameDifficulty::levelWeights());
         QPair<QByteArray, QString> group = KGameDifficulty::localizedLevelString();
         scoreDialog.setConfigGroup( group );
         KScoreDialog::FieldInfo scoreInfo;

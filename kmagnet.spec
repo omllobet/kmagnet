@@ -38,6 +38,7 @@ Authors:
   cd build  
   %makeinstall  
   cd ..  
+  %suse_update_desktop_file -r kmagnet          Game LogicGame
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -49,7 +50,16 @@ rm -rf filelists
 /usr/bin/kmagnet
 /usr/share/applications/kde4/kmagnet.desktop
 /usr/share/kde4/apps/kmagnet
+/usr/share/doc/kde/HTML/en/kmagnet/common
+/usr/share/doc/kde/HTML/en/kmagnet/index.cache.bz2
+/usr/share/doc/kde/HTML/en/kmagnet/index.docbook
+/usr/share/icons/hicolor/16x16/apps/kmagnet.png
+/usr/share/icons/hicolor/32x32/apps/kmagnet.png
+/usr/share/icons/hicolor/48x48/apps/kmagnet.png
+/usr/share/kde4/config.kcfg/kmagnet.kcfg
 
 %changelog
 * Sun Apr  5 2009 - omllobet@gmail.com
 - initial package created
+
+  
