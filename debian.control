@@ -1,0 +1,13 @@
+Source: kmagnet
+Section: games
+Priority: optional
+Maintainer: Oscar Martinez <omllobet@gmail.com>  
+Build-Depends: debhelper (>= 4.1.16), kdelibs5-dev (>= 4.0.0)  
+
+Package: kmagnet
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: a simple kde4 puzzle game
+ A simple kde4 puzzle game.
+ Basically you can move the ball up down left or right and it stops when it finds
+ an obstacle. To win the ball has to arrive to the hole.
