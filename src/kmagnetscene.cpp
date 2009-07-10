@@ -75,7 +75,7 @@ void kmagnetScene::newGame()
 
     if (!elli)
     {
-	QRadialGradient radialGradient(7, 7, 7, 4, 1);
+	QRadialGradient radialGradient(7, 7, 7, 4, 4);
 	radialGradient.setColorAt(0.0, Qt::white);
         radialGradient.setColorAt(0.35, Qt::lightGray);
         radialGradient.setColorAt(0.75, Qt::gray);
