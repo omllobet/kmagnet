@@ -20,7 +20,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source0:        %name-%{version}.tar.bz2
 
 %description
-A simple puzzle game.
+A simple kde4 puzzle game.Basically you can move the ball up down left or right and it stops when it finds an obstacle. To win the ball has to arrive to the hole. 
 
 
 Authors:
