@@ -57,6 +57,7 @@ rm -rf filelists
 /usr/share/icons/hicolor/32x32/apps/kmagnet.png
 /usr/share/icons/hicolor/48x48/apps/kmagnet.png
 /usr/share/kde4/config.kcfg/kmagnet.kcfg
+%dir /usr/share/doc/kde/HTML/en/kmagnet
 
 %changelog
 * Sun Apr  5 2009 - omllobet@gmail.com
