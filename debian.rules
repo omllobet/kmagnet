@@ -20,9 +20,8 @@ build-stamp:
 	dh_testdir
 
 	# Add here commands to compile the package.
-	mkdir build
 	cd build
-	cmake -DCMAKE_SKIP_RPATH=ON -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX= -DCMAKE_BUILD_TYPE=release ..
+	#cmake -DCMAKE_SKIP_RPATH=ON -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX= -DCMAKE_BUILD_TYPE=release ..
 	make all
 	# --- end custom part for compiling
 
@@ -34,6 +33,11 @@ clean:
 	rm -f build-stamp
 
 	# Add here commands to clean up after the build process.
+	ls
+	mkdir build
+	cd build
+	ls
+	cmake -DCMAKE_SKIP_RPATH=ON -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX= -DCMAKE_BUILD_TYPE=release ..
 	make clean
 	# --- end custom part for cleaning up
 
