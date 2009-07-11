@@ -20,9 +20,9 @@ build-stamp:
 	dh_testdir
 
 	# Add here commands to compile the package.
-	mkdir build
+	mkdir -p build
 	(cd build ; cmake -DCMAKE_SKIP_RPATH=ON -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX= -DCMAKE_BUILD_TYPE=release ..)
-	make all
+	make -C build all
 	# --- end custom part for compiling
 
 	touch build-stamp
@@ -33,7 +33,7 @@ clean:
 	rm -f build-stamp
 
 	# Add here commands to clean up after the build process.
-	mkdir build
+	mkdir -p build
 	rm -rf build
 	#make -C build clean
 	# --- end custom part for cleaning up
