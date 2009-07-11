@@ -33,7 +33,9 @@ clean:
 	rm -f build-stamp
 
 	# Add here commands to clean up after the build process.
-	make -C build clean
+	mkdir build
+	rm -rf build
+	#make -C build clean
 	# --- end custom part for cleaning up
 
 	dh_clean
@@ -46,7 +48,7 @@ install: build
 
 	# Add here commands to install the package
 	# The DESTDIR Has To Be Exactly /usr/src/packages/BUILD/debian/debian/<nameOfPackage>
-	make install DESTDIR=/usr/src/packages/BUILD/debian/kmagnet
+	make -C build install DESTDIR=/usr/src/packages/BUILD/debian/kmagnet
 	# --- end custom part for installing
 
 # Build architecture-independent files here.
