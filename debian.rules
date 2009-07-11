@@ -33,7 +33,7 @@ clean:
 	rm -f build-stamp
 
 	# Add here commands to clean up after the build process.
-	make -c build clean
+	make -C build clean
 	# --- end custom part for cleaning up
 
 	dh_clean
