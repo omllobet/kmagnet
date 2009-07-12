@@ -35,9 +35,6 @@ int main(int argc, char **argv)
     about.addAuthor( ki18n("Oscar Martinez"), KLocalizedString(), "omllobet@gmail.com" );
     KCmdLineArgs::init(argc, argv, &about);
 
-    //KCmdLineOptions options;
-    //options.add("+[URL]", ki18n( "Document to open" ));
-    //KCmdLineArgs::addCmdLineOptions(options);
     KApplication app;
 
     KGlobal::locale()->insertCatalog("libkdegames");
@@ -50,23 +47,6 @@ int main(int argc, char **argv)
     }
     else
     {
-        // no session.. just start up normally
-       /* KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-        if (args->count() == 0)
-        {
-            kmagnet *widget = new kmagnet;
-            widget->show();
-        }
-        else
-        {
-            int i = 0;
-            for (; i < args->count(); i++)
-            {
-                kmagnet *widget = new kmagnet;
-                widget->show();
-            }
-        }
-        args->clear();*/
 	widget->show();
     }
 
