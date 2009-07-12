@@ -278,7 +278,7 @@ void kmagnet::save()
     KConfigGroup configGroup = config.group("kmagnet");
 
     QStringList list;
-    QString     value;
+    QString    value;
 
     value.sprintf ("%d",KGameDifficulty::level() );
     list.append (value);
@@ -306,7 +306,8 @@ void kmagnet::save()
     configGroup.writeEntry ("currentposition", list);
 
     list.clear();
-    p =m_scene->getStartPosition();
+    if (!m_scene->getEditorMode())
+      p =m_scene->getStartPosition();
     value.sprintf ("%d",(int)p.x() );
     list.append (value);
     value.sprintf ("%d",(int)p.y() );
