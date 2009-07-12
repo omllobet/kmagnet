@@ -30,7 +30,7 @@ kmagnetScene::kmagnetScene(QObject * parent, int rows, int columns) :
         haswon(false),
         editorMode(false),
         movements(0),
-        startposition(QPoint(03,03))
+        startPosition(QPoint(03,03))
 
 {
     resizeScene((int)sceneRect().width(), (int)sceneRect().height());
@@ -63,7 +63,7 @@ void kmagnetScene::newGame()
         if (i<oldSize)
             m_cells[i]->reset();
         else
-            m_cells[i] = new kmagnetcell(0, this);
+            m_cells[i] = new kmagnetCell(0, this);
     }
 
     for (int row=0; row<ROWS; ++row) {
@@ -73,23 +73,23 @@ void kmagnetScene::newGame()
         }
     }
 
-    if (!elli)
+    if (!m_ball)
     {
 	QRadialGradient radialGradient(7, 7, 7, 4, 4);
 	radialGradient.setColorAt(0.0, Qt::white);
         radialGradient.setColorAt(0.35, Qt::lightGray);
         radialGradient.setColorAt(0.75, Qt::gray);
         radialGradient.setColorAt(1.0, Qt::darkGray);
-        elli= addEllipse(0,0,14,14, QPen(Qt::NoPen),radialGradient);
-        elli->setPos(startposition);
-        elli->setZValue(1000);
+        m_ball= addEllipse(0,0,14,14, QPen(Qt::NoPen),radialGradient);
+        m_ball->setPos(startPosition);
+        m_ball->setZValue(1000);
         this->update();
     }
     else
     {
-        elli->setPos(startposition);
-        dynamic_cast<kmagnetcell*>(itemAt(startposition))->setisfinal(false);
-        dynamic_cast<kmagnetcell*>(itemAt(startposition))->setisfree(true);
+        m_ball->setPos(startPosition);
+        dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFinal(false);
+        dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFree(true);
     }
     //this->update();
 }
@@ -118,7 +118,7 @@ void kmagnetScene::process(int mov)
     movements++;
     if (movements==1000) haslost=true;
     emit advanceMovements(movements);
-    //check if has won
+    //check if has won or lost
     if (haswon)
     {
         emit itsover(true);
@@ -131,34 +131,35 @@ void kmagnetScene::process(int mov)
 
 void kmagnetScene::movement(int x, int y)
 {
-    bool trobat=false;
-    while (!trobat)
+    bool found=false;
+    while (!found)
     {
-        QList<QGraphicsItem *> ci= this->collidingItems (elli);
-        int i=0;
-        trobat=false;
-        while (i < ci.size() && !trobat)
+        QList<QGraphicsItem *> ci= this->collidingItems (m_ball);
+        found=false;
+	int i=0;
+        while (i < ci.size() && !found)
         {
-            if (!dynamic_cast<kmagnetcell*>( ci.at(i))->getisfree())
+	    kmagnetCell* cell =dynamic_cast<kmagnetCell*>( ci.at(i));
+            if (!cell->getIsFree())
             {
-                trobat=true;
-                elli->setPos(elli->pos().x()-x,elli->pos().y()-y);
+                found=true;
+                m_ball->setPos(m_ball->pos().x()-x,m_ball->pos().y()-y);
             }
-            else if ( dynamic_cast<kmagnetcell*>( ci.at(i))->getisfinal())
+            else if ( cell->getIsFinal())
             {
-                trobat=true;
+                found=true;
                 haswon=true;
             }
             i++;
         }
-        if (!trobat && elli->pos().y()+y >=0 && elli->pos().x()+x >=0
-                && elli->pos().y()+y <=ROWS*20.0 && elli->pos().x()+x <=COLUMNS*20.0)
+        if (!found && m_ball->pos().y()+y >=0 && m_ball->pos().x()+x >=0
+                && m_ball->pos().y()+y <=ROWS*20.0 && m_ball->pos().x()+x <=COLUMNS*20.0)
         {
-            elli->setPos(elli->pos().x()+x,elli->pos().y()+y);
+            m_ball->setPos(m_ball->pos().x()+x,m_ball->pos().y()+y);
         }
-        else if (!trobat)
+        else if (!found)
         {
-            trobat=true;
+            found=true;
             haslost=true;
         }
     }
@@ -172,7 +173,7 @@ void kmagnetScene::resizeScene(int width, int height)
     setSceneRect(0, 0, width, height);
 }
 
-void kmagnetScene::setfinalposition(QPoint p)
+void kmagnetScene::setFinalPosition(QPoint p)
 {
     int x=p.x();
     int y =p.y();
@@ -180,29 +181,30 @@ void kmagnetScene::setfinalposition(QPoint p)
     if (x<0||y<0||x>=COLUMNS*20||y>=ROWS*20)
         return;
     QGraphicsItem* item= this->itemAt(QPoint(x,y));
-    if (item!=0) dynamic_cast<kmagnetcell*>(item)->setisfinal(true);
+    if (item!=0) dynamic_cast<kmagnetCell*>(item)->setIsFinal(true);
 }
 
-void kmagnetScene::setnotfreeposition(QPoint p)
+void kmagnetScene::setNotFreePosition(QPoint pos)
 {
-    int x=p.x();
-    int y =p.y();
+    int x=pos.x();
+    int y =pos.y();
     if (x<0||y<0||x>=COLUMNS*20||y>=ROWS*20)
         return;
     QGraphicsItem* item= this->itemAt(QPointF(x,y));
-    if (item!=0) dynamic_cast<kmagnetcell*>(item)->setisfree(false);
+    if (item!=0) dynamic_cast<kmagnetCell*>(item)->setIsFree(false);
 }
+
 void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 {
     QGraphicsItem* item=(this->itemAt(mouseEvent->scenePos()));
     if (mouseEvent->button() == Qt::LeftButton && item!=0)
     {
         if (editorMode) {
-            dynamic_cast<kmagnetcell*>(item)->setisfree(false);
+            dynamic_cast<kmagnetCell*>(item)->setIsFree(false);
 	    return;
         }
-        if ( !editorMode && item!=elli) {
-            QPointF p1= elli->pos();
+        if ( !editorMode && item!=m_ball) {
+            QPointF p1= m_ball->pos();
             int x1 = p1.x();
             int y1= p1.y();
             int x1norm =x1 - x1%20;
@@ -230,17 +232,17 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
     }
     else if (mouseEvent->button() == Qt::RightButton)
     {
-        if (item!=0 && editorMode) dynamic_cast<kmagnetcell*>(item)->setisfinal(true);
+        if (item!=0 && editorMode) dynamic_cast<kmagnetCell*>(item)->setIsFinal(true);
     }
     else if (mouseEvent->button() == Qt::MidButton)
     {
-        if (item!=0 && editorMode) dynamic_cast<kmagnetcell*>(item)->reset();
+        if (item!=0 && editorMode) dynamic_cast<kmagnetCell*>(item)->reset();
     }
 }
 
 void kmagnetScene::restart()
 {
-    setElliPos(startposition);
+    setBallPos(startPosition);
     haswon=false;
     haslost=false;
     movements=0;

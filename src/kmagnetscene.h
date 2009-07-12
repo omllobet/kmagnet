@@ -29,7 +29,7 @@
 #include "common.h"
 #include "kmagnetcell.h"
 
-class kmagnetcell;
+class kmagnetCell;
 class kmagnetScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -39,7 +39,7 @@ public:
      */
     kmagnetScene(QObject * parent = 0, int rows = 25, int columns = 20 );
 
-    QPixmapCache* getcache() {
+    QPixmapCache* getCache() {
         return cache;
     };
     /**
@@ -48,6 +48,9 @@ public:
     virtual ~kmagnetScene();
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     virtual void keyReleaseEvent ( QKeyEvent * keyEvent); 
+    void setFinalPosition(QPoint pos);
+    void setNotFreePosition(QPoint pos);
+    void restart();
     void newGame();
     int getMovements() {
         return movements;
@@ -59,29 +62,26 @@ public:
 	Q_UNUSED(b);
         editorMode=!editorMode;
     };
-    QPointF getElliPos() {
-        return elli->pos();
+    QPointF getBallPos() {
+        return m_ball->pos();
     };
-    void setElliPos(QPoint p) {
-        elli->setPos(p);
-        currentposition=p;
+    void setBallPos(QPoint p) {
+        m_ball->setPos(p);
+        currentPosition=p;
     };
-    void setstartposition(QPoint p){
-	startposition=p;
+    void setStartPosition(QPoint p){
+	startPosition=p;
     };
-    QPoint getstartposition(){
-	return startposition;
+    QPoint getStartPosition(){
+	return startPosition;
     };
     bool getEditorMode(){
 	return editorMode;
     };
-    void setsize(int r, int c){
+    void setSize(int r, int c){
 	ROWS=r;
 	COLUMNS=c;
     };
-    void setfinalposition(QPoint p);
-    void setnotfreeposition(QPoint p);
-    void restart();
 
 public slots:
     void resizeScene(int width, int height);
@@ -93,17 +93,17 @@ signals:
 
 private:
 
-    QVector<kmagnetcell*> m_cells;
     int COLUMNS;
     int ROWS;
     bool haslost;
     bool haswon;
     bool editorMode;
     int movements;
-    QPoint startposition;
-    QPoint currentposition;
+    QPoint startPosition;
+    QPoint currentPosition;
     QPixmapCache* cache;
-    QGraphicsEllipseItem* elli;
+    QGraphicsEllipseItem* m_ball;
+    QVector<kmagnetCell*> m_cells;
     void movement(int x, int y);
 };
 

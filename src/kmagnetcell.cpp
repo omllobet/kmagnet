@@ -21,27 +21,27 @@
 
 #include "kmagnetcell.h"
 
-kmagnetcell::kmagnetcell(QGraphicsItem * parent, QGraphicsScene * scene)
+kmagnetCell::kmagnetCell(QGraphicsItem * parent, QGraphicsScene * scene)
         : QGraphicsItem(parent, scene),
-        isfree(true),
-        isfinal(false),
+        isFree(true),
+        isFinal(false),
         visited(false),
-        myscene(scene)
+        myScene(scene)
 {
-    cache =((kmagnetScene *) myscene)->getcache();
+    cache =dynamic_cast<kmagnetScene *>(myScene)->getCache();
 }
 
-QRectF kmagnetcell::boundingRect() const
+QRectF kmagnetCell::boundingRect() const
 {
     return QRectF(0 , 0, 20, 20);
 }
 
-void kmagnetcell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget )
+void kmagnetCell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget )
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
     QPixmap pixmap;
-    if (isfinal)
+    if (isFinal)
     {
         if (!(cache->find("final", pixmap)))
         {
@@ -49,7 +49,7 @@ void kmagnetcell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * o
         }
         painter->drawPixmap(0,0,pixmap);
     }
-    else if (!isfree)
+    else if (!isFree)
     {
         if (!(cache->find("notfree", pixmap)))
         {
@@ -57,7 +57,7 @@ void kmagnetcell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * o
         }
         painter->drawPixmap(0,0,pixmap);
     }
-    else if (isfree && !isfinal)
+    else if (isFree && !isFinal)
     {
         if (!(cache->find("free", pixmap)))
         {
@@ -67,42 +67,42 @@ void kmagnetcell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * o
     }
 }
 
-bool kmagnetcell::getisfree()
+bool kmagnetCell::getIsFree()
 {
-    return isfree;
+    return isFree;
 }
 
-bool kmagnetcell::getisfinal()
+bool kmagnetCell::getIsFinal()
 {
-    return isfinal;
+    return isFinal;
 }
 
-bool kmagnetcell::getvisited()
+bool kmagnetCell::getVisited()
 {
     return visited;
 }
 
-void kmagnetcell::setisfree(bool b)
+void kmagnetCell::setIsFree(bool b)
 {
-    this->isfree=b;
+    this->isFree=b;
     this->update();
 }
 
-void kmagnetcell::setisfinal(bool b)
+void kmagnetCell::setIsFinal(bool b)
 {
-    this->isfinal=b;
+    this->isFinal=b;
     this->update();
 }
 
-void kmagnetcell::setvisited(bool b)
+void kmagnetCell::setVisited(bool b)
 {
     this->visited=b;
 }
 
-void kmagnetcell::reset()
+void kmagnetCell::reset()
 {
     this->visited=false;
-    this->isfinal=false;
-    this->isfree=true;
+    this->isFinal=false;
+    this->isFree=true;
     this->update();
 }

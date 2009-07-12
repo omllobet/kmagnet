@@ -49,7 +49,7 @@ public:
      * Default Destructor
      */
     virtual ~kmagnet();
-    virtual void keyReleaseEvent ( QKeyEvent * keyEvent); 
+    virtual void keyReleaseEvent ( QKeyEvent * keyEvent);
 
 private slots:
     void newGame();
@@ -69,15 +69,15 @@ private:
     void setupActions();
 
 private:
-    
+
     int ROWS;
     int COLUMNS;
+    int moves;
     kmagnetView *m_view;
     QPrinter   *m_printer;
     KToggleAction *m_toolbarAction;
     KToggleAction *m_statusbarAction;
     KGameClock* m_gameClock;
-    int	moves;
     kmagnetScene *m_scene;
 };
 

@@ -42,7 +42,6 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     this->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     ROWS=25;
     COLUMNS=20;
-    //m_scene->addSimpleText("hi this is a test");
     m_view= new kmagnetView(this);
     m_view->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     m_view->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -60,13 +59,13 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     m_view->setFocus(Qt::OtherFocusReason);
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
     QWidget *contenidor = new QWidget(this);
-    
+
     QHBoxLayout * gl = new QHBoxLayout();
     gl->addSpacing(0);
     gl->addWidget(m_view);
     gl->addSpacing(0);
     contenidor->setLayout(gl);
-    
+
     m_printer=0;
     m_gameClock = new KGameClock(this, KGameClock::MinSecOnly);
     connect(m_gameClock, SIGNAL(timeChanged(const QString&)), SLOT(advanceTime(const QString&)));
@@ -103,7 +102,6 @@ void kmagnet::newGame()
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
     advanceMovements(0);
     m_scene->newGame();
-
 }
 
 void kmagnet::showHighscores()
@@ -176,38 +174,38 @@ void kmagnet::load()
     QStringList list;
     QStringList notFound;
     list = configGroup.readEntry ("difficulty", notFound);
-    if (list.size()==1){
-	KGameDifficulty::standardLevel level = static_cast<KGameDifficulty::standardLevel>(list.at(0).toInt());
-	KGameDifficulty::setLevel(level);
-	emit levelChanged(level);
+    if (list.size()==1) {
+        KGameDifficulty::standardLevel level = static_cast<KGameDifficulty::standardLevel>(list.at(0).toInt());
+        KGameDifficulty::setLevel(level);
+        emit levelChanged(level);
     }
     list.clear();
     list = configGroup.readEntry ("movements", notFound);
-    if (list.size()==1){
-	int movs=list.at(0).toInt();
-	m_scene->setMovements(movs);
-	advanceMovements(movs);
+    if (list.size()==1) {
+        int movs=list.at(0).toInt();
+        m_scene->setMovements(movs);
+        advanceMovements(movs);
     }
     list.clear();
     list = configGroup.readEntry ("time", notFound);
-    if (list.size()==1){
-	m_gameClock->setTime(list.at(0).toInt());
+    if (list.size()==1) {
+        m_gameClock->setTime(list.at(0).toInt());
     }
     list.clear();
     list = configGroup.readEntry ("currentposition", notFound);
     if (list.size()==2)
-        m_scene->setElliPos(QPoint(list.at(0).toInt(), list.at(1).toInt()));
+        m_scene->setBallPos(QPoint(list.at(0).toInt(), list.at(1).toInt()));
     list.clear();
     list = configGroup.readEntry ("startposition", notFound);
     if (list.size()==2)
-        m_scene->setstartposition(QPoint(list.at(0).toInt(), list.at(1).toInt()));
+        m_scene->setStartPosition(QPoint(list.at(0).toInt(), list.at(1).toInt()));
     list.clear();
     list = configGroup.readEntry ("final", notFound);
     if (list.size()%2==0)
     {
         for (int i=0; i < list.size(); i=i+2)
         {
-            m_scene->setfinalposition(QPoint(list.at(i).toInt(), list.at(i+1).toInt()));
+            m_scene->setFinalPosition(QPoint(list.at(i).toInt(), list.at(i+1).toInt()));
         }
     }
     list.clear();
@@ -216,7 +214,7 @@ void kmagnet::load()
     {
         for (int i=0; i < list.size(); i=i+2)
         {
-            m_scene->setnotfreeposition(QPoint(list.at(i).toInt(), list.at(i+1).toInt()));
+            m_scene->setNotFreePosition(QPoint(list.at(i).toInt(), list.at(i+1).toInt()));
         }
     }
     m_scene->update();
@@ -238,8 +236,8 @@ void kmagnet::gameOver(bool won)
     m_gameClock->pause();
     if (won) {
         KScoreDialog scoreDialog(KScoreDialog::Name | KScoreDialog::Time, this);
-	scoreDialog.setConfigGroup(KGameDifficulty::localizedLevelString());
-	//scoreDialog.setConfigGroupWeights(KGameDifficulty::levelWeights());
+        scoreDialog.setConfigGroup(KGameDifficulty::localizedLevelString());
+        //scoreDialog.setConfigGroupWeights(KGameDifficulty::levelWeights());
         QPair<QByteArray, QString> group = KGameDifficulty::localizedLevelString();
         scoreDialog.setConfigGroup( group );
         KScoreDialog::FieldInfo scoreInfo;
@@ -252,12 +250,12 @@ void kmagnet::gameOver(bool won)
             scoreDialog.exec();
     }
     else
-    {       
-        int answer=KMessageBox::questionYesNo(this, i18n("Thanks for playing. Do you want to try again?"),i18n("Game ended")); 
-	if (answer==KMessageBox::Yes)
-	  restart();
-	else
-	  newGame();
+    {
+        int answer=KMessageBox::questionYesNo(this, i18n("Thanks for playing. Do you want to try again?"),i18n("Game ended"));
+        if (answer==KMessageBox::Yes)
+            restart();
+        else
+            newGame();
     }
 }
 
@@ -287,9 +285,9 @@ void kmagnet::save()
     configGroup.writeEntry ("difficulty", list);
     list.clear();
     if (m_scene->getEditorMode())
-	  value.sprintf ("%d",0 );
+        value.sprintf ("%d",0 );
     else
-	  value.sprintf ("%d",m_scene->getMovements() );
+        value.sprintf ("%d",m_scene->getMovements() );
     list.append (value);
     configGroup.writeEntry ("movements", list);
     list.clear();
@@ -298,8 +296,8 @@ void kmagnet::save()
     list.append (value);
     configGroup.writeEntry ("time", list);
     list.clear();
-    
-QPointF p =m_scene->getElliPos();
+
+    QPointF p =m_scene->getBallPos();
     value.sprintf ("%d",(int)p.x() );
     list.append (value);
     value.sprintf ("%d",(int)p.y() );
@@ -308,7 +306,7 @@ QPointF p =m_scene->getElliPos();
     configGroup.writeEntry ("currentposition", list);
 
     list.clear();
-    p =m_scene->getstartposition();
+    p =m_scene->getStartPosition();
     value.sprintf ("%d",(int)p.x() );
     list.append (value);
     value.sprintf ("%d",(int)p.y() );
@@ -321,8 +319,8 @@ QPointF p =m_scene->getElliPos();
     QList<QGraphicsItem *>  ci =m_scene->items();
     for (int i=0; i < ci.size(); i++)
     {
-        kmagnetcell * item = (kmagnetcell *)ci.at(i);
-        if (item->getisfinal())
+        kmagnetCell * item = (kmagnetCell *)ci.at(i);
+        if (item->getIsFinal())
         {
             QPointF p =item->pos();
             value.sprintf ("%d",(int)p.x() );
@@ -330,7 +328,7 @@ QPointF p =m_scene->getElliPos();
             value.sprintf ("%d",(int)p.y() );
             list.append (value);
         }
-        else if (!item->getisfree())
+        else if (!item->getIsFree())
         {
             QPointF p =item->pos();
             value2.sprintf ("%d",(int)p.x() );
@@ -341,58 +339,57 @@ QPointF p =m_scene->getElliPos();
     }
     configGroup.writeEntry ("final", list);
     configGroup.writeEntry ("notfree", list2);
-    
+
     configGroup.sync();
 }
 
 void kmagnet::restart()
 {
-  m_gameClock->restart();
-  advanceMovements(0);
-  m_scene->restart();
+    m_gameClock->restart();
+    advanceMovements(0);
+    m_scene->restart();
 }
 
 void kmagnet::pause(bool b)
 {
-   (b) ? m_scene->setForegroundBrush(QBrush(QColor(25, 12, 0, 220),Qt::SolidPattern)) : m_scene->setForegroundBrush(QBrush());
-   (b) ? m_gameClock->pause(): m_gameClock->resume(); 
+    (b) ? m_scene->setForegroundBrush(QBrush(QColor(25, 12, 0, 220),Qt::SolidPattern)) : m_scene->setForegroundBrush(QBrush());
+    (b) ? m_gameClock->pause(): m_gameClock->resume();
 }
 
 void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
 {
 
-  if (level==KGameDifficulty::Easy)
-  {
-    m_view->setFixedSize(5*20,7*20);
-    m_scene->setsize(7,5);
-  }
-  else if (level==KGameDifficulty::Medium)
-  {
-    m_view->setFixedSize(10*20,14*20);
-    m_scene->setsize(14,10);
-  }
-  else if (level==KGameDifficulty::Hard)
-  {
-    m_view->setFixedSize(20*20,25*20);
-    m_scene->setsize(25,20);
-  }
-   //+4 for borders
-  int theight=0;
-  QList<KToolBar*> tlist = toolBars();
-  for (int i=0;i< tlist.size(); i++)
-  {
-    theight=theight+ dynamic_cast<KToolBar*>(tlist.at(i))->height();
-  }
-  this->setMinimumSize(std::max(m_view->width()+4, std::max(menuBar()->width()+4, std::max(statusBar()->width()+4, toolBar()->width()+4))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4);
-  resize(this->minimumSize());
+    if (level==KGameDifficulty::Easy)
+    {
+        m_view->setFixedSize(5*20,7*20);
+        m_scene->setSize(7,5);
+    }
+    else if (level==KGameDifficulty::Medium)
+    {
+        m_view->setFixedSize(10*20,14*20);
+        m_scene->setSize(14,10);
+    }
+    else if (level==KGameDifficulty::Hard)
+    {
+        m_view->setFixedSize(20*20,25*20);
+        m_scene->setSize(25,20);
+    }
+    //+4 for borders
+    int theight=0;
+    QList<KToolBar*> tlist = toolBars();
+    for (int i=0;i< tlist.size(); i++)
+    {
+        theight=theight+ dynamic_cast<KToolBar*>(tlist.at(i))->height();
+    }
+    this->setMinimumSize(std::max(m_view->width()+4, std::max(menuBar()->width()+4, std::max(statusBar()->width()+4, toolBar()->width()+4))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4);
+    resize(this->minimumSize());
 
-  emit newGame();
+    emit newGame();
 }
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
-{
- m_scene->keyReleaseEvent(keyEvent);
-  qDebug("lalala");
+{//FIXME
+    m_scene->keyReleaseEvent(keyEvent);
 }
 
 #include "kmagnet.moc"

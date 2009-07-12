@@ -16,7 +16,6 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-
 #ifndef KMAGNETCELL_H
 #define KMAGNETCELL_H
 
@@ -25,21 +24,21 @@
 #include "common.h"
 #include "kmagnetscene.h"
 
-class kmagnetcell : public QGraphicsItem
+class kmagnetCell : public QGraphicsItem
 {
 public:
-    kmagnetcell(QGraphicsItem* parent=0, QGraphicsScene * scene=0);
+    kmagnetCell(QGraphicsItem* parent=0, QGraphicsScene * scene=0);
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    bool getisfree();
-    bool getisfinal();
-    bool getvisited();
+    bool getIsFree();
+    bool getIsFinal();
+    bool getVisited();
 
-    void setisfree(bool b);
-    void setisfinal(bool b);
-    void setvisited(bool b);
+    void setIsFree(bool b);
+    void setIsFinal(bool b);
+    void setVisited(bool b);
 
     void reset();
 
@@ -52,8 +51,8 @@ public:
 protected:
 
 private:
-    bool isfree;
-    bool isfinal;
+    bool isFree;
+    bool isFinal;
     bool visited;//not useful yet
 
     int x_pos;
@@ -61,7 +60,7 @@ private:
     int corx;
     int cory;
 
-    QGraphicsScene* myscene;
+    QGraphicsScene* myScene;
     QPixmapCache* cache;
 };
 
