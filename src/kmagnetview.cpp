@@ -31,4 +31,4 @@ kmagnetView::~kmagnetView()
 void kmagnetView::resizeEvent( QResizeEvent *ev )
 {
     emit resizeScene( ev->size().width(), ev->size().height() );
-}
+}  

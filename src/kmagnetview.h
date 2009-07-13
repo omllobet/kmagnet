@@ -36,6 +36,7 @@ public:
      * Default Destructor
      */
     virtual ~kmagnetView();
+
 signals:
     void resizeScene( int w, int h);
 private:

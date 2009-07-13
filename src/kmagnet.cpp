@@ -36,6 +36,7 @@
 #include "settings.h"
 #include "common.h"
 #include "kmagnetcell.h"
+#include <KGameDifficulty>
 
 kmagnet::kmagnet() : KXmlGuiWindow()
 {
@@ -56,7 +57,6 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     connect(m_scene, SIGNAL(advanceMovements(int)), this, SLOT(advanceMovements(int)));
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
     m_view->setScene(m_scene);
-    m_view->setFocus(Qt::OtherFocusReason);
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
     QWidget *contenidor = new QWidget(this);
 
@@ -71,14 +71,13 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     connect(m_gameClock, SIGNAL(timeChanged(const QString&)), SLOT(advanceTime(const QString&)));
 
     // accept dnd
-    setAcceptDrops(true);
+    //setAcceptDrops(true);
 
     setCentralWidget(contenidor);
 
     // add a status bar
     statusBar()->insertItem( i18n("Time: 00:00"), 0);
     statusBar()->insertItem( i18n("Movements: 0"), 1);
-    statusBar()->setFocusPolicy(Qt::NoFocus);
     statusBar()->show();
 
     // then, setup our actions
@@ -307,7 +306,7 @@ void kmagnet::save()
 
     list.clear();
     if (!m_scene->getEditorMode())
-      p =m_scene->getStartPosition();
+        p =m_scene->getStartPosition();
     value.sprintf ("%d",(int)p.x() );
     list.append (value);
     value.sprintf ("%d",(int)p.y() );
@@ -389,8 +388,22 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
 }
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
-{//FIXME
-    m_scene->keyReleaseEvent(keyEvent);
+{
+    switch ( keyEvent->key() )
+    {
+    case Qt::Key_Down:
+        m_scene->process(Moves::DOWN);
+        break;
+    case Qt::Key_Up:
+        m_scene->process(Moves::UP);
+        break;
+    case Qt::Key_Left:
+        m_scene->process(Moves::LEFT);
+        break;
+    case Qt::Key_Right:
+        m_scene->process(Moves::RIGHT);
+        break;
+    }
 }
 
 #include "kmagnet.moc"

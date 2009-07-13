@@ -247,22 +247,3 @@ void kmagnetScene::restart()
     haslost=false;
     movements=0;
 }
-
-void kmagnetScene::keyReleaseEvent ( QKeyEvent * keyEvent)
-{
-    switch ( keyEvent->key() )
-    {
-    case Qt::Key_Down:
-        process(Moves::DOWN);
-        break;
-    case Qt::Key_Up:
-        process(Moves::UP);
-        break;
-    case Qt::Key_Left:
-        process(Moves::LEFT);
-        break;
-    case Qt::Key_Right:
-        process(Moves::RIGHT);
-        break;
-    }
-}

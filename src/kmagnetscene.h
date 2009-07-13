@@ -25,6 +25,7 @@
 #include <QGraphicsItem>
 #include <QVector>
 #include <QPixmapCache>
+#include <QKeyEvent>
 
 #include "common.h"
 #include "kmagnetcell.h"
@@ -46,8 +47,6 @@ public:
      * Default Destructor
      */
     virtual ~kmagnetScene();
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void keyReleaseEvent ( QKeyEvent * keyEvent); 
     void setFinalPosition(QPoint pos);
     void setNotFreePosition(QPoint pos);
     void restart();
@@ -90,6 +89,9 @@ public slots:
 signals:
     void advanceMovements(int m);
     void itsover(bool haswon);
+
+protected:
+    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
 
 private:
 
