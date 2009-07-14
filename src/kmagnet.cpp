@@ -118,7 +118,7 @@ void kmagnet::setupActions()
     KStandardGameAction::highscores(this, SLOT(showHighscores()), actionCollection());
     KStandardGameAction::saveAs(this, SLOT(save()), actionCollection());
     KStandardGameAction::quit(this, SLOT(close()), actionCollection());
-    KStandardAction::preferences( this, SLOT( configureSettings() ), actionCollection() );
+    //KStandardAction::preferences( this, SLOT( configureSettings() ), actionCollection() );
     KStandardGameAction::pause( this, SLOT( pause(bool ) ), actionCollection() );
     KGameDifficulty::init(this,this, SLOT(levelChanged(KGameDifficulty::standardLevel)));
     KGameDifficulty::setRestartOnChange(KGameDifficulty::RestartOnChange);
