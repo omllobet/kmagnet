@@ -87,7 +87,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
     setupGUI();
-contenidor->grabKeyboard();
+    contenidor->grabKeyboard();
 }
 
 kmagnet::~kmagnet()
