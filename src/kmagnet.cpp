@@ -87,7 +87,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
     setupGUI();
-    contenidor->grabKeyboard();
+    this->grabKeyboard();
 }
 
 kmagnet::~kmagnet()
@@ -97,6 +97,7 @@ kmagnet::~kmagnet()
 
 void kmagnet::newGame()
 {
+    this->grabKeyboard();
     m_gameClock->restart();
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
     advanceMovements(0);
@@ -232,6 +233,7 @@ void kmagnet::advanceMovements(int movement)
 
 void kmagnet::gameOver(bool won)
 {
+    this->releaseKeyboard();
     m_gameClock->pause();
     if (won) {
         KScoreDialog scoreDialog(KScoreDialog::Name | KScoreDialog::Time, this);
@@ -348,6 +350,7 @@ void kmagnet::restart()
     m_gameClock->restart();
     advanceMovements(0);
     m_scene->restart();
+    this->grabKeyboard();
 }
 
 void kmagnet::pause(bool b)
