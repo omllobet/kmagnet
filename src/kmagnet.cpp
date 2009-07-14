@@ -74,7 +74,6 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     //setAcceptDrops(true);
 
     setCentralWidget(contenidor);
-
     // add a status bar
     statusBar()->insertItem( i18n("Time: 00:00"), 0);
     statusBar()->insertItem( i18n("Movements: 0"), 1);
@@ -88,6 +87,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
     setupGUI();
+contenidor->grabKeyboard();
 }
 
 kmagnet::~kmagnet()
