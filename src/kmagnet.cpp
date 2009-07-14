@@ -410,4 +410,3 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 }
 
 #include "kmagnet.moc"
-
