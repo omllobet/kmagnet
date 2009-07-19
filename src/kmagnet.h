@@ -51,6 +51,9 @@ public:
     virtual ~kmagnet();
     virtual void keyReleaseEvent ( QKeyEvent * keyEvent);
 
+public slots:
+    void loadfile(QString loadFilename);
+
 private slots:
     void newGame();
     void showHighscores();

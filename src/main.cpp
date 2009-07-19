@@ -20,6 +20,8 @@
 #include <KAboutData>
 #include <KCmdLineArgs>
 #include <KDE/KLocale>
+#include <KUrl>
+#include <KStandardDirs>
 
 #include "kmagnet.h"
 
@@ -35,11 +37,14 @@ int main(int argc, char **argv)
     about.addAuthor( ki18n("Oscar Martinez"), KLocalizedString(), "omllobet@gmail.com" );
     KCmdLineArgs::init(argc, argv, &about);
 
+    KCmdLineOptions options;
+    options.add("+[file]", ki18n( "Puzzle to open" ));
+    KCmdLineArgs::addCmdLineOptions(options);
     KApplication app;
 
     KGlobal::locale()->insertCatalog("libkdegames");
     kmagnet *widget = new kmagnet;
-
+    
     // see if we are starting with session management
     if (app.isSessionRestored())
     {
@@ -47,8 +52,29 @@ int main(int argc, char **argv)
     }
     else
     {
-	widget->show();
+	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+        if (args->count() == 0)
+        {
+            widget->show();
+        }
+        else
+        {
+	  if (args->count() == 1)
+	  {
+	    QString path= args->arg(0);
+	    KUrl url=KUrl(path);
+	    if (url.isRelative())
+	    {
+		path.prepend(QUrl(KGlobal::dirs()->findResourceDir("appdata", "")).toString(QUrl::RemoveScheme) + "data/");
+	    }
+	    widget->loadfile(path);
+	    widget->show();
+	  }
+	  else
+	  {
+	    widget->show();
+	  }
+	}
     }
-
     return app.exec();
 }

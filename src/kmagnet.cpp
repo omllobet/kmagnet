@@ -159,7 +159,11 @@ void kmagnet::load()
     if (loadFilename.isNull()) {
         return;
     }
+    loadfile(loadFilename);
+}
 
+void kmagnet::loadfile(QString loadFilename)
+{
     KConfig config (loadFilename, KConfig::SimpleConfig);
 
     if (! config.hasGroup ("kmagnet")) {
