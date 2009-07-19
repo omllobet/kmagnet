@@ -57,6 +57,10 @@ void kmagnetCell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * o
         }
         painter->drawPixmap(0,0,pixmap);
     }
+    /*else if (visited)
+    {
+      painter->drawText(0,0,"v");
+    }*/
     else if (isFree && !isFinal)
     {
         if (!(cache->find("free", pixmap)))
@@ -97,6 +101,7 @@ void kmagnetCell::setIsFinal(bool b)
 void kmagnetCell::setVisited(bool b)
 {
     this->visited=b;
+    this->update();
 }
 
 void kmagnetCell::reset()

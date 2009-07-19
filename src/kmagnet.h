@@ -25,6 +25,7 @@
 
 #include "kmagnetscene.h"
 #include "kmagnetview.h"
+#include "kmagnetsolver.h"
 
 class KToggleAction;
 
@@ -64,6 +65,7 @@ private slots:
     void gameOver(bool won);
     void editingMode(bool b);
     void save();
+    void solve();
     void restart();
     void pause(bool b);
     void levelChanged(KGameDifficulty::standardLevel);

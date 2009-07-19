@@ -31,12 +31,12 @@
 #include <KStandardGameAction>
 #include <KGameDifficulty>
 #include <KStandardDirs>
+#include <KGameDifficulty>
 
 #include "kmagnet.h"
 #include "settings.h"
 #include "common.h"
 #include "kmagnetcell.h"
-#include <KGameDifficulty>
 
 kmagnet::kmagnet() : KXmlGuiWindow()
 {
@@ -130,6 +130,11 @@ void kmagnet::setupActions()
     editModeAction->setShortcut(Qt::CTRL + Qt::Key_T);
     actionCollection()->addAction("editmode", editModeAction);
     connect( editModeAction, SIGNAL( triggered(bool) ),this, SLOT( editingMode(bool) ) );
+    KAction *solveAction= new KAction(i18n("Solve"),this);
+    //editModeAction->setCheckable(true);
+    editModeAction->setShortcut(Qt::CTRL + Qt::Key_Space);
+    actionCollection()->addAction("solve", solveAction);
+    connect( solveAction, SIGNAL( triggered(bool) ),this, SLOT( solve() ) );
 }
 
 void kmagnet::configureSettings()
@@ -410,6 +415,44 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
         m_scene->process(Moves::RIGHT);
         break;
     }
+}
+
+void kmagnet::solve()
+{
+    std::vector<Moves::Move> lm;
+    kmagnetSolver* km = new kmagnetSolver(m_scene);
+    km->solve(lm, nextMove(false, m_scene->getStartPosition()),0);
+    lm.clear();
+    lm = km->getSolution();
+    delete km;
+    qDebug("finito solver");
+    if (lm.size()!=0)
+    {
+        for (unsigned int i=0; i< lm.size(); i++) {
+            //	System.out.println(lm.get(i));
+            QString str=QString();
+            switch (lm.at(i))
+            {
+            case 0:
+                str= "UP";
+                break;
+            case 1:
+                str= "DOWN";
+                break;
+            case 2:
+                str= "LEFT";
+                break;
+            case 3:
+                str= "RIGHT";
+                break;
+            default:
+                str="meeeec";
+                break;
+            }
+            qDebug() << str;
+        }
+    }
+
 }
 
 #include "kmagnet.moc"

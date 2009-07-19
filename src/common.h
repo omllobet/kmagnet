@@ -18,9 +18,35 @@
 
 #ifndef COMMON_H
 #define COMMON_H
+#include <QPoint>
+
 namespace Moves
 {
 enum Move { UP, DOWN,LEFT,RIGHT };
+};
+
+class nextMove
+{
+private:
+  bool isPossible;
+  QPoint destination;
+
+public:
+	nextMove(bool possible, QPoint point)
+	{
+		isPossible=possible;
+		destination=point;
+	};
+	
+	bool getIsPossible()
+	{
+		return isPossible;
+	};
+	
+	QPoint getPosition()
+	{
+		return destination;
+	};
 };
 
 #endif // MOVES_H

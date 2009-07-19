@@ -48,8 +48,6 @@ public:
         return Type;
     }
 
-protected:
-
 private:
     bool isFree;
     bool isFinal;

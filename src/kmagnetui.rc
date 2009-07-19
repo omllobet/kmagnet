@@ -1,6 +1,11 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <kpartgui name="kmagnet" version="1">
 <MenuBar>
+  <Menu name="game">
+    <Action name="solve" />
+  </Menu>
+</MenuBar>
+<MenuBar>
   <Menu name="settings">
     <Action name="editmode" />
   </Menu>

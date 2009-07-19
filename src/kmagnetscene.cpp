@@ -19,6 +19,7 @@
 #include <KStandardDirs>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
+#include <QDebug>
 
 #include "kmagnetscene.h"
 
@@ -94,8 +95,9 @@ void kmagnetScene::newGame()
     //this->update();
 }
 
-void kmagnetScene::process(int mov)
+void kmagnetScene::process(Moves::Move mov)
 {
+    //qDebug() << "proxima posicio" << this->getNextPosition(mov);
     if (haslost) return;
     if (mov==Moves::UP)
     {
@@ -163,6 +165,7 @@ void kmagnetScene::movement(int x, int y)
             haslost=true;
         }
     }
+    currentPosition=m_ball->pos().toPoint();
 }
 kmagnetScene::~kmagnetScene()
 {
@@ -247,3 +250,87 @@ void kmagnetScene::restart()
     haslost=false;
     movements=0;
 }
+
+QPoint kmagnetScene::getNextPosition(Moves::Move m)
+{
+    //int x = m_ball->scenePos().x();
+    //int y = m_ball->scenePos().y();
+    int x = currentPosition.x();
+    int y = currentPosition.y();
+
+    switch (m)
+    {
+	case (Moves::UP):
+	{
+		for(int i=y-20; i>=0;i=i-20)
+		{
+		//	kmagnetCell* currentCell= m_cells.at((x*COLUMNS)/((COLUMNS-1)*20+3)+ (i*ROWS)/((ROWS-1)*20+3)*COLUMNS);
+			kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(x,i));
+			if (!currentCell->getIsFree())
+			  return QPoint(x,i+20);
+			else if (currentCell->getIsFinal())
+			  return QPoint(x,i);
+		}
+		return QPoint(x,y);
+	}
+	case (Moves::DOWN):
+	{
+		for(int i=y+20; i<ROWS*20;i=i+20)
+		{
+			kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(x,i));
+			if (!currentCell->getIsFree())
+			  return QPoint(x,i-20);
+			else if (currentCell->getIsFinal())
+			  return QPoint(x,i);
+		}
+		return QPoint(x,y);
+	}
+	case (Moves::LEFT):
+	{
+		for(int i=x-20; i>=0;i=i-20)
+		{
+			kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(i,y));
+			if (!currentCell->getIsFree())
+			  return QPoint(i+20,y);
+			else if (currentCell->getIsFinal())
+			  return QPoint(i,y);
+		}
+		return QPoint(x,y);
+	}
+	case (Moves::RIGHT):
+	{
+		for(int i=x+20; i<COLUMNS*20;i=i+20)
+		{
+			kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(i,y));
+			if (!currentCell->getIsFree())
+			  return QPoint(i-20,y);
+			else if (currentCell->getIsFinal())
+			  return QPoint(i,y);
+		}
+		return QPoint(x,y);
+	}
+	default:
+		qDebug() << "invalid move";
+		break;
+	}
+	return  QPoint(x,y);
+}
+
+nextMove kmagnetScene::isPossibleMove( Moves::Move m)
+	{
+		QPoint p = getNextPosition(m);
+		int x=p.x();
+		int y=p.y();
+		if ((x==currentPosition.x() && y==currentPosition.y()) || dynamic_cast<kmagnetCell*>(itemAt(x,y))->getVisited())
+		{
+		  if (dynamic_cast<kmagnetCell*>(itemAt(x,y))->getVisited())
+		      qDebug() << "ya visitado";
+		  return nextMove(false,p);
+		}
+		return nextMove(true,p);
+	}
+
+void kmagnetScene::setVisited(QPoint p,bool b)
+    {
+      dynamic_cast< kmagnetCell* >(itemAt(p))->setVisited(b);
+     }

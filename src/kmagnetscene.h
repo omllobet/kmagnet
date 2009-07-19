@@ -16,7 +16,6 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-
 #ifndef KMAGNETSCENE_H
 #define KMAGNETSCENE_H
 
@@ -74,6 +73,12 @@ public:
     QPoint getStartPosition(){
 	return startPosition;
     };
+    void setCurrentPosition(QPoint p){
+	currentPosition=p;
+    };
+    QPoint getCurrentPosition(){
+	return currentPosition;
+    };
     bool getEditorMode(){
 	return editorMode;
     };
@@ -81,10 +86,13 @@ public:
 	ROWS=r;
 	COLUMNS=c;
     };
+    QPoint getNextPosition(Moves::Move m);
+    nextMove isPossibleMove(Moves::Move m);
+    void setVisited(QPoint p,bool b);
 
 public slots:
     void resizeScene(int width, int height);
-    void process(int mov);
+    void process(Moves::Move mov);
 
 signals:
     void advanceMovements(int m);

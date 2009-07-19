@@ -4,6 +4,7 @@ set(kmagnet_SRCS
    kmagnet.cpp
    main.cpp
    kmagnetcell.cpp
+   kmagnetsolver.cpp
  )
 
 kde4_add_ui_files(kmagnet_SRCS)
