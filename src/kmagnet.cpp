@@ -72,7 +72,6 @@ kmagnet::kmagnet() : KXmlGuiWindow()
 
     // accept dnd
     //setAcceptDrops(true);
-
     setCentralWidget(contenidor);
     // add a status bar
     statusBar()->insertItem( i18n("Time: 00:00"), 0);

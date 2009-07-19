@@ -52,29 +52,18 @@ int main(int argc, char **argv)
     }
     else
     {
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-        if (args->count() == 0)
-        {
-            widget->show();
-        }
-        else
-        {
-	  if (args->count() == 1)
-	  {
-	    QString path= args->arg(0);
-	    KUrl url=KUrl(path);
-	    if (url.isRelative())
-	    {
-		path.prepend(QUrl(KGlobal::dirs()->findResourceDir("appdata", "")).toString(QUrl::RemoveScheme) + "data/");
-	    }
-	    widget->loadfile(path);
-	    widget->show();
-	  }
-	  else
-	  {
-	    widget->show();
-	  }
+      KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+      if (args->count() == 1)
+      {
+	QString path= args->arg(0);
+	KUrl url=KUrl(path);
+	if (url.isRelative())
+	{
+	  path.prepend(QUrl(KGlobal::dirs()->findResourceDir("appdata", "")).toString(QUrl::RemoveScheme) + "data/");
 	}
-    }
+	widget->loadfile(path);
+       }
+       widget->show();
+      }
     return app.exec();
 }
