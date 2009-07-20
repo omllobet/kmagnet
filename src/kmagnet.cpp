@@ -138,7 +138,7 @@ void kmagnet::setupActions()
     connect( editModeAction, SIGNAL( triggered(bool) ),this, SLOT( editingMode(bool) ) );
     KAction *solveAction= new KAction(i18n("Solve"),this);
     //editModeAction->setCheckable(true);
-    editModeAction->setShortcut(Qt::CTRL + Qt::Key_Space);
+    solveAction->setShortcut(Qt::CTRL + Qt::Key_Space);
     actionCollection()->addAction("solve", solveAction);
     connect( solveAction, SIGNAL( triggered(bool) ),this, SLOT( solveFunc() ) );
 }
