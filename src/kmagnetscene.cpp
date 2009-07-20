@@ -70,7 +70,8 @@ void kmagnetScene::newGame()
     for (int row=0; row<ROWS; ++row) {
         for (int col=0; col<COLUMNS; ++col)
         {
-            m_cells.at(row*COLUMNS+col)->setPos((col)*20, (row)*20);
+	    //qDebug()<<"s "<< row*COLUMNS+col;
+            m_cells[row*COLUMNS+col]->setPos(QPointF((col)*20, (row)*20));
         }
     }
 
@@ -320,11 +321,10 @@ nextMove kmagnetScene::isPossibleMove( Moves::Move m)
 	{
 		QPoint p = getNextPosition(m);
 		int x=p.x();
+		//qDebug()<< "x "<< x;
 		int y=p.y();
 		if ((x==currentPosition.x() && y==currentPosition.y()) || dynamic_cast<kmagnetCell*>(itemAt(x,y))->getVisited())
 		{
-		  if (dynamic_cast<kmagnetCell*>(itemAt(x,y))->getVisited())
-		      qDebug() << "ya visitado";
 		  return nextMove(false,p);
 		}
 		return nextMove(true,p);

@@ -4,18 +4,10 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name="kmagnetrc"/>
-  <group name="Preferences">
-    <entry name="col_background" type="Color">
-	    <label>color of the background</label>
-	    <default>black</default>
-    </entry>
-    <entry name="col_foreground" type="Color">
-	    <label>color of the foreground</label>
-	    <default>yellow</default>
-    </entry>
-    <entry name="val_time" type="Int">
-	    <label>size of a ball</label>
-	    <default>2</default>
+  <group name="general">
+    <entry name="maxCalls" type="Int">
+	    <label>Maximium number of steps to find the solution</label>
+	    <default>15</default>
     </entry>
   </group>
 </kcfg>

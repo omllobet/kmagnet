@@ -1,3 +1,6 @@
 ->rewrite some things XD
+->improve order
 ->thousand other things
 ->animations
+->do the painting side the right way and do not hardcode size
+->put solver in a Qthread or something

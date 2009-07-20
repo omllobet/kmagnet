@@ -7,7 +7,7 @@ set(kmagnet_SRCS
    kmagnetsolver.cpp
  )
 
-kde4_add_ui_files(kmagnet_SRCS)
+kde4_add_ui_files(kmagnet_SRCS prefs_base.ui)
 
 kde4_add_kcfg_files(kmagnet_SRCS settings.kcfgc )
 

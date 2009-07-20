@@ -1,5 +1,20 @@
-/*
-*/
+/*************************************************************************************
+ *  Copyright (C) 2009 by Oscar Martinez <omllobet@gmail.com>                        *
+ *                                                                                   *
+ *  This program is free software; you can redistribute it and/or                    *
+ *  modify it under the terms of the GNU General Public License                      *
+ *  as published by the Free Software Foundation; either version 3                   *
+ *  of the License, or (at your option) any later version.                           *
+ *                                                                                   *
+ *  This program is distributed in the hope that it will be useful,                  *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
+ *  GNU General Public License for more details.                                     *
+ *                                                                                   *
+ *  You should have received a copy of the GNU General Public License                *
+ *  along with this program; if not, write to the Free Software                      *
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
+ *************************************************************************************/
 
 #include <string>
 #include <QDebug>
@@ -8,14 +23,25 @@
 
 using namespace std;
 
-kmagnetSolver::kmagnetSolver(kmagnetScene* scene)
+kmagnetSolver::kmagnetSolver(kmagnetScene* scene):QObject(),
+maxCalls(15)
 {
     this->m_scene=scene;
 }
 
-void kmagnetSolver::solve(vector<Moves::Move> lm, nextMove sg, int numrec)
+void kmagnetSolver::findSolution()
 {
-    if (numrec>=25) return;
+      std::vector<Moves::Move> lm;
+      nextMove nm = nextMove(false, m_scene->getCurrentPosition());
+      int calls=0;
+      solution.clear();
+      solve(lm,nm,calls);
+      emit finished();
+}
+
+void kmagnetSolver::solve(vector<Moves::Move> &lm, nextMove sg, int numrec)
+{
+    if (numrec>=maxCalls) return;
     if (sg.getIsPossible() && dynamic_cast<kmagnetCell*>(m_scene->itemAt(sg.getPosition()))->getIsFinal())
     {//is solution
         if (solution.size()==0 || solution.size()> lm.size())
@@ -23,27 +49,6 @@ void kmagnetSolver::solve(vector<Moves::Move> lm, nextMove sg, int numrec)
             solution.clear();
             solution=lm;
         }
-        //qDebug() << "solution:";
-        //System.out.println("Solution:");
-        /*for(unsigned int i=0; i< lm.size(); i++)
-        {
-        //	System.out.println(lm.get(i));
-          QString str=QString();
-          switch (lm.at(i))
-          {
-            case 0:
-              str= "UP";break;
-            case 1:
-              str= "DOWN";break;
-            case 2:
-              str= "LEFT";break;
-            case 3:
-              str= "RIGHT";break;
-            default:
-              str="meeeec";break;
-          }
-          qDebug() << str;
-        }*/
         return;
     }
     else
@@ -72,7 +77,6 @@ void kmagnetSolver::solve(vector<Moves::Move> lm, nextMove sg, int numrec)
     }
 }
 
-
 void kmagnetSolver::trymove(Moves::Move m, vector<Moves::Move> &l, int n)
 {
     nextMove nm = m_scene->isPossibleMove(m);
@@ -82,7 +86,9 @@ void kmagnetSolver::trymove(Moves::Move m, vector<Moves::Move> &l, int n)
         //QPoint p= m_scene->getBallPos().toPoint();
         QPoint p= m_scene->getCurrentPosition();
         //m_scene->setBallPos(nm.getPosition());
-	m_scene->setCurrentPosition(nm.getPosition());
+      m_scene->setVisited(p,true);	
+      m_scene->setCurrentPosition(nm.getPosition());
+	
         solve(l,nm, n+1);
         //m_scene->setBallPos(p);
 	m_scene->setCurrentPosition(p);

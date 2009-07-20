@@ -37,6 +37,7 @@
 #include "settings.h"
 #include "common.h"
 #include "kmagnetcell.h"
+#include "kmagnetsolver.h"
 
 kmagnet::kmagnet() : KXmlGuiWindow()
 {
@@ -58,6 +59,10 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
     m_view->setScene(m_scene);
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
+    
+    m_solver= new kmagnetSolver(m_scene);
+    connect(m_solver, SIGNAL(finished()),this,SLOT(solutionFound()));
+
     QWidget *contenidor = new QWidget(this);
 
     QHBoxLayout * gl = new QHBoxLayout();
@@ -92,6 +97,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
 kmagnet::~kmagnet()
 {
     delete m_gameClock;
+    //delete m_solver;
 }
 
 void kmagnet::newGame()
@@ -117,7 +123,7 @@ void kmagnet::setupActions()
     KStandardGameAction::highscores(this, SLOT(showHighscores()), actionCollection());
     KStandardGameAction::saveAs(this, SLOT(save()), actionCollection());
     KStandardGameAction::quit(this, SLOT(close()), actionCollection());
-    //KStandardAction::preferences( this, SLOT( configureSettings() ), actionCollection() );
+    KStandardAction::preferences( this, SLOT( configureSettings() ), actionCollection() );
     KStandardGameAction::pause( this, SLOT( pause(bool ) ), actionCollection() );
     KGameDifficulty::init(this,this, SLOT(levelChanged(KGameDifficulty::standardLevel)));
     KGameDifficulty::setRestartOnChange(KGameDifficulty::RestartOnChange);
@@ -134,7 +140,7 @@ void kmagnet::setupActions()
     //editModeAction->setCheckable(true);
     editModeAction->setShortcut(Qt::CTRL + Qt::Key_Space);
     actionCollection()->addAction("solve", solveAction);
-    connect( solveAction, SIGNAL( triggered(bool) ),this, SLOT( solve() ) );
+    connect( solveAction, SIGNAL( triggered(bool) ),this, SLOT( solveFunc() ) );
 }
 
 void kmagnet::configureSettings()
@@ -149,9 +155,9 @@ void kmagnet::configureSettings()
     }
     KConfigDialog *dialog = new KConfigDialog(this, "settings", Settings::self());
     QWidget *generalSettingsDlg = new QWidget;
-    //ui_prefs_base.setupUi(generalSettingsDlg);
-    dialog->addPage(generalSettingsDlg, i18n("General"), "Game_setting");
-//    connect(dialog, SIGNAL(settingsChanged(QString)), m_view, SLOT(settingsChanged()));
+    ui_prefs_base.setupUi(generalSettingsDlg);
+    dialog->addPage(generalSettingsDlg, i18n("General"), "games-config-options");
+    connect(dialog, SIGNAL(settingsChanged(QString)), this, SLOT(settingsChanged()));
     dialog->setAttribute( Qt::WA_DeleteOnClose );
     dialog->show();
 }
@@ -417,15 +423,15 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
     }
 }
 
-void kmagnet::solve()
+void kmagnet::solveFunc()
 {
-    std::vector<Moves::Move> lm;
-    kmagnetSolver* km = new kmagnetSolver(m_scene);
-    km->solve(lm, nextMove(false, m_scene->getStartPosition()),0);
-    lm.clear();
-    lm = km->getSolution();
-    delete km;
-    qDebug("finito solver");
+  m_solver->findSolution();
+}
+
+void kmagnet::solutionFound()
+{
+//convert data to vector
+    std::vector<Moves::Move> lm=m_solver->getSolution();
     if (lm.size()!=0)
     {
         for (unsigned int i=0; i< lm.size(); i++) {
@@ -452,7 +458,10 @@ void kmagnet::solve()
             qDebug() << str;
         }
     }
-
 }
 
+void kmagnet::settingsChanged()
+{
+  m_solver->setMaxCalls(Settings::maxCalls());
+}
 #include "kmagnet.moc"

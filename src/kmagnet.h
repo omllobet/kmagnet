@@ -26,7 +26,9 @@
 #include "kmagnetscene.h"
 #include "kmagnetview.h"
 #include "kmagnetsolver.h"
+#include "ui_prefs_base.h"
 
+class kmagnetSolver;
 class KToggleAction;
 
 /**
@@ -65,10 +67,12 @@ private slots:
     void gameOver(bool won);
     void editingMode(bool b);
     void save();
-    void solve();
+    void solveFunc();
     void restart();
     void pause(bool b);
     void levelChanged(KGameDifficulty::standardLevel);
+    void solutionFound();
+    void settingsChanged();
 
 private:
     void setupActions();
@@ -84,6 +88,8 @@ private:
     KToggleAction *m_statusbarAction;
     KGameClock* m_gameClock;
     kmagnetScene *m_scene;
+    kmagnetSolver *m_solver;
+    Ui::prefs_base ui_prefs_base ;
 };
 
 #endif // _KMAGNET_H_
