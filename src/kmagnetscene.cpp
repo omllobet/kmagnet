@@ -180,7 +180,6 @@ kmagnetScene::~kmagnetScene()
 
 void kmagnetScene::animateMovement(Moves::Move m)
 {
-  //qDebug() << "aaasss";
   nextMove nm= isPossibleMove(m);
   //QPoint end=getNextPosition(m);
   if (!nm.getIsPossible()) {haslost=true;return;};

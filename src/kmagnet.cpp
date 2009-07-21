@@ -398,7 +398,8 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
     {
         theight=theight+ dynamic_cast<KToolBar*>(tlist.at(i))->height();
     }
-    this->setMinimumSize(std::max(m_view->width()+4, std::max(menuBar()->width()+4, std::max(statusBar()->width()+4, toolBar()->width()+4))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4);
+    int bar =28;//titlebar height size//FIXME
+    this->setMinimumSize(std::max(m_view->width()+4, std::max(menuBar()->width()+4, std::max(statusBar()->width()+4, toolBar()->width()+4))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+bar);
     resize(this->minimumSize());
 
     emit newGame();
