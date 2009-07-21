@@ -29,6 +29,8 @@
 #include "common.h"
 #include "kmagnetcell.h"
 
+#include <vector>
+
 class kmagnetCell;
 class kmagnetScene : public QGraphicsScene
 {
@@ -89,10 +91,13 @@ public:
     QPoint getNextPosition(Moves::Move m);
     nextMove isPossibleMove(Moves::Move m);
     void setVisited(QPoint p,bool b);
+    void animateMovement(Moves::Move m);
+    void replay(QVector<Moves::Move> lm);
 
 public slots:
     void resizeScene(int width, int height);
     void process(Moves::Move mov);
+    void finishWait();
 
 signals:
     void advanceMovements(int m);
@@ -115,6 +120,7 @@ private:
     QGraphicsEllipseItem* m_ball;
     QVector<kmagnetCell*> m_cells;
     void movement(int x, int y);
+    QVector<Moves::Move> sol;
 };
 
 #endif // KMAGNETSCENE_H

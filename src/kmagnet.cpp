@@ -457,6 +457,8 @@ void kmagnet::solutionFound()
             }
             qDebug() << str;
         }
+    QVector<Moves::Move> lm2= QVector<Moves::Move>::fromStdVector(lm);
+    m_scene->replay(lm2);
     }
 }
 
@@ -464,4 +466,5 @@ void kmagnet::settingsChanged()
 {
   m_solver->setMaxCalls(Settings::maxCalls());
 }
+
 #include "kmagnet.moc"
