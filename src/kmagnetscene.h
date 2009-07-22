@@ -56,10 +56,10 @@ public:
         return movements;
     };
     void setMovements(int p) {
-	movements=p;
+        movements=p;
     };
     void toogleEditorMode(bool b) {
-	Q_UNUSED(b);
+        Q_UNUSED(b);
         editorMode=!editorMode;
     };
     QPointF getBallPos() {
@@ -69,27 +69,27 @@ public:
         m_ball->setPos(p);
         currentPosition=p;
     };
-    void setStartPosition(QPoint p){
-	startPosition=p;
+    void setStartPosition(QPoint p) {
+        startPosition=p;
     };
-    QPoint getStartPosition(){
-	return startPosition;
+    QPoint getStartPosition() {
+        return startPosition;
     };
-    void setCurrentPosition(QPoint p){
-	currentPosition=p;
+    void setCurrentPosition(QPoint p) {
+        currentPosition=p;
     };
-    QPoint getCurrentPosition(){
-	return currentPosition;
+    QPoint getCurrentPosition() {
+        return currentPosition;
     };
-    bool getEditorMode(){
-	return editorMode;
+    bool getEditorMode() {
+        return editorMode;
     };
-    void setSize(int r, int c){
-	ROWS=r;
-	COLUMNS=c;
+    void setSize(int r, int c) {
+        ROWS=r;
+        COLUMNS=c;
     };
-    void setHasLost(bool haslostGame){
-	hasLost=haslostGame;
+    void setHasLost(bool haslostGame) {
+        hasLost=haslostGame;
     };
     QPoint getNextPosition(Moves::Move m);
     nextMove isPossibleMove(Moves::Move m);

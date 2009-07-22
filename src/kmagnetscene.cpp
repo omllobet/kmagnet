@@ -35,7 +35,7 @@ kmagnetScene::kmagnetScene(QObject * parent, int rows, int columns) :
         editorMode(false),
         movements(0),
         startPosition(QPoint(03,03)),
-	sol(QVector<Moves::Move>())
+        sol(QVector<Moves::Move>())
 {
     resizeScene((int)sceneRect().width(), (int)sceneRect().height());
     cache = new QPixmapCache();
@@ -73,15 +73,15 @@ void kmagnetScene::newGame()
     for (int row=0; row<ROWS; ++row) {
         for (int col=0; col<COLUMNS; ++col)
         {
-	    //qDebug()<<"s "<< row*COLUMNS+col;
+            //qDebug()<<"s "<< row*COLUMNS+col;
             m_cells[row*COLUMNS+col]->setPos(QPointF((col)*Global::itemSize, (row)*Global::itemSize));
         }
     }
 
     if (!m_ball)
     {
-	QRadialGradient radialGradient(7, 7, 7, 4, 4);
-	radialGradient.setColorAt(0.0, Qt::white);
+        QRadialGradient radialGradient(7, 7, 7, 4, 4);
+        radialGradient.setColorAt(0.0, Qt::white);
         radialGradient.setColorAt(0.35, Qt::lightGray);
         radialGradient.setColorAt(0.75, Qt::gray);
         radialGradient.setColorAt(1.0, Qt::darkGray);
@@ -143,10 +143,10 @@ void kmagnetScene::movement(int x, int y)
     {
         QList<QGraphicsItem *> ci= this->collidingItems (m_ball);
         found=false;
-	int i=0;
+        int i=0;
         while (i < ci.size() && !found)
         {
-	    kmagnetCell* cell =dynamic_cast<kmagnetCell*>( ci.at(i));
+            kmagnetCell* cell =dynamic_cast<kmagnetCell*>( ci.at(i));
             if (!cell->getIsFree())
             {
                 found=true;
@@ -179,45 +179,48 @@ kmagnetScene::~kmagnetScene()
 
 void kmagnetScene::animateMovement(Moves::Move m)
 {
-  nextMove nm= isPossibleMove(m);
-  //QPoint end=getNextPosition(m);
-  if (!nm.getIsPossible()) {hasLost=true;return;};
-  QPoint end= nm.getPosition();
-  QPoint start=currentPosition;
-  //if (start==end) {hasLost=true; return;}//better use isPossibleMove?
-  //qDebug() << it << "-----" << m_ball << "-----" << &it << "----------" << &m_ball;
-  if (dynamic_cast<kmagnetCell*>(itemAt(end))->getIsFinal()) hasWon=true;
-  QPoint dif=end-start;
-  int time;
-  if (dif.x()!=0)
-      time=dif.x();
-   else
-      time=dif.y();
-  QTimeLine *timer = new QTimeLine(250+abs(time));
-  connect(timer, SIGNAL(finished()),this, SLOT(finishWait()));
-  timer->setFrameRange(0, 100);
-  QGraphicsItemAnimation *animation = new QGraphicsItemAnimation();
-  animation->setItem(m_ball);
-  animation->setTimeLine(timer);
-  animation->setPosAt(1.0,end);
-  timer->start();
-  currentPosition=end;
+    nextMove nm= isPossibleMove(m);
+    //QPoint end=getNextPosition(m);
+    if (!nm.getIsPossible()) {
+        hasLost=true;
+        return;
+    };
+    QPoint end= nm.getPosition();
+    QPoint start=currentPosition;
+    //if (start==end) {hasLost=true; return;}//better use isPossibleMove?
+    //qDebug() << it << "-----" << m_ball << "-----" << &it << "----------" << &m_ball;
+    if (dynamic_cast<kmagnetCell*>(itemAt(end))->getIsFinal()) hasWon=true;
+    QPoint dif=end-start;
+    int time;
+    if (dif.x()!=0)
+        time=dif.x();
+    else
+        time=dif.y();
+    QTimeLine *timer = new QTimeLine(250+abs(time));
+    connect(timer, SIGNAL(finished()),this, SLOT(finishWait()));
+    timer->setFrameRange(0, 100);
+    QGraphicsItemAnimation *animation = new QGraphicsItemAnimation();
+    animation->setItem(m_ball);
+    animation->setTimeLine(timer);
+    animation->setPosAt(1.0,end);
+    timer->start();
+    currentPosition=end;
 }
 
 void kmagnetScene::replay(QVector<Moves::Move> lm)
 {
-  sol.clear();
-  sol=lm;
-  animateMovement(lm.at(0));
-  sol.pop_front();
+    sol.clear();
+    sol=lm;
+    animateMovement(lm.at(0));
+    sol.pop_front();
 }
 
 void kmagnetScene::finishWait()
 {
-  if (sol.size()!=0)
+    if (sol.size()!=0)
     {
-      animateMovement(sol.at(0));
-      sol.pop_front();//sol.erase(sol.begin());
+        animateMovement(sol.at(0));
+        sol.pop_front();//sol.erase(sol.begin());
     }
 }
 
@@ -254,7 +257,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
     {
         if (editorMode) {
             dynamic_cast<kmagnetCell*>(item)->setIsFree(false);
-	    return;
+            return;
         }
         if ( !editorMode && item!=m_ball) {
             QPointF p1= m_ball->pos();
@@ -309,76 +312,76 @@ QPoint kmagnetScene::getNextPosition(Moves::Move m)
     int y = currentPosition.y();
     switch (m)
     {
-	case (Moves::UP):
-	{
-		for(int i=y-Global::itemSize; i>=0;i=i-Global::itemSize)
-		{
-		//	kmagnetCell* currentCell= m_cells.at((x*COLUMNS)/((COLUMNS-1)*Global::itemSize+3)*COLUMNS+ (i*ROWS)/((ROWS-1)*Global::itemSize+3));
-			kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(x,i));
-			if (!currentCell->getIsFree())
-			  return QPoint(x,i+Global::itemSize);
-			else if (currentCell->getIsFinal())
-			  return QPoint(x,i);
-		}
-		return QPoint(x,y);
-	}
-	case (Moves::DOWN):
-	{
-		for(int i=y+Global::itemSize; i<ROWS*Global::itemSize;i=i+Global::itemSize)
-		{
-			kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(x,i));
-			if (!currentCell->getIsFree())
-			  return QPoint(x,i-Global::itemSize);
-			else if (currentCell->getIsFinal())
-			  return QPoint(x,i);
-		}
-		return QPoint(x,y);
-	}
-	case (Moves::LEFT):
-	{
-		for(int i=x-Global::itemSize; i>=0;i=i-Global::itemSize)
-		{
-			kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(i,y));
-			if (!currentCell->getIsFree())
-			  return QPoint(i+Global::itemSize,y);
-			else if (currentCell->getIsFinal())
-			  return QPoint(i,y);
-		}
-		return QPoint(x,y);
-	}
-	case (Moves::RIGHT):
-	{
-		for(int i=x+Global::itemSize; i<COLUMNS*Global::itemSize;i=i+Global::itemSize)
-		{
-			kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(i,y));
-			if (!currentCell->getIsFree())
-			  return QPoint(i-Global::itemSize,y);
-			else if (currentCell->getIsFinal())
-			  return QPoint(i,y);
-		}
-		return QPoint(x,y);
-	}
-	default:
-		qDebug() << "invalid move";
-		break;
-	}
-	return  QPoint(x,y);
+    case (Moves::UP):
+    {
+        for (int i=y-Global::itemSize; i>=0;i=i-Global::itemSize)
+        {
+            //	kmagnetCell* currentCell= m_cells.at((x*COLUMNS)/((COLUMNS-1)*Global::itemSize+3)*COLUMNS+ (i*ROWS)/((ROWS-1)*Global::itemSize+3));
+            kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(x,i));
+            if (!currentCell->getIsFree())
+                return QPoint(x,i+Global::itemSize);
+            else if (currentCell->getIsFinal())
+                return QPoint(x,i);
+        }
+        return QPoint(x,y);
+    }
+    case (Moves::DOWN):
+    {
+        for (int i=y+Global::itemSize; i<ROWS*Global::itemSize;i=i+Global::itemSize)
+        {
+            kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(x,i));
+            if (!currentCell->getIsFree())
+                return QPoint(x,i-Global::itemSize);
+            else if (currentCell->getIsFinal())
+                return QPoint(x,i);
+        }
+        return QPoint(x,y);
+    }
+    case (Moves::LEFT):
+    {
+        for (int i=x-Global::itemSize; i>=0;i=i-Global::itemSize)
+        {
+            kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(i,y));
+            if (!currentCell->getIsFree())
+                return QPoint(i+Global::itemSize,y);
+            else if (currentCell->getIsFinal())
+                return QPoint(i,y);
+        }
+        return QPoint(x,y);
+    }
+    case (Moves::RIGHT):
+    {
+        for (int i=x+Global::itemSize; i<COLUMNS*Global::itemSize;i=i+Global::itemSize)
+        {
+            kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(i,y));
+            if (!currentCell->getIsFree())
+                return QPoint(i-Global::itemSize,y);
+            else if (currentCell->getIsFinal())
+                return QPoint(i,y);
+        }
+        return QPoint(x,y);
+    }
+    default:
+        qDebug() << "invalid move";
+        break;
+    }
+    return  QPoint(x,y);
 }
 
 nextMove kmagnetScene::isPossibleMove( Moves::Move m)
-	{
-		QPoint p = getNextPosition(m);
-		int x=p.x();
-		//qDebug()<< "x "<< x;
-		int y=p.y();
-		if ((x==currentPosition.x() && y==currentPosition.y()) || dynamic_cast<kmagnetCell*>(itemAt(x,y))->getVisited())
-		{
-		  return nextMove(false,p);
-		}
-		return nextMove(true,p);
-	}
+{
+    QPoint p = getNextPosition(m);
+    int x=p.x();
+    //qDebug()<< "x "<< x;
+    int y=p.y();
+    if ((x==currentPosition.x() && y==currentPosition.y()) || dynamic_cast<kmagnetCell*>(itemAt(x,y))->getVisited())
+    {
+        return nextMove(false,p);
+    }
+    return nextMove(true,p);
+}
 
 void kmagnetScene::setVisited(QPoint p,bool b)
-    {
-      dynamic_cast< kmagnetCell* >(itemAt(p))->setVisited(b);
-     }
+{
+    dynamic_cast< kmagnetCell* >(itemAt(p))->setVisited(b);
+}

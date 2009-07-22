@@ -32,25 +32,27 @@ using namespace std;
 class kmagnetSolver: public QObject
 {
 
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-     
-      kmagnetSolver(kmagnetScene* scene);
-      void solve(vector<Moves::Move> &lm, nextMove sg, int numrec);
-      vector<Moves::Move> getSolution(){return solution;};    
-      void findSolution();
+
+    kmagnetSolver(kmagnetScene* scene);
+    void solve(vector<Moves::Move> &lm, nextMove sg, int numrec);
+    vector<Moves::Move> getSolution() {
+        return solution;
+    };
+    void findSolution();
 
 signals:
-     void finished();
+    void finished();
 
 private:
 
     void trymove(Moves::Move m, vector<Moves::Move> &l, int n);
-    
+
     kmagnetScene* m_scene;
     vector<Moves::Move> solution;
-    
+
 };
 
 #endif // KMAGNETSOLVER_H

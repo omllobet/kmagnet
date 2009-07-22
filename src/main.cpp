@@ -35,7 +35,7 @@ static const char version[] = "0.02";
 int Global::itemSize=20;
 
 int main(int argc, char **argv)
-{    
+{
     KAboutData about("kmagnet", 0, ki18n("kmagnet"), version, ki18n(description),
                      KAboutData::License_GPL, ki18n("(C) 2009 Oscar Martinez"), KLocalizedString(), 0, "omllobet@gmail.com");
     about.addAuthor( ki18n("Oscar Martinez"), KLocalizedString(), "omllobet@gmail.com" );
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 
     KGlobal::locale()->insertCatalog("libkdegames");
     kmagnet *widget = new kmagnet;
-    
+
     // see if we are starting with session management
     if (app.isSessionRestored())
     {
@@ -57,20 +57,20 @@ int main(int argc, char **argv)
     }
     else
     {
-      KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-      if (args->count() == 1)
-      {
-	QString path= args->arg(0);
-	KUrl url=KUrl(path);
-	if (url.isRelative())
-	{
-	  //path.prepend(QUrl(KGlobal::dirs()->findResourceDir("appdata", "")).toString(QUrl::RemoveScheme) + "data/");
-	  //qDebug() << KStandardDirs::locate("appdata","");
-	  path.prepend(QString("/usr/local/share/apps/kmagnet/data/"));
-	}
-	widget->loadfile(path);
-       }
-       widget->show();
-      }
+        KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+        if (args->count() == 1)
+        {
+            QString path= args->arg(0);
+            KUrl url=KUrl(path);
+            if (url.isRelative())
+            {
+                //path.prepend(QUrl(KGlobal::dirs()->findResourceDir("appdata", "")).toString(QUrl::RemoveScheme) + "data/");
+                //qDebug() << KStandardDirs::locate("appdata","");
+                path.prepend(QString("/usr/local/share/apps/kmagnet/data/"));
+            }
+            widget->loadfile(path);
+        }
+        widget->show();
+    }
     return app.exec();
 }

@@ -27,31 +27,31 @@ enum Move { UP, DOWN,LEFT,RIGHT };
 
 namespace Global
 {
-    extern int itemSize;
+extern int itemSize;
 };
 
 class nextMove
 {
 private:
-  bool isPossible;
-  QPoint destination;
+    bool isPossible;
+    QPoint destination;
 
 public:
-	nextMove(bool possible, QPoint point)
-	{
-		isPossible=possible;
-		destination=point;
-	};
-	
-	bool getIsPossible()
-	{
-		return isPossible;
-	};
-	
-	QPoint getPosition()
-	{
-		return destination;
-	};
+    nextMove(bool possible, QPoint point)
+    {
+        isPossible=possible;
+        destination=point;
+    };
+
+    bool getIsPossible()
+    {
+        return isPossible;
+    };
+
+    QPoint getPosition()
+    {
+        return destination;
+    };
 };
 
 #endif // MOVES_H

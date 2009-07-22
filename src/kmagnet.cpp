@@ -59,7 +59,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
     m_view->setScene(m_scene);
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
-   
+
     //solver
     m_solver= new kmagnetSolver(m_scene);
     connect(m_solver, SIGNAL(finished()),this,SLOT(solutionFound()));
@@ -174,10 +174,10 @@ void kmagnet::load()
         return;
     }
     loadfile(loadFilename);
-    
+
     QAction * editingModeAction = this->action("editmode");
     if (editingModeAction->isChecked())
-	editingModeAction->activate(QAction::Trigger);
+        editingModeAction->activate(QAction::Trigger);
 }
 
 void kmagnet::loadfile(QString loadFilename)
@@ -432,7 +432,7 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 
 void kmagnet::solveFunc()
 {
-  m_solver->findSolution();
+    m_solver->findSolution();
 }
 
 void kmagnet::solutionFound()
@@ -466,15 +466,15 @@ void kmagnet::solutionFound()
             }
             qDebug() << str;
         }
-    QVector<Moves::Move> lm2= QVector<Moves::Move>::fromStdVector(lm);
-    m_scene->replay(lm2);
+        QVector<Moves::Move> lm2= QVector<Moves::Move>::fromStdVector(lm);
+        m_scene->replay(lm2);
     }
 }
 
 void kmagnet::settingsChanged()
 {
-  //qDebug() << "max calls" << Settings::maxCalls();
-  Settings::self()->writeConfig();
+    //qDebug() << "max calls" << Settings::maxCalls();
+    Settings::self()->writeConfig();
 }
 
 #include "kmagnet.moc"

@@ -31,12 +31,12 @@ kmagnetSolver::kmagnetSolver(kmagnetScene* scene):QObject()
 
 void kmagnetSolver::findSolution()
 {
-      std::vector<Moves::Move> lm;
-      nextMove nm = nextMove(false, m_scene->getCurrentPosition());
-      int calls=0;
-      solution.clear();
-      solve(lm,nm,calls);
-      emit finished();    
+    std::vector<Moves::Move> lm;
+    nextMove nm = nextMove(false, m_scene->getCurrentPosition());
+    int calls=0;
+    solution.clear();
+    solve(lm,nm,calls);
+    emit finished();
 }
 
 void kmagnetSolver::solve(vector<Moves::Move> &lm, nextMove sg, int numrec)
@@ -86,12 +86,12 @@ void kmagnetSolver::trymove(Moves::Move m, vector<Moves::Move> &l, int n)
         //QPoint p= m_scene->getBallPos().toPoint();
         QPoint p= m_scene->getCurrentPosition();
         //m_scene->setBallPos(nm.getPosition());
-      m_scene->setVisited(p,true);	
-      m_scene->setCurrentPosition(nm.getPosition());
-	
+        m_scene->setVisited(p,true);
+        m_scene->setCurrentPosition(nm.getPosition());
+
         solve(l,nm, n+1);
         //m_scene->setBallPos(p);
-	m_scene->setCurrentPosition(p);
+        m_scene->setCurrentPosition(p);
         m_scene->setVisited(p,false);
         l.pop_back();
     }
