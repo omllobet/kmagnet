@@ -20,11 +20,11 @@
 #include <QDebug>
 
 #include "kmagnetsolver.h"
+#include <settings.h>
 
 using namespace std;
 
-kmagnetSolver::kmagnetSolver(kmagnetScene* scene):QObject(),
-maxCalls(15)
+kmagnetSolver::kmagnetSolver(kmagnetScene* scene):QObject()
 {
     this->m_scene=scene;
 }
@@ -41,7 +41,7 @@ void kmagnetSolver::findSolution()
 
 void kmagnetSolver::solve(vector<Moves::Move> &lm, nextMove sg, int numrec)
 {
-    if (numrec>=maxCalls) return;
+    if (numrec>=Settings::maxCalls()) return;
     if (sg.getIsPossible() && dynamic_cast<kmagnetCell*>(m_scene->itemAt(sg.getPosition()))->getIsFinal())
     {//is solution
         if (solution.size()==0 || solution.size()> lm.size())

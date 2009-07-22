@@ -40,7 +40,7 @@ public:
       void solve(vector<Moves::Move> &lm, nextMove sg, int numrec);
       vector<Moves::Move> getSolution(){return solution;};    
       void findSolution();
-      void setMaxCalls(int newMaxCalls){maxCalls=newMaxCalls;};
+
 signals:
      void finished();
 
@@ -48,7 +48,6 @@ private:
 
     void trymove(Moves::Move m, vector<Moves::Move> &l, int n);
     
-    int maxCalls;
     kmagnetScene* m_scene;
     vector<Moves::Move> solution;
     

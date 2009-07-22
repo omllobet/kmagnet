@@ -136,7 +136,6 @@ void kmagnetScene::process(Moves::Move mov)
     }
 }
 
-
 void kmagnetScene::movement(int x, int y)
 {
     bool found=false;
