@@ -276,8 +276,8 @@ void kmagnet::gameOver(bool won)
         int answer=KMessageBox::questionYesNo(this, i18n("Thanks for playing. Do you want to try again?"),i18n("Game ended"));
         if (answer==KMessageBox::Yes)
             restart();
-        else
-            newGame();
+        //else
+            //newGame();
     }
 }
 
