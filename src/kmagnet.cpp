@@ -174,7 +174,10 @@ void kmagnet::load()
         return;
     }
     loadfile(loadFilename);
-    editingMode(false);
+    
+    QAction * editingModeAction = this->action("editmode");
+    if (editingModeAction->isChecked())
+	editingModeAction->activate(QAction::Trigger);
 }
 
 void kmagnet::loadfile(QString loadFilename)
