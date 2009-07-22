@@ -89,6 +89,7 @@ bool kmagnetCell::getVisited()
 void kmagnetCell::setIsFree(bool b)
 {
     this->isFree=b;
+    if (!b) this->isFinal=false;
     this->update();
 }
 

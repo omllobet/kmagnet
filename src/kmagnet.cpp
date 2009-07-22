@@ -54,7 +54,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
                                   QGraphicsView::DontAdjustForAntialiasing );
 
     m_view->setFixedSize(COLUMNS*Global::itemSize, ROWS*Global::itemSize);
-    m_scene = new kmagnetScene(m_view, ROWS, COLUMNS);
+    m_scene = new kmagnetScene(this, ROWS, COLUMNS);
     connect(m_scene, SIGNAL(advanceMovements(int)), this, SLOT(advanceMovements(int)));
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
     m_view->setScene(m_scene);
@@ -432,6 +432,7 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 
 void kmagnet::solveFunc()
 {
+    this->action("solve")->setEnabled(false);
     m_solver->findSolution();
 }
 

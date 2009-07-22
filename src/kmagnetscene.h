@@ -28,9 +28,11 @@
 
 #include "common.h"
 #include "kmagnetcell.h"
+#include "kmagnet.h"
 
 #include <vector>
 
+class kmagnet;
 class kmagnetCell;
 class kmagnetScene : public QGraphicsScene
 {

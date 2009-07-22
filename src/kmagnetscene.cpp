@@ -222,6 +222,10 @@ void kmagnetScene::finishWait()
         animateMovement(sol.at(0));
         sol.pop_front();//sol.erase(sol.begin());
     }
+    else
+    {
+	dynamic_cast<kmagnet*>(parent())->action("solve")->setEnabled(true);
+    }
 }
 
 void kmagnetScene::resizeScene(int width, int height)
@@ -252,7 +256,9 @@ void kmagnetScene::setNotFreePosition(QPoint pos)
 
 void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 {
+    dynamic_cast<kmagnet*>(parent())->setFocus();
     QGraphicsItem* item=(this->itemAt(mouseEvent->scenePos()));
+    if (item->zValue()==5.0) return;//if its the ball skip
     if (mouseEvent->button() == Qt::LeftButton && item!=0)
     {
         if (editorMode) {

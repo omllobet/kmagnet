@@ -28,6 +28,7 @@
 #include "kmagnetsolver.h"
 #include "ui_prefs_base.h"
 
+class kmagnetScene;
 class kmagnetSolver;
 class KToggleAction;
 

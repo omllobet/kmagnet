@@ -25,10 +25,10 @@
 
 #include "common.h"
 #include "kmagnetscene.h"
-#include "kmagnet.h"
 
 using namespace std;
 
+class kmagnetScene;
 class kmagnetSolver: public QObject
 {
 

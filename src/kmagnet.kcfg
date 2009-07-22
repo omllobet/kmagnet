@@ -7,7 +7,7 @@
   <group name="general">
     <entry name="maxCalls" type="Int">
 	    <label>Maximium number of steps to find the solution</label>
-	    <default>15</default>
+	    <default>101</default>
     </entry>
   </group>
 </kcfg>
