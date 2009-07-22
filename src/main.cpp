@@ -32,8 +32,10 @@ static const char description[] =
 
 static const char version[] = "0.02";
 
+int Global::itemSize=20;
+
 int main(int argc, char **argv)
-{
+{    
     KAboutData about("kmagnet", 0, ki18n("kmagnet"), version, ki18n(description),
                      KAboutData::License_GPL, ki18n("(C) 2009 Oscar Martinez"), KLocalizedString(), 0, "omllobet@gmail.com");
     about.addAuthor( ki18n("Oscar Martinez"), KLocalizedString(), "omllobet@gmail.com" );

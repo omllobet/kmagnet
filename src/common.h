@@ -25,6 +25,11 @@ namespace Moves
 enum Move { UP, DOWN,LEFT,RIGHT };
 };
 
+namespace Global
+{
+    extern int itemSize;
+};
+
 class nextMove
 {
 private:

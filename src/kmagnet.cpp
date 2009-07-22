@@ -53,7 +53,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
                                   QGraphicsView::DontSavePainterState |
                                   QGraphicsView::DontAdjustForAntialiasing );
 
-    m_view->setFixedSize(COLUMNS*20, ROWS*20);
+    m_view->setFixedSize(COLUMNS*Global::itemSize, ROWS*Global::itemSize);
     m_scene = new kmagnetScene(m_view, ROWS, COLUMNS);
     connect(m_scene, SIGNAL(advanceMovements(int)), this, SLOT(advanceMovements(int)));
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
@@ -380,17 +380,17 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
 
     if (level==KGameDifficulty::Easy)
     {
-        m_view->setFixedSize(10*20,15*20);
+        m_view->setFixedSize(10*Global::itemSize,15*Global::itemSize);
         m_scene->setSize(15,10);
     }
     else if (level==KGameDifficulty::Medium)
     {
-        m_view->setFixedSize(15*20,20*20);
+        m_view->setFixedSize(15*Global::itemSize,20*Global::itemSize);
         m_scene->setSize(20,15);
     }
     else if (level==KGameDifficulty::Hard)
     {
-        m_view->setFixedSize(20*20,25*20);
+        m_view->setFixedSize(20*Global::itemSize,25*Global::itemSize);
         m_scene->setSize(25,20);
     }
     //+4 for borders

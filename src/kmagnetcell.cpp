@@ -33,7 +33,7 @@ kmagnetCell::kmagnetCell(QGraphicsItem * parent, QGraphicsScene * scene)
 
 QRectF kmagnetCell::boundingRect() const
 {
-    return QRectF(0 , 0, 20, 20);
+    return QRectF(0 , 0, Global::itemSize, Global::itemSize);
 }
 
 void kmagnetCell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget )
