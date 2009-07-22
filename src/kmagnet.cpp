@@ -161,10 +161,14 @@ void kmagnet::configureSettings()
     dialog->setAttribute( Qt::WA_DeleteOnClose );
     dialog->show();
 }
+
 void kmagnet::load()
 {
     newGame();
-    QString loadFilename = KFileDialog::getOpenFileName (KUrl(KGlobal::dirs()->findResourceDir("appdata", "") + "data"),
+//KGlobal::dirs()->findResourceDir("appdata", "") + "data")
+
+    //qDebug() <<KGlobal::dirs()->findResourceDir("data", "") << "jkoljnm" << KStandardDirs::locateLocal("appdata", " ") << " kmkmk" << KStandardDirs::locate("data", "/data/") << " lkfkm" << KGlobal::dirs()->findResourceDir("appdata", "") << "kmkm" << KStandardDirs::locateLocal("data", "");
+    QString loadFilename = KFileDialog::getOpenFileName (KUrl("/usr/local/share/apps/kmagnet/data"),
                            "*.kmp", this, i18n("Load Puzzle"));
     if (loadFilename.isNull()) {
         return;
@@ -376,13 +380,13 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
 
     if (level==KGameDifficulty::Easy)
     {
-        m_view->setFixedSize(5*20,7*20);
-        m_scene->setSize(7,5);
+        m_view->setFixedSize(10*20,15*20);
+        m_scene->setSize(15,10);
     }
     else if (level==KGameDifficulty::Medium)
     {
-        m_view->setFixedSize(10*20,14*20);
-        m_scene->setSize(14,10);
+        m_view->setFixedSize(15*20,20*20);
+        m_scene->setSize(20,15);
     }
     else if (level==KGameDifficulty::Hard)
     {

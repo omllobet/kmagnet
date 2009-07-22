@@ -23,6 +23,8 @@
 #include <KUrl>
 #include <KStandardDirs>
 
+#include <QDebug>
+
 #include "kmagnet.h"
 
 static const char description[] =
@@ -59,7 +61,9 @@ int main(int argc, char **argv)
 	KUrl url=KUrl(path);
 	if (url.isRelative())
 	{
-	  path.prepend(QUrl(KGlobal::dirs()->findResourceDir("appdata", "")).toString(QUrl::RemoveScheme) + "data/");
+	  //path.prepend(QUrl(KGlobal::dirs()->findResourceDir("appdata", "")).toString(QUrl::RemoveScheme) + "data/");
+	  //qDebug() << KStandardDirs::locate("appdata","");
+	  path.prepend(QString("/usr/local/share/apps/kmagnet/data/"));
 	}
 	widget->loadfile(path);
        }
