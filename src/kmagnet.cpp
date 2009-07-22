@@ -468,7 +468,7 @@ void kmagnet::solutionFound()
 void kmagnet::settingsChanged()
 {
   //qDebug() << "max calls" << Settings::maxCalls();
-  Settings::writeConfig();
+  Settings::self()->writeConfig();
 }
 
 #include "kmagnet.moc"
