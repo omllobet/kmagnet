@@ -467,8 +467,7 @@ void kmagnet::solutionFound()
 
 void kmagnet::settingsChanged()
 {
-  qDebug() << "max calls" << Settings::maxCalls();
-  m_solver->setMaxCalls(Settings::maxCalls());
+  //qDebug() << "max calls" << Settings::maxCalls();
   Settings::writeConfig();
 }
 
