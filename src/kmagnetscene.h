@@ -67,10 +67,6 @@ public:
     QPointF getBallPos() {
         return m_ball->pos();
     };
-    void setBallPos(QPoint p) {
-        m_ball->setPos(p);
-        currentPosition=p;
-    };
     void setStartPosition(QPoint p) {
         startPosition=p;
     };
@@ -93,6 +89,7 @@ public:
     void setHasLost(bool haslostGame) {
         hasLost=haslostGame;
     };
+    void setBallPos(QPoint p);
     QPoint getNextPosition(Moves::Move m);
     nextMove isPossibleMove(Moves::Move m);
     void setVisited(QPoint p,bool b);

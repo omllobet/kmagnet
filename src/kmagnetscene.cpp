@@ -224,7 +224,7 @@ void kmagnetScene::finishWait()
     }
     else
     {
-	dynamic_cast<kmagnet*>(parent())->action("solve")->setEnabled(true);
+        dynamic_cast<kmagnet*>(parent())->action("solve")->setEnabled(true);
     }
 }
 
@@ -390,4 +390,11 @@ nextMove kmagnetScene::isPossibleMove( Moves::Move m)
 void kmagnetScene::setVisited(QPoint p,bool b)
 {
     dynamic_cast< kmagnetCell* >(itemAt(p))->setVisited(b);
+}
+
+void kmagnetScene::setBallPos(QPoint p) 
+{
+    dynamic_cast<kmagnetCell *>(itemAt(p))->reset();
+    m_ball->setPos(p);
+    currentPosition=p;
 }

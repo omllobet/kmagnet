@@ -371,6 +371,7 @@ void kmagnet::restart()
     m_gameClock->restart();
     advanceMovements(0);
     m_scene->restart();
+    this->action("solve")->setEnabled(true);
 }
 
 void kmagnet::pause(bool b)
