@@ -470,6 +470,10 @@ void kmagnet::solutionFound()
         QVector<Moves::Move> lm2= QVector<Moves::Move>::fromStdVector(lm);
         m_scene->replay(lm2);
     }
+    else
+    {
+	this->action("solve")->setEnabled(true);
+    }
 }
 
 void kmagnet::settingsChanged()
