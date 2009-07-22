@@ -439,6 +439,7 @@ void kmagnet::solutionFound()
 {
 //convert data to vector
     m_scene->setHasLost(true);
+    m_gameClock->pause();
     std::vector<Moves::Move> lm=m_solver->getSolution();
     if (lm.size()!=0)
     {
