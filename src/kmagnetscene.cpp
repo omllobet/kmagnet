@@ -30,8 +30,8 @@ kmagnetScene::kmagnetScene(QObject * parent, int rows, int columns) :
         QGraphicsScene(parent),
         COLUMNS(columns),
         ROWS(rows),
-        haslost(false),
-        haswon(false),
+        hasLost(false),
+        hasWon(false),
         editorMode(false),
         movements(0),
         startPosition(QPoint(03,03)),
@@ -46,8 +46,8 @@ kmagnetScene::kmagnetScene(QObject * parent, int rows, int columns) :
 
 void kmagnetScene::newGame()
 {
-    haslost=false;
-    haswon=false;
+    hasLost=false;
+    hasWon=false;
     movements=0;
     int oldSize = m_cells.size();
     int newSize = ROWS*COLUMNS;
@@ -102,7 +102,7 @@ void kmagnetScene::newGame()
 void kmagnetScene::process(Moves::Move mov)
 {
     //qDebug() << "proxima posicio" << this->getNextPosition(mov);
-    if (haslost) return;
+    if (hasLost) return;
     //animateMovement(mov);
     if (mov==Moves::UP)
     {
@@ -123,14 +123,14 @@ void kmagnetScene::process(Moves::Move mov)
 
     //advance movements
     movements++;
-    if (movements==1000) haslost=true;
+    if (movements==1000) hasLost=true;
     emit advanceMovements(movements);
     //check if has won or lost
-    if (haswon)
+    if (hasWon)
     {
         emit itsover(true);
     }
-    else if (haslost)
+    else if (hasLost)
     {
         emit itsover(false);
     }
@@ -155,7 +155,7 @@ void kmagnetScene::movement(int x, int y)
             else if ( cell->getIsFinal())
             {
                 found=true;
-                haswon=true;
+                hasWon=true;
             }
             i++;
         }
@@ -167,7 +167,7 @@ void kmagnetScene::movement(int x, int y)
         else if (!found)
         {
             found=true;
-            haslost=true;
+            hasLost=true;
         }
     }
     currentPosition=m_ball->pos().toPoint();
@@ -181,12 +181,12 @@ void kmagnetScene::animateMovement(Moves::Move m)
 {
   nextMove nm= isPossibleMove(m);
   //QPoint end=getNextPosition(m);
-  if (!nm.getIsPossible()) {haslost=true;return;};
+  if (!nm.getIsPossible()) {hasLost=true;return;};
   QPoint end= nm.getPosition();
   QPoint start=currentPosition;
-  //if (start==end) {haslost=true; return;}//better use isPossibleMove?
+  //if (start==end) {hasLost=true; return;}//better use isPossibleMove?
   //qDebug() << it << "-----" << m_ball << "-----" << &it << "----------" << &m_ball;
-  if (dynamic_cast<kmagnetCell*>(itemAt(end))->getIsFinal()) haswon=true;
+  if (dynamic_cast<kmagnetCell*>(itemAt(end))->getIsFinal()) hasWon=true;
   QPoint dif=end-start;
   int time;
   if (dif.x()!=0)
@@ -296,8 +296,8 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 void kmagnetScene::restart()
 {
     setBallPos(startPosition);
-    haswon=false;
-    haslost=false;
+    hasWon=false;
+    hasLost=false;
     movements=0;
 }
 

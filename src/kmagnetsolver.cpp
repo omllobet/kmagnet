@@ -36,7 +36,7 @@ void kmagnetSolver::findSolution()
       int calls=0;
       solution.clear();
       solve(lm,nm,calls);
-      emit finished();
+      emit finished();    
 }
 
 void kmagnetSolver::solve(vector<Moves::Move> &lm, nextMove sg, int numrec)

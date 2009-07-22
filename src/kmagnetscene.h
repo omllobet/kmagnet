@@ -88,6 +88,9 @@ public:
 	ROWS=r;
 	COLUMNS=c;
     };
+    void setHasLost(bool haslostGame){
+	hasLost=haslostGame;
+    };
     QPoint getNextPosition(Moves::Move m);
     nextMove isPossibleMove(Moves::Move m);
     void setVisited(QPoint p,bool b);
@@ -110,8 +113,8 @@ private:
 
     int COLUMNS;
     int ROWS;
-    bool haslost;
-    bool haswon;
+    bool hasLost;
+    bool hasWon;
     bool editorMode;
     int movements;
     QPoint startPosition;
