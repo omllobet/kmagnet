@@ -174,6 +174,7 @@ void kmagnet::load()
         return;
     }
     loadfile(loadFilename);
+    editingMode(false);
 }
 
 void kmagnet::loadfile(QString loadFilename)
