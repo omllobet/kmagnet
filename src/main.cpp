@@ -30,7 +30,7 @@
 static const char description[] =
     I18N_NOOP("A KDE 4 Puzzle-like Game");
 
-static const char version[] = "0.01beta";
+static const char version[] = "0.02";
 
 int main(int argc, char **argv)
 {

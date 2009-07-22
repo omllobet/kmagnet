@@ -13,7 +13,7 @@ BuildRequires:  libkdegames4-devel libkde4-devel
 License:        GNU General Public License (GPL)
 Group:          Amusements/Games/Board/Puzzle
 Summary:        A kde4 simple puzzle game
-Version:        0.01beta
+Version:        0.02
 Release:        1
 URL:            http://personal.telefonica.terra.es/web/oscarmartinez/v2/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
