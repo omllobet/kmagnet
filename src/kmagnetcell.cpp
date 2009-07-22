@@ -95,6 +95,7 @@ void kmagnetCell::setIsFree(bool b)
 void kmagnetCell::setIsFinal(bool b)
 {
     this->isFinal=b;
+    if (b) this->isFree=true;
     this->update();
 }
 
