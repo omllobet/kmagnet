@@ -322,8 +322,10 @@ void kmagnet::save()
     list.append (value);
     configGroup.writeEntry ("movements", list);
     list.clear();
-
-    value.sprintf ("%d",m_gameClock->seconds());
+    if (m_scene->getEditorMode())
+	value.sprintf ("%d",0 );
+    else
+	value.sprintf ("%d",m_gameClock->seconds());
     list.append (value);
     configGroup.writeEntry ("time", list);
     list.clear();
