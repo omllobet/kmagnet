@@ -476,7 +476,7 @@ void kmagnet::solutionFound()
                 str= "RIGHT";
                 break;
             default:
-                str="meeeec";
+                str="MOONMOVE";
                 break;
             }
             qDebug() << str;

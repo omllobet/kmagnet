@@ -23,8 +23,6 @@
 #include <KUrl>
 #include <KStandardDirs>
 
-#include <QDebug>
-
 #include "kmagnet.h"
 
 static const char description[] =
