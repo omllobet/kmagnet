@@ -446,6 +446,7 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 
 void kmagnet::solveFunc()
 {
+    if (m_scene->gameIsLost() || m_scene->gameIsWon()) return;
     this->action("solve")->setEnabled(false);
     m_solver->findSolution();
 }

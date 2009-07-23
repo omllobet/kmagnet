@@ -89,6 +89,12 @@ public:
     void setHasLost(bool haslostGame) {
         hasLost=haslostGame;
     };
+    bool gameIsLost(){
+	return hasLost;
+    };
+    bool gameIsWon(){
+	return hasWon;
+    };
     void setBallPos(QPoint p);
     QPoint getNextPosition(Moves::Move m);
     nextMove isPossibleMove(Moves::Move m);
