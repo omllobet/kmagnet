@@ -64,9 +64,9 @@ int main(int argc, char **argv)
             KUrl url=KUrl(path);
             if (url.isRelative())
             {
-                //path.prepend(QUrl(KGlobal::dirs()->findResourceDir("appdata", "")).toString(QUrl::RemoveScheme) + "data/");
-                //qDebug() << KStandardDirs::locate("appdata","");
-                path.prepend(QString("/usr/local/share/apps/kmagnet/data/"));
+		QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
+		if (!dataDir.isEmpty())
+		    path.prepend(dataDir.first());
             }
             widget->loadfile(path);
         }

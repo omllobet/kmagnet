@@ -165,10 +165,11 @@ void kmagnet::configureSettings()
 void kmagnet::load()
 {
     newGame();
-//KGlobal::dirs()->findResourceDir("appdata", "") + "data")
-
-    //qDebug() <<KGlobal::dirs()->findResourceDir("data", "") << "jkoljnm" << KStandardDirs::locateLocal("appdata", " ") << " kmkmk" << KStandardDirs::locate("data", "/data/") << " lkfkm" << KGlobal::dirs()->findResourceDir("appdata", "") << "kmkm" << KStandardDirs::locateLocal("data", "");
-    QString loadFilename = KFileDialog::getOpenFileName (KUrl("/usr/local/share/apps/kmagnet/data"),
+    QString path = QString();
+    QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
+		if (!dataDir.isEmpty())
+		    path.prepend(dataDir.first());
+    QString loadFilename = KFileDialog::getOpenFileName (KUrl(path),
                            "*.kmp", this, i18n("Load Puzzle"));
     if (loadFilename.isNull()) {
         return;
@@ -182,11 +183,19 @@ void kmagnet::load()
 
 void kmagnet::loadfile(QString loadFilename)
 {
+    QFile file( loadFilename);
+    if (!file.exists())
+    {
+      KMessageBox::information (this,
+                                  i18n("Sorry, The file %1 doesn't exist").arg(loadFilename),
+                                  i18n("File doesn't exist"));
+      return;
+    }
     KConfig config (loadFilename, KConfig::SimpleConfig);
 
     if (! config.hasGroup ("kmagnet")) {
         KMessageBox::information (this,
-                                  i18n("Sorry, This is not a valid KMagnet Puzzle"),
+                                  i18n("Sorry, This is not a valid KMagnet Puzzle File"),
                                   i18n("File Not Valid"));
         return;
     }
