@@ -3,7 +3,7 @@
   <!-- Define an entity for your application if it is not part of KDE
        CVS -->
   <!ENTITY kmyapplication "<application>kmagnet</application>">
-  <!ENTITY kappname "&kmagnet;"><!-- replace kmyapplication here
+  <!ENTITY kappname "&kmyapplication;"><!-- replace kmyapplication here
                                             do *not* replace kappname-->
   <!ENTITY package "kde-module"><!-- kdebase, kdeadmin, etc.  Leave
                                      this unchanged if your
@@ -52,7 +52,7 @@ thanks ;-).
 as Authors, publish date, the abstract, and Keywords -->
 
 <bookinfo>
-<title>The &kmagnet; Handbook</title>
+<title>The &kmyapplication; Handbook</title>
 
 <authorgroup>
 <author>
@@ -95,7 +95,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para>
-&kmmagnet; is a simple puzzle game.
+&kmyapplication; is a simple puzzle game.
 ever want.
 </para>
 </abstract>

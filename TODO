@@ -1,5 +1,6 @@
 ->rewrite some things XD
 ->improve order
+->write the code seriously
 ->convert from std to Qt
 ->thousand other things
 ->animations
@@ -7,3 +8,4 @@
 ->put solver in a Qthread or something
 ->split scene in scene+board (graphicitem)
 ->renderer+support themes
+:wq
