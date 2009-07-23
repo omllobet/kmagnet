@@ -1,5 +1,5 @@
 #
-# spec file for package kmagnet (Version 0.01beta)
+# spec file for package kmagnet (Version 0.02)
 #
 # Copyright (c) 2009 Oscar Martinez
 # This file and all modifications and additions to the pristine
@@ -9,7 +9,7 @@
 # norootforbuild
 
 Name:           kmagnet
-BuildRequires:  libkdegames4-devel libkde4-devel
+BuildRequires:  libkdegames4-devel libkde4-devel kdebase4-runtime
 License:        GNU General Public License (GPL)
 Group:          Amusements/Games/Board/Puzzle
 Summary:        A kde4 simple puzzle game
@@ -62,5 +62,3 @@ rm -rf filelists
 %changelog
 * Sun Apr  5 2009 - omllobet@gmail.com
 - initial package created
-
-  
