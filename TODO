@@ -3,6 +3,7 @@
 ->write the code seriously
 ->convert from std to Qt
 ->thousand other things
+->why did I put keyboard moves on kmagnet and mouseevents on kmagnetscene?
 ->animations
 ->do the painting side the right way and do not hardcode size
 ->put solver in a Qthread or something

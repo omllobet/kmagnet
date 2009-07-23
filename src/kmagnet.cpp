@@ -272,7 +272,7 @@ void kmagnet::gameOver(bool won)
         QPair<QByteArray, QString> group = KGameDifficulty::localizedLevelString();
         scoreDialog.setConfigGroup( group );
         KScoreDialog::FieldInfo scoreInfo;
-        scoreInfo[KScoreDialog::Score].setNum(1000- m_scene->getMovements());
+        scoreInfo[KScoreDialog::Score].setNum(1000 - m_scene->getMovements());
         //score-as-time will be shown
         scoreInfo[KScoreDialog::Time] = m_gameClock->timeString();
 

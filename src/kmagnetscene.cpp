@@ -259,10 +259,17 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
     dynamic_cast<kmagnet*>(parent())->setFocus();
     QGraphicsItem* item=(this->itemAt(mouseEvent->scenePos()));
     if (item->zValue()==5.0) return;//if its the ball skip
-    if (mouseEvent->button() == Qt::LeftButton && item!=0)
+    if (mouseEvent->button() == Qt::LeftButton && item)
     {
-        if (editorMode) {
-            dynamic_cast<kmagnetCell*>(item)->setIsFree(false);
+        if (editorMode) 
+	{
+	    kmagnetCell *currentCell= dynamic_cast<kmagnetCell*>(item);
+	    if (mouseEvent->modifiers()==Qt::ControlModifier)
+		{
+		 setBallPos(QPoint(currentCell->x()+3,currentCell->y()+3));//this 3 has to be the same number as the startpositionbydefault mod itemSize
+		}
+	    else
+		currentCell->setIsFree(false);
             return;
         }
         if ( !editorMode && item!=m_ball) {
@@ -294,11 +301,11 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
     }
     else if (mouseEvent->button() == Qt::RightButton)
     {
-        if (item!=0 && editorMode) dynamic_cast<kmagnetCell*>(item)->setIsFinal(true);
+        if (item && editorMode) dynamic_cast<kmagnetCell*>(item)->setIsFinal(true);
     }
     else if (mouseEvent->button() == Qt::MidButton)
     {
-        if (item!=0 && editorMode) dynamic_cast<kmagnetCell*>(item)->reset();
+        if (item && editorMode) dynamic_cast<kmagnetCell*>(item)->reset();
     }
 }
 
