@@ -266,7 +266,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 	    kmagnetCell *currentCell= dynamic_cast<kmagnetCell*>(item);
 	    if (mouseEvent->modifiers()==Qt::ControlModifier)
 		{
-		 setBallPos(QPoint(currentCell->x()+3,currentCell->y()+3));//this 3 has to be the same number as the startpositionbydefault mod itemSize
+		 setBallPos(QPoint(currentCell->x()+3,currentCell->y()+3));//this 3 has to be the same number as the startpositionbydefault mod itemSize which at time has to be itemsize-ballsize/2
 		}
 	    else
 		currentCell->setIsFree(false);

@@ -27,6 +27,7 @@ Authors:
 --------
     Oscar Martinez <omllobet@gmail.com>
 
+%debug_package
 %prep
 %setup -q
 
@@ -62,3 +63,5 @@ rm -rf filelists
 %changelog
 * Sun Apr  5 2009 - omllobet@gmail.com
 - initial package created
+
+  
