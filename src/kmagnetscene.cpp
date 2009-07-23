@@ -96,7 +96,7 @@ void kmagnetScene::newGame()
         dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFinal(false);
         dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFree(true);
     }
-    //this->update();
+
 }
 
 void kmagnetScene::process(Moves::Move mov)
