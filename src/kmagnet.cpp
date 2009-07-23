@@ -105,7 +105,7 @@ void kmagnet::newGame()
     m_gameClock->restart();
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
     advanceMovements(0);
-    QAction * pauseAction = this->action("pause");
+    QAction * pauseAction = this->action("game_pause");
     if (pauseAction->isChecked())
         pauseAction->activate(QAction::Trigger);
     m_scene->newGame();
