@@ -3,7 +3,7 @@
   <!-- Define an entity for your application if it is not part of KDE
        CVS -->
   <!ENTITY kmyapplication "<application>kmagnet</application>">
-  <!ENTITY kappname "&kmyapplication;"><!-- replace kmyapplication here
+  <!ENTITY kappname "&kmagnet;"><!-- replace kmyapplication here
                                             do *not* replace kappname-->
   <!ENTITY package "kde-module"><!-- kdebase, kdeadmin, etc.  Leave
                                      this unchanged if your
@@ -52,7 +52,7 @@ thanks ;-).
 as Authors, publish date, the abstract, and Keywords -->
 
 <bookinfo>
-<title>The &kmyapplication; Handbook</title>
+<title>The &kmagnet; Handbook</title>
 
 <authorgroup>
 <author>
@@ -63,19 +63,18 @@ as Authors, publish date, the abstract, and Keywords -->
 and use `&George.N.Ugnacious; &George.N.Ugnacious.mail;' in the author element.
  -->
 <personname>
-<firstname>George</firstname>
-<othername>N.</othername>
-<surname>Ugnacious</surname>
+<firstname>Oscar</firstname>
+<surname>Martinez</surname>
 </personname>
-<email>gnu@kde.org</email>
+<email>omllobet@gmail.com</email>
 </author>
 </authorgroup>
 
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 
 <copyright>
-<year>2008</year>
-<holder>George N. Ugnacious</holder>
+<year>2009</year>
+<holder>Oscar Martinez</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
 <!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
@@ -89,14 +88,14 @@ Please respect the format of the date (YYYY-MM-DD) and of the version
 (V.MM.LL), it could be used by automation scripts.
 Do NOT change these in the translation. -->
 
-<date>2008-01-10</date>
-<releaseinfo>1.01.00</releaseinfo>
+<date>2009-07-22</date>
+<releaseinfo>0.02</releaseinfo>
 
 <!-- Abstract about this handbook -->
 
 <abstract>
 <para>
-&kmyapplication; is an application specially designed to do nothing you would
+&kmmagnet; is a simple puzzle game.
 ever want.
 </para>
 </abstract>
@@ -107,10 +106,8 @@ Please at least include KDE, the KDE package it is in, the name
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>kdeutils</keyword>
-<keyword>Kapp</keyword>
-<keyword>nothing</keyword>
-<keyword>nothing else</keyword>
+<keyword>games</keyword>
+<keyword>kmagnet</keyword>
 </keywordset>
 
 </bookinfo>
