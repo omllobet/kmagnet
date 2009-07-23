@@ -102,7 +102,7 @@ void kmagnetScene::newGame()
 void kmagnetScene::process(Moves::Move mov)
 {
     //qDebug() << "proxima posicio" << this->getNextPosition(mov);
-    if (hasLost) return;
+    if (hasLost || hasWon) return;
     //animateMovement(mov);
     if (mov==Moves::UP)
     {
