@@ -2,5 +2,4 @@
 File=kmagnet.kcfg
 ClassName=Settings
 Singleton=true
-Mutators=col_background,col_foreground
 # will create the necessary code for setting those variables

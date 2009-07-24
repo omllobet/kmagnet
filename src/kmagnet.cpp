@@ -104,11 +104,15 @@ kmagnet::~kmagnet()
 void kmagnet::newGame()
 {
     m_gameClock->restart();
+    m_gameClock->pause();
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
     advanceMovements(0);
+    QAction * editingModeAction = this->action("editmode");
+    if (!editingModeAction->isChecked())
+        editingModeAction->trigger();
     QAction * pauseAction = this->action("game_pause");
     if (pauseAction->isChecked())
-        pauseAction->activate(QAction::Trigger);
+        pauseAction->activate(KAction::Trigger);
     m_scene->newGame();
 }
 
@@ -133,8 +137,7 @@ void kmagnet::setupActions()
     KGameDifficulty::addStandardLevel(KGameDifficulty::Easy);
     KGameDifficulty::addStandardLevel(KGameDifficulty::Medium);
     KGameDifficulty::addStandardLevel(KGameDifficulty::Hard);
-    
-    KGameDifficulty::setLevel(KGameDifficulty::Hard);
+    //KGameDifficulty::setLevel(KGameDifficulty::Hard);
     KAction *editModeAction= new KAction(i18n("Edit Mode"),this);
     editModeAction->setCheckable(true);
     editModeAction->setShortcut(Qt::CTRL + Qt::Key_T);
@@ -146,6 +149,7 @@ void kmagnet::setupActions()
     solveAction->setShortcut(Qt::CTRL + Qt::Key_Space);
     actionCollection()->addAction("solve", solveAction);
     connect( solveAction, SIGNAL( triggered(bool) ),this, SLOT( solveFunc() ) );
+    KGameDifficulty::setLevel(KGameDifficulty::Hard);
 }
 
 void kmagnet::configureSettings()
@@ -179,10 +183,6 @@ void kmagnet::load()
         return;
     }
     loadfile(loadFilename);
-
-    QAction * editingModeAction = this->action("editmode");
-    if (editingModeAction->isChecked())
-        editingModeAction->activate(QAction::Trigger);
 }
 
 void kmagnet::loadfile(QString loadFilename)
@@ -215,6 +215,9 @@ void kmagnet::loadfile(QString loadFilename)
         //emit levelChanged(level);
     }
     newGame();
+    QAction * editingModeAction = this->action("editmode");
+    if (editingModeAction->isChecked())
+        editingModeAction->activate(QAction::Trigger);
     list.clear();
     list = configGroup.readEntry ("movements", notFound);
     if (list.size()==1) {
@@ -384,10 +387,11 @@ void kmagnet::save()
 void kmagnet::restart()
 {
     m_gameClock->restart();
+    m_gameClock->resume();
     (m_scene->getEditorMode()) ? m_gameClock->pause():m_gameClock->resume();
     QAction * pauseAction = this->action("game_pause");
     if (pauseAction->isChecked())
-        pauseAction->activate(QAction::Trigger);
+        pauseAction->activate(KAction::Trigger);
     advanceMovements(0);
     m_scene->restart();
     this->action("solve")->setEnabled(true);
@@ -439,6 +443,7 @@ void kmagnet::calculateMinimiumSize()
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 {
+    //if (m_scene->getEditorMode()) return;
     switch ( keyEvent->key() )
     {
     case Qt::Key_Down:
@@ -459,6 +464,9 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 void kmagnet::solveFunc()
 {
     //if (m_scene->gameIsLost() || m_scene->gameIsWon()) restart();
+    QAction * pauseAction = this->action("game_pause");
+    if (pauseAction->isChecked())
+        pauseAction->activate(KAction::Trigger);
     this->action("solve")->setEnabled(false);
     m_solver->findSolution();
 }

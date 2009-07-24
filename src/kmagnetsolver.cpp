@@ -89,7 +89,6 @@ void kmagnetSolver::trymove(Moves::Move m, vector<Moves::Move> &l, int n)
         //m_scene->setBallPos(nm.getPosition());
         m_scene->setVisited(p,true);
         m_scene->setCurrentPosition(nm.getPosition());
-
         solve(l,nm, n+1);
         //m_scene->setBallPos(p);
         m_scene->setCurrentPosition(p);
