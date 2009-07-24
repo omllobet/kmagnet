@@ -109,6 +109,7 @@ void kmagnet::newGame()
     if (pauseAction->isChecked())
         pauseAction->activate(QAction::Trigger);
     m_scene->newGame();
+    //calculateMinimiumSize();
 }
 
 void kmagnet::showHighscores()
@@ -132,6 +133,7 @@ void kmagnet::setupActions()
     KGameDifficulty::addStandardLevel(KGameDifficulty::Easy);
     KGameDifficulty::addStandardLevel(KGameDifficulty::Medium);
     KGameDifficulty::addStandardLevel(KGameDifficulty::Hard);
+    
     KGameDifficulty::setLevel(KGameDifficulty::Hard);
     KAction *editModeAction= new KAction(i18n("Edit Mode"),this);
     editModeAction->setCheckable(true);
@@ -166,7 +168,6 @@ void kmagnet::configureSettings()
 
 void kmagnet::load()
 {
-    newGame();
     QString path = QString();
     QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
 		if (!dataDir.isEmpty())
@@ -185,6 +186,7 @@ void kmagnet::load()
 
 void kmagnet::loadfile(QString loadFilename)
 {
+    newGame();
     QFile file( loadFilename);
     if (!file.exists())
     {
@@ -411,18 +413,23 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
         m_view->setFixedSize(20*Global::itemSize,25*Global::itemSize);
         m_scene->setSize(25,20);
     }
-    //+4 for borders
+    emit newGame();
+    calculateMinimiumSize();
+}
+
+void kmagnet::calculateMinimiumSize()
+{
+//+4 for borders
     int theight=0;
     QList<KToolBar*> tlist = toolBars();
     for (int i=0;i< tlist.size(); i++)
     {
         theight=theight+ dynamic_cast<KToolBar*>(tlist.at(i))->height();
     }
-    int bar =28;//titlebar height size aprox//FIXME
+    int bar =0;//titlebar height size aprox//FIXME
     this->setMinimumSize(std::max(m_view->width()+4, std::max(menuBar()->width()+4, std::max(statusBar()->width()+4, toolBar()->width()+4))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+bar);
+    qDebug() << "theight" << theight << "mview" << m_view->height() << "statusbar" << statusBar()->height() << " menubar" << menuBar()->height();
     resize(this->minimumSize());
-
-    emit newGame();
 }
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)

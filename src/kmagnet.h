@@ -77,7 +77,7 @@ private slots:
 
 private:
     void setupActions();
-
+    void calculateMinimiumSize();
 private:
 
     int ROWS;

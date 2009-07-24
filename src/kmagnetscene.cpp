@@ -37,7 +37,7 @@ kmagnetScene::kmagnetScene(QObject * parent, int rows, int columns) :
         startPosition(QPoint(03,03)),
         sol(QVector<Moves::Move>())
 {
-    resizeScene((int)sceneRect().width(), (int)sceneRect().height());
+    resizeScene((int)sceneRect().width() , (int)sceneRect().height());
     cache = new QPixmapCache();
     cache->insert("free", QPixmap(KStandardDirs::locate("appdata", "images/free.png")));
     cache->insert("notfree", QPixmap(KStandardDirs::locate("appdata", "images/notfree.png")));
@@ -265,7 +265,9 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 	    kmagnetCell *currentCell= dynamic_cast<kmagnetCell*>(item);
 	    if (mouseEvent->modifiers()==Qt::ControlModifier)
 		{
-		 setBallPos(QPoint(currentCell->x()+3,currentCell->y()+3));//this 3 has to be the same number as the startpositionbydefault mod itemSize which at time has to be itemsize-ballsize/2
+		  QPoint p =QPoint(currentCell->x()+3,currentCell->y()+3);//this 3 has to be the same number as the startpositionbydefault mod itemSize which at time has to be itemsize-ballsize/2
+		  setBallPos(p);
+		  startPosition=p;
 		}
 	    else
 		currentCell->setIsFree(false);
