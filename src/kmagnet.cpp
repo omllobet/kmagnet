@@ -186,7 +186,6 @@ void kmagnet::load()
 
 void kmagnet::loadfile(QString loadFilename)
 {
-    newGame();
     QFile file( loadFilename);
     if (!file.exists())
     {
@@ -212,8 +211,9 @@ void kmagnet::loadfile(QString loadFilename)
     if (list.size()==1) {
         KGameDifficulty::standardLevel level = static_cast<KGameDifficulty::standardLevel>(list.at(0).toInt());
         KGameDifficulty::setLevel(level);
-        emit levelChanged(level);
+        //emit levelChanged(level);
     }
+    newGame();
     list.clear();
     list = configGroup.readEntry ("movements", notFound);
     if (list.size()==1) {
@@ -384,6 +384,10 @@ void kmagnet::save()
 void kmagnet::restart()
 {
     m_gameClock->restart();
+    (m_scene->getEditorMode()) ? m_gameClock->pause():m_gameClock->resume();
+    QAction * pauseAction = this->action("game_pause");
+    if (pauseAction->isChecked())
+        pauseAction->activate(QAction::Trigger);
     advanceMovements(0);
     m_scene->restart();
     this->action("solve")->setEnabled(true);
