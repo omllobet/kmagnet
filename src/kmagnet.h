@@ -54,6 +54,7 @@ public:
      */
     virtual ~kmagnet();
     virtual void keyReleaseEvent ( QKeyEvent * keyEvent);
+    void calculateMinimiumSize();
 
 public slots:
     void loadfile(QString loadFilename);
@@ -77,7 +78,7 @@ private slots:
 
 private:
     void setupActions();
-    void calculateMinimiumSize();
+    
 private:
 
     int ROWS;

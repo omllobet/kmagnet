@@ -96,6 +96,7 @@ void kmagnetScene::newGame()
         dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFinal(false);
         dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFree(true);
     }
+    dynamic_cast<kmagnet*>(parent())->calculateMinimiumSize();
 }
 
 void kmagnetScene::process(Moves::Move mov)

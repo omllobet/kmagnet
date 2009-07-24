@@ -92,6 +92,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
     setupGUI();
+    adjustSize();
     setFocus();
 }
 
@@ -109,7 +110,6 @@ void kmagnet::newGame()
     if (pauseAction->isChecked())
         pauseAction->activate(QAction::Trigger);
     m_scene->newGame();
-    //calculateMinimiumSize();
 }
 
 void kmagnet::showHighscores()
@@ -140,6 +140,7 @@ void kmagnet::setupActions()
     editModeAction->setShortcut(Qt::CTRL + Qt::Key_T);
     actionCollection()->addAction("editmode", editModeAction);
     connect( editModeAction, SIGNAL( triggered(bool) ),this, SLOT( editingMode(bool) ) );
+    editModeAction->trigger();
     KAction *solveAction= new KAction(i18n("Solve"),this);
     //editModeAction->setCheckable(true);
     solveAction->setShortcut(Qt::CTRL + Qt::Key_Space);
@@ -377,7 +378,6 @@ void kmagnet::save()
     }
     configGroup.writeEntry ("final", list);
     configGroup.writeEntry ("notfree", list2);
-
     configGroup.sync();
 }
 
@@ -417,23 +417,24 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
         m_view->setFixedSize(20*Global::itemSize,25*Global::itemSize);
         m_scene->setSize(25,20);
     }
-    emit newGame();
-    calculateMinimiumSize();
+   emit newGame();
 }
 
 void kmagnet::calculateMinimiumSize()
 {
 //+4 for borders
-    int theight=0;
+    int theight= toolBar("mainToolBar")->height();
     QList<KToolBar*> tlist = toolBars();
-    for (int i=0;i< tlist.size(); i++)
+    for (int i=1;i< tlist.size(); i++)
     {
         theight=theight+ dynamic_cast<KToolBar*>(tlist.at(i))->height();
     }
-    int bar =0;//titlebar height size aprox//FIXME
-    this->setMinimumSize(std::max(m_view->width()+4, std::max(menuBar()->width()+4, std::max(statusBar()->width()+4, toolBar()->width()+4))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+bar);
-    qDebug() << "theight" << theight << "mview" << m_view->height() << "statusbar" << statusBar()->height() << " menubar" << menuBar()->height();
+    this->setMinimumSize(std::max(m_view->width()+4, std::max(menuBar()->width()+4, std::max(statusBar()->width()+4, toolBar()->width()+4))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+28);
+    //qDebug() << "theight" << theight << "mview" << m_view->height() << "statusbar" << statusBar()->height() << " menubar" << menuBar()->height();
     resize(this->minimumSize());
+    
+    //setMinimumSize(size());
+    //resize(minimumSize());
 }
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
@@ -457,7 +458,7 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 
 void kmagnet::solveFunc()
 {
-    if (m_scene->gameIsLost() || m_scene->gameIsWon()) return;
+    //if (m_scene->gameIsLost() || m_scene->gameIsWon()) restart();
     this->action("solve")->setEnabled(false);
     m_solver->findSolution();
 }
@@ -466,7 +467,9 @@ void kmagnet::solutionFound()
 {
 //convert data to vector
     m_scene->setHasLost(true);
+    m_gameClock->restart();
     m_gameClock->pause();
+    advanceMovements(0);
     std::vector<Moves::Move> lm=m_solver->getSolution();
     if (lm.size()!=0)
     {
