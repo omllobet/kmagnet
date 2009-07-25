@@ -19,6 +19,7 @@ URL:            http://personal.telefonica.terra.es/web/oscarmartinez/v2/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source0:        %name-%{version}.tar.bz2
 
+
 %description
 A simple kde4 puzzle game.Basically you can move the ball up down left or right and it stops when it finds an obstacle. To win the ball has to arrive to the hole. 
 
@@ -50,6 +51,7 @@ rm -rf filelists
 %doc AUTHORS COPYING ChangeLog README TODO
 /usr/bin/kmagnet
 /usr/share/applications/kde4/kmagnet.desktop
+/usr/share/doc/kde/HTML/en/kmagnet/screenshot.png
 /usr/share/kde4/apps/kmagnet
 /usr/share/doc/kde/HTML/en/kmagnet/common
 /usr/share/doc/kde/HTML/en/kmagnet/index.cache.bz2
