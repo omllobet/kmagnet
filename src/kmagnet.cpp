@@ -365,9 +365,9 @@ void kmagnet::save()
     for (int i=0; i < ci.size(); i++)
     {
         kmagnetCell * item = (kmagnetCell *)ci.at(i);
+	QPointF p =item->pos();
         if (item->getIsFinal())
         {
-            QPointF p =item->pos();
             value.sprintf ("%d",(int)p.x() );
             list.append (value);
             value.sprintf ("%d",(int)p.y() );
@@ -375,7 +375,6 @@ void kmagnet::save()
         }
         else if (!item->getIsFree())
         {
-            QPointF p =item->pos();
             value2.sprintf ("%d",(int)p.x() );
             list2.append (value2);
             value2.sprintf ("%d",(int)p.y() );
