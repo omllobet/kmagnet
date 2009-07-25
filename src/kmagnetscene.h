@@ -25,6 +25,8 @@
 #include <QVector>
 #include <QPixmapCache>
 #include <QKeyEvent>
+#include <QGraphicsItemAnimation>
+#include <QTimeLine>
 
 #include "common.h"
 #include "kmagnetcell.h"
@@ -129,6 +131,8 @@ private:
     QVector<kmagnetCell*> m_cells;
     void movement(int x, int y);
     QVector<Moves::Move> sol;
+    QVector<QTimeLine*> m_timers;
+    QVector<QGraphicsItemAnimation*> m_animations;
 };
 
 #endif // KMAGNETSCENE_H

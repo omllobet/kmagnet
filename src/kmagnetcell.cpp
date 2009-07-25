@@ -95,7 +95,6 @@ void kmagnetCell::setIsFree(bool b)
 
 void kmagnetCell::setIsFinal(bool b)
 {
-    qDebug("final");
     this->isFinal=b;
     if (b) this->isFree=true;
     this->update();
@@ -104,7 +103,7 @@ void kmagnetCell::setIsFinal(bool b)
 void kmagnetCell::setVisited(bool b)
 {
     this->visited=b;
-    this->update();
+    //this->update();
 }
 
 void kmagnetCell::reset()

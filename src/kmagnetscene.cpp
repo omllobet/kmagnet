@@ -20,8 +20,6 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include <QDebug>
-#include <QGraphicsItemAnimation>
-#include <QTimeLine>
 
 #include "kmagnetscene.h"
 #include <QThread>
@@ -42,6 +40,7 @@ kmagnetScene::kmagnetScene(QObject * parent, int rows, int columns) :
     cache->insert("free", QPixmap(KStandardDirs::locate("appdata", "images/free.png")));
     cache->insert("notfree", QPixmap(KStandardDirs::locate("appdata", "images/notfree.png")));
     cache->insert("final", QPixmap(KStandardDirs::locate("appdata", "images/final.png")));
+    m_ball=0;
 }
 
 void kmagnetScene::newGame()
@@ -175,6 +174,11 @@ void kmagnetScene::movement(int x, int y)
 
 kmagnetScene::~kmagnetScene()
 {
+  delete cache;
+  for (int i=0;i<m_timers.size();i++)
+    delete m_timers[i];
+  for (int i=0;i<m_animations.size();i++)
+    delete m_animations[i];
 }
 
 void kmagnetScene::animateMovement(Moves::Move m)
@@ -197,9 +201,11 @@ void kmagnetScene::animateMovement(Moves::Move m)
     else
         time=dif.y();
     QTimeLine *timer = new QTimeLine(250+abs(time));
+    m_timers.append(timer);
     connect(timer, SIGNAL(finished()),this, SLOT(finishWait()));
     timer->setFrameRange(0, 100);
     QGraphicsItemAnimation *animation = new QGraphicsItemAnimation();
+    m_animations.append(animation);
     animation->setItem(m_ball);
     animation->setTimeLine(timer);
     animation->setPosAt(1.0,end);

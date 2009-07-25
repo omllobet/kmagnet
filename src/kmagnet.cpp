@@ -341,7 +341,8 @@ void kmagnet::save()
     configGroup.writeEntry ("time", list);
     list.clear();
 
-    QPointF p =m_scene->getBallPos();
+    //QPointF p =m_scene->getBallPos();
+    QPoint p =m_scene->getCurrentPosition();
     value.sprintf ("%d",(int)p.x() );
     list.append (value);
     value.sprintf ("%d",(int)p.y() );
@@ -350,8 +351,8 @@ void kmagnet::save()
     configGroup.writeEntry ("currentposition", list);
 
     list.clear();
-    if (!m_scene->getEditorMode())
-        p =m_scene->getStartPosition();
+    //if (!m_scene->getEditorMode())
+    p =m_scene->getStartPosition();
     value.sprintf ("%d",(int)p.x() );
     list.append (value);
     value.sprintf ("%d",(int)p.y() );
