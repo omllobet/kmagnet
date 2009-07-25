@@ -165,7 +165,8 @@ patent issues. -->
 <para>It has a built-in editor that allows you to easily design your own puzzles!</para>
 <para>It has a solve command to solve the puzzles.</para>
 <para>It includes 3 different difficulty levels.</para>
-<para>It has a save and a load function to save you new designed puzzles or your current game.</para>
+<para>It has a save and a load function to save you new designed puzzles or your
+ current game.</para>
 </sect1>
 </chapter>
 
@@ -174,12 +175,15 @@ patent issues. -->
 <sect1 id="kapp-window">
 <title>Editor Mode</title>
 <para>In this Mode you can start designing your own puzzles.</para>
-<para>To do so lefclick a cell to put a block on it, rightclick to put a hole and middleclick to free the it.</para>
-<para>To move the ball you can use Ctrl+leftclick. In this mode you can also play your puzzle using the keyboard.</para>
+<para>To do so lefclick a cell to put a block on it, rightclick to put a hole and
+ middleclick to free the it.</para>
+<para>To move the ball you can use Ctrl+leftclick. In this mode you can also play 
+your puzzle using the keyboard.</para>
 <sect2>
 <title>Playing Mode</title>
 <para>In this Mode you can play saved puzzles.</para>
-<para>To move the ball you can use the mouse clicking in the direction you want to go or you can use the keyboard..</para>
+<para>To move the ball you can use the mouse clicking in the direction you want to
+ go or you can use the keyboard..</para>
 </sect2>
 </sect1>
 </chapter>
