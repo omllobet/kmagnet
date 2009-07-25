@@ -99,6 +99,9 @@ kmagnet::kmagnet() : KXmlGuiWindow()
 kmagnet::~kmagnet()
 {
     delete m_gameClock;
+    delete m_solver;
+    delete m_scene;
+    delete m_view;
 }
 
 void kmagnet::newGame()
