@@ -467,6 +467,7 @@ void kmagnet::solveFunc()
     QAction * pauseAction = this->action("game_pause");
     if (pauseAction->isChecked())
         pauseAction->activate(KAction::Trigger);
+    this->action("game_restart")->setEnabled(false);
     this->action("solve")->setEnabled(false);
     m_solver->findSolution();
 }
@@ -510,6 +511,7 @@ void kmagnet::solutionFound()
     else
     {
 	this->action("solve")->setEnabled(true);
+	this->action("game_restart")->setEnabled(true);
     }
 }
 

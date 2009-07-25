@@ -225,6 +225,7 @@ void kmagnetScene::finishWait()
     else
     {
         dynamic_cast<kmagnet*>(parent())->action("solve")->setEnabled(true);
+	dynamic_cast<kmagnet*>(parent())->action("game_restart")->setEnabled(true);
     }
 }
 
