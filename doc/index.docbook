@@ -169,6 +169,10 @@ patent issues. -->
 </sect1>
 </chapter>
 
+<chapter id="playing-kapp">
+<title>Playing &kmyapplication;</title>
+
+
 <chapter id="commands">
 <title>Command Reference</title>
 
@@ -383,20 +387,11 @@ application work. -->
 <qandaset id="faqlist">
 <qandaentry>
 <question>
-<para>My Mouse doesn't work. How do I quit &kmyapplication;?</para>
+<para>How do I play &kmyapplication;?</para>
 </question>
 <answer>
-<para>You silly goose! Check out the <link linkend="commands">Commands
-Section</link> for the answer.</para>
-</answer>
-</qandaentry>
-<qandaentry>
-<question>
-<para>Why can't I twiddle my documents?</para>
-</question>
-<answer>
-<para>You can only twiddle your documents if you have the foobar.lib
-installed.</para>
+<para>Check out the <link linkend="commands">Commands
+Section</link> and the <link linkend="playing-kapp">Playing &kmyapplication;</link> for the answer</para>
 </answer>
 </qandaentry>
 </qandaset>
@@ -415,20 +410,11 @@ distribution. -->
 &kmyapplication;
 </para>
 <para>
-Program copyright 2008 John Q. Hacker <email>jqh@kde.org</email>
-</para>
-<para>
-Contributors:
-<itemizedlist>
-<listitem><para>Konqui the KDE Dragon <email>konqui@kde.org</email></para>
-</listitem>
-<listitem><para>Tux the Linux Penguin <email>tux@linux.org</email></para>
-</listitem>
-</itemizedlist>
+Program copyright 2009 Oscar Martinez<email>omllobet@gmail.com</email>
 </para>
 
 <para>
-Documentation Copyright &copy; 2008 George N. Ugnacious <email>gnu@kde.org</email>
+Documentation Copyright &copy; 2008 Oscar Martinez<email>omllobet@gmail.com</email>
 </para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
@@ -477,22 +463,20 @@ information here.
 -->
 
 <para>
-In order to successfully use &kmyapplication;, you need &kde; 1.1. Foobar.lib is
-required in order to support the advanced &kmyapplication; features. &kmyapplication; uses
-about 5 megs of memory to run, but this may vary depending on your
-platform and configuration.
+In order to successfully use &kmyapplication;, you need &kde; 4.1.
 </para>
 
 <para>
 All required libraries as well as &kmyapplication; itself can be found
-on <ulink url="ftp://ftp.kapp.org">The &kmyapplication; home page</ulink>.
+on <ulink url="http://personal.telefonica.terra.es/web/oscarmartinez/v2/">The &kmyapplication; home page</ulink>.
 </para>
 
 <!-- For a list of updates, you may refer to the application web site
 or the ChangeLog file, or ... -->
 <para>
 You can find a list of changes at <ulink
-url="http://apps.kde.org/kapp">http://apps.kde.org/kapp</ulink>.
+url="http://personal.telefonica.terra.es/web/oscarmartinez/v2/">http://personal.telefonica.terra.es/web/oscarmartinez/v2/</ulink>.
+and included with the sources.
 </para>
 </sect1>
 
@@ -504,16 +488,6 @@ url="http://apps.kde.org/kapp">http://apps.kde.org/kapp</ulink>.
 <!-- special handling, remove it, and replace with your own text. -->
 
 &install.compile.documentation;
-
-</sect1>
-
-<sect1 id="configuration">
-<title>Configuration</title>
-
-<para>Don't forget to tell your system to start the <filename>dtd</filename>
-dicer-toaster daemon first, or &kmyapplication; won't work !</para>
-
-</sect1>
 
 </appendix>
 
