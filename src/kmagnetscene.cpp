@@ -269,6 +269,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 		  QPoint p =QPoint(currentCell->x()+3,currentCell->y()+3);//this 3 has to be the same number as the startpositionbydefault mod itemSize which at time has to be itemsize-ballsize/2
 		  setBallPos(p);
 		  startPosition=p;
+		  restart();
 		}
 	    else
 		currentCell->setIsFree(false);

@@ -96,7 +96,6 @@ Do NOT change these in the translation. -->
 <abstract>
 <para>
 &kmyapplication; is a simple puzzle game.
-ever want.
 </para>
 </abstract>
 
@@ -130,8 +129,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para>
-&kmyapplication; is a program that lets you do absolutely nothing. Please report
-any problems or feature requests to the &kde; mailing lists.
+&kmyapplication; is a simple puzzle game. It has a built-in level editor.
 </para>
 </chapter>
 
@@ -153,9 +151,6 @@ patent issues. -->
 	  <imageobject>
 	    <imagedata fileref="screenshot.png" format="PNG"/>
 	  </imageobject>
-	  <imageobject>
-	    <imagedata fileref="screenshot.eps" format="EPS"/>
-	  </imageobject>
 	  <textobject>
 	    <phrase>Screenshot</phrase>
 	  </textobject>
@@ -167,22 +162,10 @@ patent issues. -->
 <sect1 id="kapp-features">
 <title>More &kmyapplication; features</title>
 
-<para>It slices! It dices! and it comes with a free toaster!</para>
-<para>
-The Squiggle Tool <guiicon><inlinemediaobject>
-	  <imageobject>
-	    <imagedata fileref="squiggle.png" format="PNG"/>
-	  </imageobject>
-	  <imageobject>
-	    <imagedata fileref="squiggle.eps" format="EPS"/>
-	  </imageobject>
-	  <textobject>
-	    <phrase>Squiggle</phrase>
-	  </textobject>
-</inlinemediaobject></guiicon> is used to draw squiggly lines all over
-the &kmyapplication; main window. It's not a bug, it's a feature!
-</para>
-
+<para>It has a built-in editor that allows you to easily design your own puzzles!</para>
+<para>It has a solve command to solve the puzzles.</para>
+<para>It includes 3 different difficulty levels.</para>
+<para>It has a save and a load function to save you new designed puzzles or your current game.</para>
 </sect1>
 </chapter>
 
@@ -199,43 +182,170 @@ or menu bars. -->
 <title>The main &kmyapplication; window</title>
 
 <sect2>
-<title>The File Menu</title>
+<title>The Game Menu</title>
 <para>
 <variablelist>
+
 <varlistentry>
 <term><menuchoice>
 <shortcut>
 <keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo>
 </shortcut>
-<guimenu>File</guimenu>
+<guimenu>Game</guimenu>
 <guimenuitem>New</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Creates a new document</action></para></listitem>
+<listitem><para><action>Creates a new game</action></para></listitem>
 </varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>O</keycap></keycombo>
+</shortcut>
+<guimenu>Game</guimenu>
+<guimenuitem>Load</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Loads a previously saved game.</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul"><keycap>F5</keycap></keycombo>
+</shortcut>
+<guimenu>Game</guimenu>
+<guimenuitem>Restart</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Restarts the game</action></para></listitem>
+</varlistentry>
+
 <varlistentry>
 <term><menuchoice>
 <shortcut>
 <keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
 </shortcut>
-<guimenu>File</guimenu>
-<guimenuitem>Save</guimenuitem>
+<guimenu>Game</guimenu>
+<guimenuitem>Save As...</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Saves the document</action></para></listitem>
+<listitem><para><action>Saves the game</action></para></listitem>
 </varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul"><keycap>P</keycap></keycombo>
+</shortcut>
+<guimenu>Game</guimenu>
+<guimenuitem>Pause</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Pauses the game</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>H</keycap></keycombo>
+</shortcut>
+<guimenu>Game</guimenu>
+<guimenuitem>Show High Scores</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Shows the high scores</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>Space</keycap></keycombo>
+</shortcut>
+<guimenu>Game</guimenu>
+<guimenuitem>Solve</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Solves the puzzle</action></para></listitem>
+</varlistentry>
+
 <varlistentry>
 <term><menuchoice>
 <shortcut>
 <keycombo action="simul">&Ctrl;<keycap>Q</keycap></keycombo>
 </shortcut>
-<guimenu>File</guimenu>
+<guimenu>Game</guimenu>
 <guimenuitem>Quit</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Quits</action> &kmyapplication;</para></listitem>
+<listitem><para><action>Quits the program</action></para></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect2>
+
+<sect2>
+<title>The Settings Menu</title>
+<para>
+<variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>T</keycap></keycombo>
+</shortcut>
+<guimenu>Settings</guimenu>
+<guimenuitem>Editor Mode</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Creates a new game</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>O</keycap></keycombo>
+</shortcut>
+<guimenu>Game</guimenu>
+<guimenuitem>Load</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Loads a previously saved game.</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul"><keycap>F5</keycap></keycombo>
+</shortcut>
+<guimenu>Game</guimenu>
+<guimenuitem>Restart</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Restarts the game</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
+</shortcut>
+<guimenu>Game</guimenu>
+<guimenuitem>Save As...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Saves the game</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul"><keycap>P</keycap></keycombo>
+</shortcut>
+<guimenu>Game</guimenu>
+<guimenuitem>Pause</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Pauses the game</action></para></listitem>
 </varlistentry>
 </variablelist>
 </para>
 
 </sect2>
+
+
+
+
 
 <sect2>
 <title>The <guimenu>Help</guimenu> Menu</title>

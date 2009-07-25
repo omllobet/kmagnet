@@ -138,7 +138,7 @@ void kmagnet::setupActions()
     KGameDifficulty::addStandardLevel(KGameDifficulty::Medium);
     KGameDifficulty::addStandardLevel(KGameDifficulty::Hard);
     //KGameDifficulty::setLevel(KGameDifficulty::Hard);
-    KAction *editModeAction= new KAction(i18n("Edit Mode"),this);
+    KAction *editModeAction= new KAction(i18n("Editor Mode"),this);
     editModeAction->setCheckable(true);
     editModeAction->setShortcut(Qt::CTRL + Qt::Key_T);
     actionCollection()->addAction("editmode", editModeAction);
