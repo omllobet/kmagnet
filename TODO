@@ -1,12 +1,11 @@
 ->rewrite some things XD
 ->improve order
-->write the code seriously
+->improve code
 ->convert from std to Qt?
 ->read Qt documentation
 ->thousand other things
 ->why did I put keyboard moves on kmagnet and mouseevents on kmagnetscene?
 ->animations
-->do the painting side the right way and do not hardcode size
 ->put solver in a Qthread or something
 ->split scene in scene+board (graphicitem)
 ->renderer+support themes
