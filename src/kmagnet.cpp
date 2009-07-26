@@ -178,8 +178,8 @@ void kmagnet::load()
 {
     QString path = QString();
     QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
-		if (!dataDir.isEmpty())
-		    path.prepend(dataDir.first());
+    if (!dataDir.isEmpty())
+        path.prepend(dataDir.first());
     QString loadFilename = KFileDialog::getOpenFileName (KUrl(path),
                            "*.kmp", this, i18n("Load Puzzle"));
     if (loadFilename.isNull()) {
@@ -193,10 +193,10 @@ void kmagnet::loadfile(QString loadFilename)
     QFile file( loadFilename);
     if (!file.exists())
     {
-      KMessageBox::information (this,
+        KMessageBox::information (this,
                                   i18n("Sorry, The file %1 doesn't exist").arg(loadFilename),
                                   i18n("File doesn't exist"));
-      return;
+        return;
     }
     KConfig config (loadFilename, KConfig::SimpleConfig);
 
@@ -297,7 +297,7 @@ void kmagnet::gameOver(bool won)
         if (answer==KMessageBox::Yes)
             restart();
         //else
-            //newGame();
+        //newGame();
     }
 }
 
@@ -334,9 +334,9 @@ void kmagnet::save()
     configGroup.writeEntry ("movements", list);
     list.clear();
     if (m_scene->getEditorMode())
-	value.sprintf ("%d",0 );
+        value.sprintf ("%d",0 );
     else
-	value.sprintf ("%d",m_gameClock->seconds());
+        value.sprintf ("%d",m_gameClock->seconds());
     list.append (value);
     configGroup.writeEntry ("time", list);
     list.clear();
@@ -362,13 +362,13 @@ void kmagnet::save()
 
     QStringList list2;
     QString     value2;
-    QList<QGraphicsItem *>  ci =m_scene->items();
+    QList<QGraphicsItem *>  ci =m_scene->items();//Use m_cells?
     for (int i=0; i < ci.size(); i++)
     {
-	QGraphicsItem* graphicItem=ci.at(i);
+        QGraphicsItem* graphicItem=ci.at(i);
         if (graphicItem->zValue()==5.0) continue;//FIXME
-	kmagnetCell * item = dynamic_cast<kmagnetCell *>(graphicItem);
-	QPointF p =item->pos();
+        kmagnetCell * item = dynamic_cast<kmagnetCell *>(graphicItem);
+        QPointF p =item->pos();
         if (item->getIsFinal())
         {
             value.sprintf ("%d",(int)p.x() );
@@ -426,7 +426,7 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
         m_view->setFixedSize(20*Global::itemSize,25*Global::itemSize);
         m_scene->setSize(25,20);
     }
-   emit newGame();
+    emit newGame();
 }
 
 void kmagnet::calculateMinimiumSize()
@@ -441,7 +441,7 @@ void kmagnet::calculateMinimiumSize()
     this->setMinimumSize(std::max(m_view->width()+4, std::max(menuBar()->width()+4, std::max(statusBar()->width()+4, toolBar()->width()+4))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+28);
     //qDebug() << "theight" << theight << "mview" << m_view->height() << "statusbar" << statusBar()->height() << " menubar" << menuBar()->height();
     resize(this->minimumSize());
-    
+
     //setMinimumSize(size());
     //resize(minimumSize());
 }
@@ -515,8 +515,8 @@ void kmagnet::solutionFound()
     }
     else
     {
-	this->action("solve")->setEnabled(true);
-	this->action("game_restart")->setEnabled(true);
+        this->action("solve")->setEnabled(true);
+        this->action("game_restart")->setEnabled(true);
     }
 }
 
