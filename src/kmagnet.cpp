@@ -365,7 +365,9 @@ void kmagnet::save()
     QList<QGraphicsItem *>  ci =m_scene->items();
     for (int i=0; i < ci.size(); i++)
     {
-        kmagnetCell * item = (kmagnetCell *)ci.at(i);
+	QGraphicsItem* graphicItem=ci.at(i);
+        if (graphicItem->zValue()==5.0) continue;//FIXME
+	kmagnetCell * item = dynamic_cast<kmagnetCell *>(graphicItem);
 	QPointF p =item->pos();
         if (item->getIsFinal())
         {

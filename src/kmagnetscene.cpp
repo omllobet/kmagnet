@@ -86,7 +86,7 @@ void kmagnetScene::newGame()
         radialGradient.setColorAt(1.0, Qt::darkGray);
         m_ball= addEllipse(0,0,14,14, QPen(Qt::NoPen),radialGradient);
         m_ball->setPos(startPosition);
-        m_ball->setZValue(5);
+        m_ball->setZValue(5.0);
         this->update();
     }
     else
@@ -265,7 +265,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 {
     dynamic_cast<kmagnet*>(parent())->setFocus();
     QGraphicsItem* item=(this->itemAt(mouseEvent->scenePos()));
-    if (item->zValue()==5.0) return;//if its the ball skip
+    if (item->zValue()==5.0) return;//if its the ball skip//FIXME
     if (mouseEvent->button() == Qt::LeftButton && item)
     {
         if (editorMode) 
