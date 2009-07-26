@@ -132,6 +132,7 @@ void kmagnet::setupActions()
     KStandardGameAction::load(this, SLOT(load()), actionCollection());
     KStandardGameAction::highscores(this, SLOT(showHighscores()), actionCollection());
     KStandardGameAction::saveAs(this, SLOT(save()), actionCollection());
+    KStandardGameAction::solve(this, SLOT(solveFunc()), actionCollection());
     KStandardGameAction::quit(this, SLOT(close()), actionCollection());
     KStandardAction::preferences( this, SLOT( configureSettings() ), actionCollection() );
     KStandardGameAction::pause( this, SLOT( pause(bool ) ), actionCollection() );
@@ -147,11 +148,11 @@ void kmagnet::setupActions()
     actionCollection()->addAction("editmode", editModeAction);
     connect( editModeAction, SIGNAL( triggered(bool) ),this, SLOT( editingMode(bool) ) );
     editModeAction->trigger();
-    KAction *solveAction= new KAction(i18n("Solve"),this);
+    /*KAction *solveAction= new KAction(i18n("Solve"),this);
     //editModeAction->setCheckable(true);
     solveAction->setShortcut(Qt::CTRL + Qt::Key_Space);
     actionCollection()->addAction("solve", solveAction);
-    connect( solveAction, SIGNAL( triggered(bool) ),this, SLOT( solveFunc() ) );
+    connect( solveAction, SIGNAL( triggered(bool) ),this, SLOT( solveFunc() ) );*/
     KGameDifficulty::setLevel(KGameDifficulty::Hard);
 }
 
@@ -399,7 +400,7 @@ void kmagnet::restart()
         pauseAction->activate(KAction::Trigger);
     advanceMovements(0);
     m_scene->restart();
-    this->action("solve")->setEnabled(true);
+    this->action("move_solve")->setEnabled(true);
 }
 
 void kmagnet::pause(bool b)
@@ -473,7 +474,7 @@ void kmagnet::solveFunc()
     if (pauseAction->isChecked())
         pauseAction->activate(KAction::Trigger);
     this->action("game_restart")->setEnabled(false);
-    this->action("solve")->setEnabled(false);
+    this->action("move_solve")->setEnabled(false);
     m_solver->findSolution();
 }
 
@@ -515,7 +516,7 @@ void kmagnet::solutionFound()
     }
     else
     {
-        this->action("solve")->setEnabled(true);
+        this->action("move_solve")->setEnabled(true);
         this->action("game_restart")->setEnabled(true);
     }
 }
