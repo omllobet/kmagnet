@@ -148,11 +148,6 @@ void kmagnet::setupActions()
     actionCollection()->addAction("editmode", editModeAction);
     connect( editModeAction, SIGNAL( triggered(bool) ),this, SLOT( editingMode(bool) ) );
     editModeAction->trigger();
-    /*KAction *solveAction= new KAction(i18n("Solve"),this);
-    //editModeAction->setCheckable(true);
-    solveAction->setShortcut(Qt::CTRL + Qt::Key_Space);
-    actionCollection()->addAction("solve", solveAction);
-    connect( solveAction, SIGNAL( triggered(bool) ),this, SLOT( solveFunc() ) );*/
     KGameDifficulty::setLevel(KGameDifficulty::Hard);
 }
 

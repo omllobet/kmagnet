@@ -275,17 +275,6 @@ or menu bars. -->
 <varlistentry>
 <term><menuchoice>
 <shortcut>
-<keycombo action="simul">&Ctrl;<keycap>Space</keycap></keycombo>
-</shortcut>
-<guimenu>Game</guimenu>
-<guimenuitem>Solve</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Solves the puzzle</action></para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term><menuchoice>
-<shortcut>
 <keycombo action="simul">&Ctrl;<keycap>Q</keycap></keycombo>
 </shortcut>
 <guimenu>Game</guimenu>
@@ -298,6 +287,27 @@ or menu bars. -->
 </para>
 
 </sect2>
+
+<sect2>
+<title>The Move Menu</title>
+<para>
+<variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
+</shortcut>
+<guimenu>Move</guimenu>
+<guimenuitem>Solve</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Solves the puzzle</action></para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+
+</sect2>
+
 
 <sect2>
 <title>The Settings Menu</title>
