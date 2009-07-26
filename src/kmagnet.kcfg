@@ -5,9 +5,12 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name="kmagnetrc"/>
   <group name="general">
+    <entry key="kmagnetDataPath" type="Path" >
+      <default></default>
+    </entry>
     <entry name="maxCalls" type="Int">
 	    <label>Maximium number of steps to find the solution</label>
-	    <default>101</default>
+	    <default>21</default>
     </entry>
   </group>
 </kcfg>

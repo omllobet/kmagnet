@@ -32,6 +32,7 @@
 #include <KGameDifficulty>
 #include <KStandardDirs>
 #include <KGameDifficulty>
+#include <KDirSelectDialog>
 
 #include "kmagnet.h"
 #include "settings.h"
@@ -91,7 +92,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // It also applies the saved mainwindow settings, if any, and ask the
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
-    setupGUI();
+    setupGUI();    
     adjustSize();
     setFocus();
 }
@@ -164,6 +165,9 @@ void kmagnet::configureSettings()
     KConfigDialog *dialog = new KConfigDialog(this, "settings", Settings::self());
     QWidget *generalSettingsDlg = new QWidget;
     ui_prefs_base.setupUi(generalSettingsDlg);
+//ui settings
+    connect(ui_prefs_base.selectPath, SIGNAL(released()), this,SLOT(choosePath()));
+    connect(this, SIGNAL(valueChanged(QString)), ui_prefs_base.kcfg_kmagnetDataPath, SLOT(setText(QString)));
     dialog->addPage(generalSettingsDlg, i18n("General"), "games-config-options");
     connect(dialog, SIGNAL(settingsChanged(QString)), this, SLOT(settingsChanged()));
     dialog->setAttribute( Qt::WA_DeleteOnClose );
@@ -172,10 +176,13 @@ void kmagnet::configureSettings()
 
 void kmagnet::load()
 {
-    QString path = QString();
-    QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
-    if (!dataDir.isEmpty())
-        path.prepend(dataDir.first());
+    QString path = Settings::kmagnetDataPath();
+    if (path.isEmpty())
+    {
+	QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
+	if (!dataDir.isEmpty())
+	    path.prepend(dataDir.first());
+    }
     QString loadFilename = KFileDialog::getOpenFileName (KUrl(path),
                            "*.kmp", this, i18n("Load Puzzle"));
     if (loadFilename.isNull()) {
@@ -306,8 +313,8 @@ void kmagnet::editingMode(bool b)
 
 void kmagnet::save()
 {
-
-    QString newFilename = KFileDialog::getSaveFileName (KUrl(),
+    QString path = Settings::kmagnetDataPath();
+    QString newFilename = KFileDialog::getSaveFileName (KUrl(path),
                           "*.kmp", this, i18n("Save Puzzle"));
     if (newFilename.isNull()) {
         return;
@@ -520,6 +527,17 @@ void kmagnet::settingsChanged()
 {
     //qDebug() << "max calls" << Settings::maxCalls();
     Settings::self()->writeConfig();
+}
+
+void kmagnet::choosePath()
+{
+    KUrl dirUrl = KDirSelectDialog::selectDirectory(KUrl(""), false,
+                                               parentWidget(),
+                                               i18n("Save Puzzles To"));
+    if (dirUrl.isValid() ) 
+      {
+        emit  valueChanged(dirUrl.prettyUrl());
+      }
 }
 
 #include "kmagnet.moc"

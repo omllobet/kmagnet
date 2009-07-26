@@ -75,6 +75,10 @@ private slots:
     void levelChanged(KGameDifficulty::standardLevel);
     void solutionFound();
     void settingsChanged();
+    void choosePath();
+
+signals:
+     void valueChanged(QString newValue);
 
 private:
     void setupActions();

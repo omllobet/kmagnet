@@ -6,39 +6,64 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>282</width>
-    <height>64</height>
+    <width>366</width>
+    <height>78</height>
    </rect>
   </property>
-  <layout class="QGridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="textLabel1">
-     <property name="text">
-      <string>Maximium calls:</string>
-     </property>
-     <property name="wordWrap">
-      <bool>false</bool>
-     </property>
-    </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Puzzle Path:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="kcfg_kmagnetDataPath"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="selectPath">
+       <property name="text">
+        <string>Select...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="0" column="1">
-    <widget class="QSpinBox" name="kcfg_maxCalls">
-     <property name="toolTip">
-      <string>set the maximium steps to solve a puzzle</string>
-     </property>
-     <property name="whatsThis">
-      <string>change maximium steps to find a solution</string>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>25000</number>
-     </property>
-     <property name="value">
-      <number>101</number>
-     </property>
-    </widget>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="textLabel1">
+       <property name="text">
+        <string>Maximium calls:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="kcfg_maxCalls">
+       <property name="toolTip">
+        <string>set the maximium steps to solve a puzzle</string>
+       </property>
+       <property name="whatsThis">
+        <string>change maximium steps to find a solution</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>25000</number>
+       </property>
+       <property name="value">
+        <number>21</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
