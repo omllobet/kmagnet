@@ -443,10 +443,11 @@ void kmagnet::calculateMinimiumSize()
     {
         theight=theight+ dynamic_cast<KToolBar*>(tlist.at(i))->height();
     }
-    this->setMinimumSize(std::max(m_view->width()+4, std::max(menuBar()->width()+4, std::max(statusBar()->width()+4, toolBar()->width()+4))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+28);
+    //this->setMinimumSize(std::max(m_view->width(), std::max(menuBar()->width(), std::max(statusBar()->width(), toolBar()->width()))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+28);
+    this->setMinimumSize(m_view->width()+2,m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+28);
     //qDebug() << "theight" << theight << "mview" << m_view->height() << "statusbar" << statusBar()->height() << " menubar" << menuBar()->height();
-    resize(this->minimumSize());
-
+    //resize(this->minimumSize());
+    resize(this->width(), this->minimumHeight());
     //setMinimumSize(size());
     //resize(minimumSize());
 }
