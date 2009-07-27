@@ -37,7 +37,7 @@
      <item>
       <widget class="QLabel" name="textLabel1">
        <property name="text">
-        <string>Maximium calls:</string>
+        <string>Maximium solve calls:</string>
        </property>
        <property name="wordWrap">
         <bool>false</bool>
@@ -47,10 +47,10 @@
      <item>
       <widget class="QSpinBox" name="kcfg_maxCalls">
        <property name="toolTip">
-        <string>set the maximium steps to solve a puzzle</string>
+        <string>set the maximium calls of the function that solves the puzzles</string>
        </property>
        <property name="whatsThis">
-        <string>change maximium steps to find a solution</string>
+        <string/>
        </property>
        <property name="minimum">
         <number>1</number>

@@ -320,6 +320,8 @@ void kmagnet::save()
         return;
     }
     KConfig config (newFilename, KConfig::SimpleConfig);
+    if (config.isConfigWritable(true))
+	return;
     KConfigGroup configGroup = config.group("kmagnet");
 
     QStringList list;
@@ -369,7 +371,7 @@ void kmagnet::save()
     for (int i=0; i < ci.size(); i++)
     {
         QGraphicsItem* graphicItem=ci.at(i);
-        if (graphicItem->zValue()==5.0) continue;//FIXME
+        if (graphicItem->zValue()==5.0) continue;//FIXME //ball is the only item at z=5.0
         kmagnetCell * item = dynamic_cast<kmagnetCell *>(graphicItem);
         QPointF p =item->pos();
         if (item->getIsFinal())

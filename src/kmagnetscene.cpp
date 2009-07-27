@@ -266,7 +266,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
     dynamic_cast<kmagnet*>(parent())->setFocus();
     QGraphicsItem* item=(this->itemAt(mouseEvent->scenePos()));
     if (item->zValue()==5.0) return;//if its the ball skip//FIXME
-    if (mouseEvent->button() == Qt::LeftButton && item)
+    if (mouseEvent->button() == Qt::LeftButton)
     {
         if (editorMode) 
 	{
@@ -282,7 +282,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 		currentCell->setIsFree(false);
             return;
         }
-        if ( !editorMode && item!=m_ball) {
+        if ( !editorMode) {
             QPointF p1= m_ball->pos();
             int x1 = p1.x();
             int y1= p1.y();
@@ -311,7 +311,15 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
     }
     else if (mouseEvent->button() == Qt::RightButton)
     {
-        if (item && editorMode) dynamic_cast<kmagnetCell*>(item)->setIsFinal(true);
+        if (item && editorMode)
+	{
+	  if (mouseEvent->modifiers()==Qt::ControlModifier)
+		{
+		    dynamic_cast<kmagnetCell*>(item)->reset();
+		}
+	    else
+		dynamic_cast<kmagnetCell*>(item)->setIsFinal(true);
+	}
     }
     else if (mouseEvent->button() == Qt::MidButton)
     {

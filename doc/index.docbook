@@ -251,7 +251,7 @@ or menu bars. -->
 <guimenu>Game</guimenu>
 <guimenuitem>Save As...</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Saves the game</action></para></listitem>
+<listitem><para><action>Saves the game.</action></para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -415,6 +415,7 @@ application work. -->
 &updating.documentation;
 
 <qandaset id="faqlist">
+
 <qandaentry>
 <question>
 <para>How do I play &kmyapplication;?</para>
@@ -424,7 +425,19 @@ application work. -->
 Section</link> and the <link linkend="playing-kapp">Playing &kmyapplication;</link> for the answer</para>
 </answer>
 </qandaentry>
+<qandaentry>
+<question>
+<para>I receive the following message when I try to save a puzzle: "Configuration file "/usr/share/kde4/apps/kmagnet/data/kkk.kmp" not writable.
+Please contact your system administrator."</para>
+</question>
+<answer>
+<para>This message means you don't have write permission in the directory you selected. Please
+select a directory in whichyou have write permission. You can set the default directory
+to save and load puzzles from in Settings->Configure &kmyapplication;...</para>
+</answer>
+</qandaentry>
 </qandaset>
+
 </chapter>
 
 <chapter id="credits">
