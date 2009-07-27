@@ -414,12 +414,16 @@ nextMove kmagnetScene::isPossibleMove( Moves::Move m)
 
 void kmagnetScene::setVisited(QPoint p,bool b)
 {
-    dynamic_cast< kmagnetCell* >(itemAt(p))->setVisited(b);
+    QGraphicsItem* item= this->itemAt(p);
+    if (item!=0) dynamic_cast<kmagnetCell*>(item)->setVisited(b);
 }
 
 void kmagnetScene::setBallPos(QPoint p) 
 {
-    dynamic_cast<kmagnetCell *>(itemAt(p))->reset();
-    m_ball->setPos(p);
-    currentPosition=p;
+    QGraphicsItem* item= this->itemAt(p);
+    if (item==0)
+	return;
+      dynamic_cast<kmagnetCell*>(item)->reset();
+      m_ball->setPos(p);
+      currentPosition=p;
 }
