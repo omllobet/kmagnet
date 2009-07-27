@@ -89,7 +89,6 @@ private:
     int COLUMNS;
     int moves;
     kmagnetView *m_view;
-    QPrinter   *m_printer;
     KToggleAction *m_toolbarAction;
     KToggleAction *m_statusbarAction;
     KGameClock* m_gameClock;

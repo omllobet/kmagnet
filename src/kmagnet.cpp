@@ -73,7 +73,6 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     gl->addSpacing(0);
     contenidor->setLayout(gl);
 
-    m_printer=0;
     m_gameClock = new KGameClock(this, KGameClock::MinSecOnly);
     connect(m_gameClock, SIGNAL(timeChanged(const QString&)), SLOT(advanceTime(const QString&)));
 
@@ -93,7 +92,6 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
     setupGUI();    
-    adjustSize();
     setFocus();
 }
 
@@ -107,6 +105,7 @@ kmagnet::~kmagnet()
 
 void kmagnet::newGame()
 {
+    adjustSize();
     m_gameClock->restart();
     m_gameClock->pause();
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
@@ -282,7 +281,7 @@ void kmagnet::gameOver(bool won)
     if (won) {
         KScoreDialog scoreDialog(KScoreDialog::Name | KScoreDialog::Time, this);
         scoreDialog.setConfigGroup(KGameDifficulty::localizedLevelString());
-        //scoreDialog.setConfigGroupWeights(KGameDifficulty::levelWeights());
+        //scoreDialog.setConfigGroupWeights(KGameDifficulty::levelWeights());//KDE4.2
         QPair<QByteArray, QString> group = KGameDifficulty::localizedLevelString();
         scoreDialog.setConfigGroup( group );
         KScoreDialog::FieldInfo scoreInfo;
@@ -444,7 +443,7 @@ void kmagnet::calculateMinimiumSize()
         theight=theight+ dynamic_cast<KToolBar*>(tlist.at(i))->height();
     }
     //this->setMinimumSize(std::max(m_view->width(), std::max(menuBar()->width(), std::max(statusBar()->width(), toolBar()->width()))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+28);
-    this->setMinimumSize(m_view->width()+2,m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+28);
+    this->setMinimumSize(m_view->width()+2,m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4);
     //qDebug() << "theight" << theight << "mview" << m_view->height() << "statusbar" << statusBar()->height() << " menubar" << menuBar()->height();
     //resize(this->minimumSize());
     resize(this->width(), this->minimumHeight());
