@@ -265,7 +265,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 {
     dynamic_cast<kmagnet*>(parent())->setFocus();
     QGraphicsItem* item=(this->itemAt(mouseEvent->scenePos()));
-    if (item->zValue()==5.0) return;//if its the ball skip//FIXME
+    if (item->zValue()==5.0 || !item) return;//if its the ball skip//FIXME
     if (mouseEvent->button() == Qt::LeftButton)
     {
         if (editorMode) 
