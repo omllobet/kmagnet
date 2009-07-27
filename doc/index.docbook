@@ -471,9 +471,9 @@ Documentation Copyright &copy; 2008 Oscar Martinez<email>omllobet@gmail.com</ema
      regardless of what license the application uses) -->
 
 &underGPL;        	 <!-- GPL License -->
-&underBSDLicense;        <!-- BSD License -->
-&underArtisticLicense;   <!-- BSD Artistic License -->
-&underX11License;        <!-- X11 License  -->
+<!--&underBSDLicense;         BSD License -->
+<!--&underArtisticLicense;    BSD Artistic License -->
+<!--&underX11License;         X11 License  -->
 
 </chapter>
 

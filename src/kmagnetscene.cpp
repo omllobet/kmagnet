@@ -311,7 +311,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
     }
     else if (mouseEvent->button() == Qt::RightButton)
     {
-        if (item && editorMode)
+        if (editorMode)
 	{
 	  if (mouseEvent->modifiers()==Qt::ControlModifier)
 		{
@@ -323,7 +323,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
     }
     else if (mouseEvent->button() == Qt::MidButton)
     {
-        if (item && editorMode) dynamic_cast<kmagnetCell*>(item)->reset();
+        if (editorMode) dynamic_cast<kmagnetCell*>(item)->reset();
     }
 }
 
