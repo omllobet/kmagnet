@@ -379,7 +379,7 @@ QPoint kmagnetScene::getNextPosition(Moves::Move m)
     }
     case (Moves::DOWN):
     {
-	for (int i=now; i< ROWS*COLUMNS; i=i+COLUMNS)
+	for (int i=now; i<= ROWS*COLUMNS; i=i+COLUMNS)
         {
 	    kmagnetCell* currentCell= m_cells.at(i);
             if (!currentCell->getIsFree())
@@ -390,22 +390,22 @@ QPoint kmagnetScene::getNextPosition(Moves::Move m)
     }
     case (Moves::LEFT):
     {
-	for(int i =now; i>=0; i=i-ROWS)
+	for(int i =now; i>=0; i=i-1)
         {
 	    kmagnetCell* currentCell= m_cells.at(i);
             if (!currentCell->getIsFree())
-                return QPoint(m_cells.at(i+ROWS)->pos().toPoint());
+                return QPoint(m_cells.at(i+1)->pos().toPoint());
             else if (currentCell->getIsFinal())
                 return QPoint(currentCell->pos().toPoint());
         }
     }
     case (Moves::RIGHT):
     {
-	for(int i=now; i<COLUMNS*ROWS; i=i+ROWS)
+	for(int i=now; i<=COLUMNS*ROWS; i=i+1)
         {
             kmagnetCell* currentCell= m_cells.at(i);
             if (!currentCell->getIsFree())
-                return QPoint(m_cells.at(i-ROWS)->pos().toPoint());
+                return QPoint(m_cells.at(i-1)->pos().toPoint());
             else if (currentCell->getIsFinal())
                 return QPoint(currentCell->pos().toPoint());
         }
