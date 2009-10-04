@@ -40,14 +40,13 @@ void kmagnetCell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * o
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    QPixmap pixmap;
+    QPixmap pixmap;//take a look at the cache documentation
     if (isFinal)
     {
         if (!(cache->find("final", pixmap)))
         {
             pixmap=QPixmap(KStandardDirs::locate("appdata", "images/final.png"));
         }
-        painter->drawPixmap(0,0,pixmap);
     }
     else if (!isFree)
     {
@@ -55,7 +54,6 @@ void kmagnetCell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * o
         {
             pixmap=QPixmap(KStandardDirs::locate("appdata", "images/notfree.png"));
         }
-        painter->drawPixmap(0,0,pixmap);
     }
     /*else if (visited)
     {
@@ -67,8 +65,9 @@ void kmagnetCell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * o
         {
             pixmap=QPixmap(KStandardDirs::locate("appdata", "images/free.png"));
         }
-        painter->drawPixmap(0,0,pixmap);
     }
+    pixmap=pixmap.scaledToHeight(Global::itemSize);
+    painter->drawPixmap(0,0,pixmap);
 }
 
 bool kmagnetCell::getIsFree()
