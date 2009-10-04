@@ -105,7 +105,7 @@ public:
     void replay(QVector<Moves::Move> lm);
 
 public slots:
-    void resizeScene(int width, int height);
+  void resizeScene(int width, int height);
     void process(Moves::Move mov);
     void finishWait();
 
@@ -118,6 +118,9 @@ protected:
 
 private:
 
+    void setBoardPosition();
+    int posToCell(QPoint p);
+    
     int COLUMNS;
     int ROWS;
     bool hasLost;
