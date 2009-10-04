@@ -23,6 +23,7 @@
 
 #include "kmagnetscene.h"
 #include <QThread>
+#include "kmagnet.h"
 
 kmagnetScene::kmagnetScene(QObject * parent, int rows, int columns) :
         QGraphicsScene(parent),
@@ -32,15 +33,33 @@ kmagnetScene::kmagnetScene(QObject * parent, int rows, int columns) :
         hasWon(false),
         editorMode(false),
         movements(0),
-        startPosition(QPoint(03,03)),
+        startPosition(QPoint(0,0)),
         sol(QVector<Moves::Move>())
 {
-    resizeScene((int)sceneRect().width() , (int)sceneRect().height());
+  //change start position to a cell number!!!!!!!!
+    //resizeScene((int)sceneRect().width() , (int)sceneRect().height());
     cache = new QPixmapCache();
     cache->insert("free", QPixmap(KStandardDirs::locate("appdata", "images/free.png")));
     cache->insert("notfree", QPixmap(KStandardDirs::locate("appdata", "images/notfree.png")));
     cache->insert("final", QPixmap(KStandardDirs::locate("appdata", "images/final.png")));
     m_ball=0;
+}
+
+void kmagnetScene::setBoardPosition()
+{
+  Global::itemSize = qMin(this->height()/ROWS, this->width()/COLUMNS);
+  qreal itemsize= Global::itemSize;
+  qreal Xcorrection=(this->width()-COLUMNS*itemsize)/2;
+  qreal Ycorrection=(this->height()-ROWS*itemsize)/2;
+    for (int row=0; row<ROWS; ++row) {
+        for (int col=0; col<COLUMNS; ++col)
+        {
+            //qDebug()<<"s "<< row*COLUMNS+col;
+            m_cells[row*COLUMNS+col]->setPos(QPointF(Xcorrection+(col)*itemsize, Ycorrection+(row)*itemsize));
+        }
+    }
+    if (m_ball)
+      m_ball->setRect(0,0,itemsize-0.10*itemsize,itemsize-0.10*itemsize);
 }
 
 void kmagnetScene::newGame()
@@ -69,13 +88,7 @@ void kmagnetScene::newGame()
             m_cells[i] = new kmagnetCell(0, this);
     }
 
-    for (int row=0; row<ROWS; ++row) {
-        for (int col=0; col<COLUMNS; ++col)
-        {
-            //qDebug()<<"s "<< row*COLUMNS+col;
-            m_cells[row*COLUMNS+col]->setPos(QPointF((col)*Global::itemSize, (row)*Global::itemSize));
-        }
-    }
+    setBoardPosition();
 
     if (!m_ball)
     {
@@ -84,23 +97,28 @@ void kmagnetScene::newGame()
         radialGradient.setColorAt(0.35, Qt::lightGray);
         radialGradient.setColorAt(0.75, Qt::gray);
         radialGradient.setColorAt(1.0, Qt::darkGray);
-        m_ball= addEllipse(0,0,14,14, QPen(Qt::NoPen),radialGradient);
-        m_ball->setPos(startPosition);
+//	startPosition=QPoint(itemsize/2,itemsize/2);//FIXME
+        m_ball= addEllipse(0,0,Global::itemSize-0.10*Global::itemSize,Global::itemSize-0.10*Global::itemSize, QPen(Qt::NoPen),radialGradient);
+        //m_ball->setPos(startPosition);//FIXME
         m_ball->setZValue(5.0);
         this->update();
     }
     else
     {
-        m_ball->setPos(startPosition);
-        dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFinal(false);
-        dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFree(true);
+	//startPosition=QPoint(Xcorrection+itemsize/2,Ycorrection+itemsize/2);//FIXME
+        //m_ball->setPos(startPosition);//FIXME
+	m_ball->setRect(0,0,Global::itemSize-0.10*Global::itemSize, Global::itemSize-0.10*Global::itemSize);
+        //dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFinal(false);
+        //dynamic_cast<kmagnetCell*>(itemAt(startPosition))->setIsFree(true);
     }
-    dynamic_cast<kmagnet*>(parent())->calculateMinimiumSize();
+    this->update(sceneRect());
+//    dynamic_cast<kmagnet*>(parent())->calculateMinimiumSize();
+    //dynamic_cast<kmagnet*>(parent())->adjustSize();
 }
 
 void kmagnetScene::process(Moves::Move mov)
 {
-    //qDebug() << "proxima posicio" << this->getNextPosition(mov);
+    qDebug() << "proxima posicio" << this->getNextPosition(mov);
     if (hasLost || hasWon) return;
     //animateMovement(mov);
     if (mov==Moves::UP)
@@ -135,8 +153,10 @@ void kmagnetScene::process(Moves::Move mov)
     }
 }
 
-void kmagnetScene::movement(int x, int y)
+ void kmagnetScene::movement(int x, int y)
 {
+  //millor utilitzar isapossiblemove i tal i passar completament de les
+  //colisions que detecta qt i tal, fer un benchmark?
     bool found=false;
     while (!found)
     {
@@ -175,7 +195,7 @@ void kmagnetScene::movement(int x, int y)
 kmagnetScene::~kmagnetScene()
 {
   delete cache;
-  for (int i=0;i<m_timers.size();i++)
+  for (int i=0;i<m_timers.size();i++)//buff que lleig...mirar quan ja no fan falta i esborrar-los llavors
     delete m_timers[i];
   for (int i=0;i<m_animations.size();i++)
     delete m_animations[i];
@@ -238,6 +258,7 @@ void kmagnetScene::finishWait()
 void kmagnetScene::resizeScene(int width, int height)
 {
     setSceneRect(0, 0, width, height);
+    setBoardPosition();
 }
 
 void kmagnetScene::setFinalPosition(QPoint p)
@@ -264,7 +285,9 @@ void kmagnetScene::setNotFreePosition(QPoint pos)
 void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 {
     dynamic_cast<kmagnet*>(parent())->setFocus();
-    QGraphicsItem* item=(this->itemAt(mouseEvent->scenePos()));
+    QGraphicsItem* item=0;
+    item=(this->itemAt(mouseEvent->scenePos()));
+    if (item==0) return;
     if (item->zValue()==5.0 || !item) return;//if its the ball skip//FIXME
     if (mouseEvent->button() == Qt::LeftButton)
     {
@@ -273,7 +296,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent)
 	    kmagnetCell *currentCell= dynamic_cast<kmagnetCell*>(item);
 	    if (mouseEvent->modifiers()==Qt::ControlModifier)
 		{
-		  QPoint p =QPoint(currentCell->x()+3,currentCell->y()+3);//this 3 has to be the same number as the startpositionbydefault mod itemSize which at time has to be itemsize-ballsize/2
+		  QPoint p =QPoint(currentCell->x()+0.05*Global::itemSize,currentCell->y()+0.05*Global::itemSize);
 		  setBallPos(p);
 		  startPosition=p;
 		  restart();
@@ -347,6 +370,7 @@ QPoint kmagnetScene::getNextPosition(Moves::Move m)
     {
         for (int i=y-Global::itemSize; i>=0;i=i-Global::itemSize)
         {
+	    //FIXME?
             //	kmagnetCell* currentCell= m_cells.at((x*COLUMNS)/((COLUMNS-1)*Global::itemSize+3)*COLUMNS+ (i*ROWS)/((ROWS-1)*Global::itemSize+3));
             kmagnetCell* currentCell= dynamic_cast<kmagnetCell*>(itemAt(x,i));
             if (!currentCell->getIsFree())
@@ -418,12 +442,29 @@ void kmagnetScene::setVisited(QPoint p,bool b)
     if (item!=0) dynamic_cast<kmagnetCell*>(item)->setVisited(b);
 }
 
+void kmagnetScene::posToCell()
+{
+  QPointF p = m_ball->pos();
+  qDebug() << "pos" << p;
+  
+  Global::itemSize = qMin(this->height()/ROWS, this->width()/COLUMNS);
+  qreal itemsize= Global::itemSize;
+  qreal Xcorrection=(this->width()-COLUMNS*itemsize)/2;
+  qreal Ycorrection=(this->height()-ROWS*itemsize)/2;
+  
+  int row = static_cast<int>((p.y()-Ycorrection)/itemsize);
+  int col = static_cast<int>((p.x()-Xcorrection)/itemsize);
+  
+  qDebug() << "row" << row << "col" << col;
+}
+
 void kmagnetScene::setBallPos(QPoint p) 
 {
     QGraphicsItem* item= this->itemAt(p);
     if (item==0)
 	return;
-      dynamic_cast<kmagnetCell*>(item)->reset();
+    //  dynamic_cast<kmagnetCell*>(item)->reset();//FIXME
       m_ball->setPos(p);
       currentPosition=p;
+      posToCell();
 }
