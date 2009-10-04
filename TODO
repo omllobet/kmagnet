@@ -1,4 +1,7 @@
+->Please don't use this version, use the code released in kde-apps: http://www.kde-apps.org/content/show.php?content=109111
 ->rewrite some things XD
+->postocell function, correct ball position
+->correct load and save
 ->improve order
 ->improve code
 ->convert from std to Qt?
@@ -6,8 +9,12 @@
 ->thousand other things
 ->why did I put keyboard moves on kmagnet and mouseevents on kmagnetscene?
 ->animations
+->Download puzzles from internet
 ->put solver in a Qthread or something
-->split scene in scene+board (graphicitem)
+->split scene in scene+board (graphicitem)?
 ->renderer+support themes
 ->yes it's an alpha...
+->random generator
+->modificar cmake find libkdegames- ok
+->a proper scene
 :wq
