@@ -54,31 +54,33 @@ kmagnet::kmagnet() : KXmlGuiWindow()
                                   QGraphicsView::DontSavePainterState |
                                   QGraphicsView::DontAdjustForAntialiasing );
 
-    m_view->setFixedSize(COLUMNS*Global::itemSize, ROWS*Global::itemSize);
+    //m_view->setFixedSize(COLUMNS*Global::itemSize, ROWS*Global::itemSize);
     m_scene = new kmagnetScene(this, ROWS, COLUMNS);
+    m_scene->setBackgroundBrush(Qt::lightGray);
+    
     connect(m_scene, SIGNAL(advanceMovements(int)), this, SLOT(advanceMovements(int)));
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
     m_view->setScene(m_scene);
+   //TODO tema size// connect(this, SIGNAL(resizeScene(int, int )), m_view, SLOT(resizeScene(int, int)));
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
 
     //solver
     m_solver= new kmagnetSolver(m_scene);
     connect(m_solver, SIGNAL(finished()),this,SLOT(solutionFound()));
-
-    QWidget *contenidor = new QWidget(this);
-
-    QHBoxLayout * gl = new QHBoxLayout();
-    gl->addSpacing(0);
-    gl->addWidget(m_view);
-    gl->addSpacing(0);
-    contenidor->setLayout(gl);
+    //QWidget *contenidor = new QWidget(this);
+    
+    //QHBoxLayout * gl = new QHBoxLayout();
+    //gl->addSpacing(0);
+    //gl->addWidget(m_view);
+    //gl->addSpacing(0);
+    //contenidor->setLayout(gl);
 
     m_gameClock = new KGameClock(this, KGameClock::MinSecOnly);
     connect(m_gameClock, SIGNAL(timeChanged(const QString&)), SLOT(advanceTime(const QString&)));
 
     // accept dnd
     //setAcceptDrops(true);
-    setCentralWidget(contenidor);
+    setCentralWidget(m_view);
     // add a status bar
     statusBar()->insertItem( i18n("Time: 00:00"), 0);
     statusBar()->insertItem( i18n("Movements: 0"), 1);
@@ -105,7 +107,7 @@ kmagnet::~kmagnet()
 
 void kmagnet::newGame()
 {
-    adjustSize();
+    //adjustSize();
     m_gameClock->restart();
     m_gameClock->pause();
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
@@ -237,12 +239,12 @@ void kmagnet::loadfile(QString loadFilename)
     }
     list.clear();
     list = configGroup.readEntry ("currentposition", notFound);
-    if (list.size()==2)
-        m_scene->setBallPos(QPoint(list.at(0).toInt(), list.at(1).toInt()));
+    if (list.size()==2)//FIXME
+        m_scene->setBallPos(list.at(0).toInt());
     list.clear();
     list = configGroup.readEntry ("startposition", notFound);
-    if (list.size()==2)
-        m_scene->setStartPosition(QPoint(list.at(0).toInt(), list.at(1).toInt()));
+    if (list.size()==2)//FIXME
+        m_scene->setStartPosition(list.at(0).toInt());
     list.clear();
     list = configGroup.readEntry ("final", notFound);
     if (list.size()%2==0)
@@ -312,7 +314,9 @@ void kmagnet::editingMode(bool b)
 
 void kmagnet::save()
 {
-    QString path = Settings::kmagnetDataPath();
+//TODO better safe cell num and use the vector
+//need function to get cell from position
+  QString path = Settings::kmagnetDataPath();
     QString newFilename = KFileDialog::getSaveFileName (KUrl(path),
                           "*.kmp", this, i18n("Save Puzzle"));
     if (newFilename.isNull()) {
@@ -417,39 +421,42 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
 
     if (level==KGameDifficulty::Easy)
     {
-        m_view->setFixedSize(10*Global::itemSize,15*Global::itemSize);
+        //m_view->setFixedSize(10*Global::itemSize,15*Global::itemSize);
         m_scene->setSize(15,10);
     }
     else if (level==KGameDifficulty::Medium)
     {
-        m_view->setFixedSize(15*Global::itemSize,20*Global::itemSize);
+        //m_view->setFixedSize(15*Global::itemSize,20*Global::itemSize);
         m_scene->setSize(20,15);
     }
     else if (level==KGameDifficulty::Hard)
     {
-        m_view->setFixedSize(20*Global::itemSize,25*Global::itemSize);
+        //m_view->setFixedSize(20*Global::itemSize,25*Global::itemSize);
         m_scene->setSize(25,20);
     }
     emit newGame();
 }
 
-void kmagnet::calculateMinimiumSize()
+/*void kmagnet::calculateMinimiumSize()
 {
 //+4 for borders
-    int theight= toolBar("mainToolBar")->height();
+    int theight= toolBar("mainToolBar")->height();// if theres no toolbar (hidden)will this crash?
     QList<KToolBar*> tlist = toolBars();
     for (int i=1;i< tlist.size(); i++)
     {
         theight=theight+ dynamic_cast<KToolBar*>(tlist.at(i))->height();
     }
     //this->setMinimumSize(std::max(m_view->width(), std::max(menuBar()->width(), std::max(statusBar()->width(), toolBar()->width()))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+28);
-    this->setMinimumSize(m_view->width()+2,m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4);
+//    adjustSize();
+    this->setMinimumSize(m_view->width()+2,std::max(m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4, this->height()));
     //qDebug() << "theight" << theight << "mview" << m_view->height() << "statusbar" << statusBar()->height() << " menubar" << menuBar()->height();
     //resize(this->minimumSize());
+    
     resize(this->width(), this->minimumHeight());
+    
     //setMinimumSize(size());
     //resize(minimumSize());
-}
+}*/
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 {
