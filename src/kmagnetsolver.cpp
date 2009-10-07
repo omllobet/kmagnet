@@ -17,7 +17,6 @@
  *************************************************************************************/
 
 #include <string>
-#include <QDebug>
 
 #include "kmagnetsolver.h"
 #include <settings.h>
@@ -32,18 +31,18 @@ kmagnetSolver::kmagnetSolver(kmagnetScene* scene):QObject()
 void kmagnetSolver::findSolution()
 {
     std::vector<Moves::Move> lm;
-    nextMove nm = nextMove(false, m_scene->getCurrentPosition());
+    nextMove nm = nextMove(false, m_scene->getCurrentCell());
     int calls=0;
     solution.clear();
     solve(lm,nm,calls);
     emit finished();
-    qDebug() << "-- .- .-. - .. -. ..";
+    qDebug("-- .- .-. - .. -. ..");
 }
 
 void kmagnetSolver::solve(vector<Moves::Move> &lm, nextMove sg, int numrec)
 {
     if (numrec>=Settings::maxCalls()) return;
-    if (sg.getIsPossible() && dynamic_cast<kmagnetCell*>(m_scene->itemAt(sg.getPosition()))->getIsFinal())
+    if (sg.getIsPossible() && (m_scene->getCell(sg.getPosition())->getIsFinal()))
     {//is solution
         if (solution.size()==0 || solution.size()> lm.size())
         {
@@ -84,13 +83,10 @@ void kmagnetSolver::trymove(Moves::Move m, vector<Moves::Move> &l, int n)
     if (nm.getIsPossible())
     {
         l.push_back(m);
-        //QPoint p= m_scene->getBallPos().toPoint();
-        QPoint p= m_scene->getCurrentPosition();
-        //m_scene->setBallPos(nm.getPosition());
+        uint p= m_scene->getCurrentCell();
         m_scene->setVisited(p,true);
         m_scene->setCurrentPosition(nm.getPosition());
         solve(l,nm, n+1);
-        //m_scene->setBallPos(p);
         m_scene->setCurrentPosition(p);
         m_scene->setVisited(p,false);
         l.pop_back();
