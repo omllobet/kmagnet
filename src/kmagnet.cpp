@@ -54,32 +54,21 @@ kmagnet::kmagnet() : KXmlGuiWindow()
                                   QGraphicsView::DontSavePainterState |
                                   QGraphicsView::DontAdjustForAntialiasing );
 
-    //m_view->setFixedSize(COLUMNS*Global::itemSize, ROWS*Global::itemSize);
     m_scene = new kmagnetScene(this, ROWS, COLUMNS);
     m_scene->setBackgroundBrush(Qt::lightGray);
     
     connect(m_scene, SIGNAL(advanceMovements(int)), this, SLOT(advanceMovements(int)));
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
     m_view->setScene(m_scene);
-   //TODO tema size// connect(this, SIGNAL(resizeScene(int, int )), m_view, SLOT(resizeScene(int, int)));
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
 
-    //solver
+    //solver //TODO more qt way
     m_solver= new kmagnetSolver(m_scene);
     connect(m_solver, SIGNAL(finished()),this,SLOT(solutionFound()));
-    //QWidget *contenidor = new QWidget(this);
-    
-    //QHBoxLayout * gl = new QHBoxLayout();
-    //gl->addSpacing(0);
-    //gl->addWidget(m_view);
-    //gl->addSpacing(0);
-    //contenidor->setLayout(gl);
 
     m_gameClock = new KGameClock(this, KGameClock::MinSecOnly);
     connect(m_gameClock, SIGNAL(timeChanged(const QString&)), SLOT(advanceTime(const QString&)));
 
-    // accept dnd
-    //setAcceptDrops(true);
     setCentralWidget(m_view);
     // add a status bar
     statusBar()->insertItem( i18n("Time: 00:00"), 0);
@@ -107,7 +96,6 @@ kmagnet::~kmagnet()
 
 void kmagnet::newGame()
 {
-    //adjustSize();
     m_gameClock->restart();
     m_gameClock->pause();
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
@@ -219,7 +207,6 @@ void kmagnet::loadfile(QString loadFilename)
     if (list.size()==1) {
         KGameDifficulty::standardLevel level = static_cast<KGameDifficulty::standardLevel>(list.at(0).toInt());
         KGameDifficulty::setLevel(level);
-        //emit levelChanged(level);
     }
     newGame();
     QAction * editingModeAction = this->action("editmode");
@@ -239,28 +226,28 @@ void kmagnet::loadfile(QString loadFilename)
     }
     list.clear();
     list = configGroup.readEntry ("currentposition", notFound);
-    if (list.size()==2)//FIXME
-        m_scene->setBallPos(list.at(0).toInt());
+    if (list.size()==1)
+        m_scene->setBallPos(list.at(0).toUInt());
     list.clear();
     list = configGroup.readEntry ("startposition", notFound);
-    if (list.size()==2)//FIXME
-        m_scene->setStartPosition(list.at(0).toInt());
+    if (list.size()==1)
+        m_scene->setStartPosition(list.at(0).toUInt());
     list.clear();
     list = configGroup.readEntry ("final", notFound);
-    if (list.size()%2==0)
+    if (list.size()!=0)
     {
-        for (int i=0; i < list.size(); i=i+2)
+        for (int i=0; i < list.size(); i++)
         {
-            m_scene->setFinalPosition(QPoint(list.at(i).toInt(), list.at(i+1).toInt()));
+            m_scene->setFinalPosition(list.at(i).toUInt());
         }
     }
     list.clear();
     list = configGroup.readEntry ("notfree", notFound);
-    if (list.size()%2==0)
+    if (list.size()!=0)
     {
-        for (int i=0; i < list.size(); i=i+2)
+        for (int i=0; i < list.size(); i++)
         {
-            m_scene->setNotFreePosition(QPoint(list.at(i).toInt(), list.at(i+1).toInt()));
+            m_scene->setNotFreePosition(list.at(i).toUInt());
         }
     }
     m_scene->update();
@@ -300,8 +287,6 @@ void kmagnet::gameOver(bool won)
         int answer=KMessageBox::questionYesNo(this, i18n("Thanks for playing. Do you want to try again?"),i18n("Game ended"));
         if (answer==KMessageBox::Yes)
             restart();
-        //else
-        //newGame();
     }
 }
 
@@ -314,19 +299,18 @@ void kmagnet::editingMode(bool b)
 
 void kmagnet::save()
 {
-//TODO better safe cell num and use the vector
-//need function to get cell from position
-  QString path = Settings::kmagnetDataPath();
+    QString path = Settings::kmagnetDataPath();
     QString newFilename = KFileDialog::getSaveFileName (KUrl(path),
                           "*.kmp", this, i18n("Save Puzzle"));
     if (newFilename.isNull()) {
         return;
     }
     KConfig config (newFilename, KConfig::SimpleConfig);
-    if (config.isConfigWritable(true))
-	return;
+    //if (config.isConfigWritable(true))//FIXME, why now does not work now?
+      //return;
+    qDebug("save slot 3");
     KConfigGroup configGroup = config.group("kmagnet");
-
+    qDebug("save slot 10");
     QStringList list;
     QString    value;
 
@@ -349,46 +333,32 @@ void kmagnet::save()
     configGroup.writeEntry ("time", list);
     list.clear();
 
-    //QPointF p =m_scene->getBallPos();
-    QPoint p =m_scene->getCurrentPosition();
-    value.sprintf ("%d",(int)p.x() );
+    uint p =m_scene->getCurrentCell();
+    value.sprintf ("%u",p );
     list.append (value);
-    value.sprintf ("%d",(int)p.y() );
-    list.append (value);
-
     configGroup.writeEntry ("currentposition", list);
-
     list.clear();
-    //if (!m_scene->getEditorMode())
+    
     p =m_scene->getStartPosition();
-    value.sprintf ("%d",(int)p.x() );
-    list.append (value);
-    value.sprintf ("%d",(int)p.y() );
+    value.sprintf ("%u",p );
     list.append (value);
     configGroup.writeEntry ("startposition", list);
     list.clear();
 
     QStringList list2;
     QString     value2;
-    QList<QGraphicsItem *>  ci =m_scene->items();//Use m_cells?
-    for (int i=0; i < ci.size(); i++)
+    
+    for (uint i=0; i < m_scene->getNumCells(); i++)
     {
-        QGraphicsItem* graphicItem=ci.at(i);
-        if (graphicItem->zValue()==5.0) continue;//FIXME //ball is the only item at z=5.0
-        kmagnetCell * item = dynamic_cast<kmagnetCell *>(graphicItem);
-        QPointF p =item->pos();
+        kmagnetCell * item = m_scene->getCell(i);
         if (item->getIsFinal())
         {
-            value.sprintf ("%d",(int)p.x() );
-            list.append (value);
-            value.sprintf ("%d",(int)p.y() );
+            value.sprintf ("%u",i );
             list.append (value);
         }
         else if (!item->getIsFree())
         {
-            value2.sprintf ("%d",(int)p.x() );
-            list2.append (value2);
-            value2.sprintf ("%d",(int)p.y() );
+            value2.sprintf ("%u",i );
             list2.append (value2);
         }
     }
@@ -421,46 +391,22 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
 
     if (level==KGameDifficulty::Easy)
     {
-        //m_view->setFixedSize(10*Global::itemSize,15*Global::itemSize);
         m_scene->setSize(15,10);
     }
     else if (level==KGameDifficulty::Medium)
     {
-        //m_view->setFixedSize(15*Global::itemSize,20*Global::itemSize);
         m_scene->setSize(20,15);
     }
     else if (level==KGameDifficulty::Hard)
     {
-        //m_view->setFixedSize(20*Global::itemSize,25*Global::itemSize);
         m_scene->setSize(25,20);
     }
     emit newGame();
 }
 
-/*void kmagnet::calculateMinimiumSize()
-{
-//+4 for borders
-    int theight= toolBar("mainToolBar")->height();// if theres no toolbar (hidden)will this crash?
-    QList<KToolBar*> tlist = toolBars();
-    for (int i=1;i< tlist.size(); i++)
-    {
-        theight=theight+ dynamic_cast<KToolBar*>(tlist.at(i))->height();
-    }
-    //this->setMinimumSize(std::max(m_view->width(), std::max(menuBar()->width(), std::max(statusBar()->width(), toolBar()->width()))), m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4+28);
-//    adjustSize();
-    this->setMinimumSize(m_view->width()+2,std::max(m_view->height()+ statusBar()->height() + menuBar()->height()+theight+4, this->height()));
-    //qDebug() << "theight" << theight << "mview" << m_view->height() << "statusbar" << statusBar()->height() << " menubar" << menuBar()->height();
-    //resize(this->minimumSize());
-    
-    resize(this->width(), this->minimumHeight());
-    
-    //setMinimumSize(size());
-    //resize(minimumSize());
-}*/
-
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 {
-    //if (m_scene->getEditorMode()) return;
+
     switch ( keyEvent->key() )
     {
     case Qt::Key_Down:
@@ -499,6 +445,7 @@ void kmagnet::solutionFound()
     std::vector<Moves::Move> lm=m_solver->getSolution();
     if (lm.size()!=0)
     {
+      //DEBUG CODE
         for (unsigned int i=0; i< lm.size(); i++) {
             //	System.out.println(lm.get(i));
             QString str=QString();
@@ -522,6 +469,7 @@ void kmagnet::solutionFound()
             }
             qDebug() << str;
         }
+	//FI_DEBUG_CODE
         QVector<Moves::Move> lm2= QVector<Moves::Move>::fromStdVector(lm);
         m_scene->replay(lm2);
     }
@@ -534,7 +482,6 @@ void kmagnet::solutionFound()
 
 void kmagnet::settingsChanged()
 {
-    //qDebug() << "max calls" << Settings::maxCalls();
     Settings::self()->writeConfig();
 }
 
