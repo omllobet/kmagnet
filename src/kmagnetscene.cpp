@@ -206,44 +206,42 @@ void kmagnetScene::resizeScene ( int width, int height )
     setBoardPosition();
 }
 
-void kmagnetScene::setFinalPosition ( QPoint p )
+void kmagnetScene::setFinalPosition ( uint num)
 {
-    uint x=p.x();
-    uint y =p.y();
-    //qDebug("x=%d, y=%d, size=%d",x, y, this->items().size());
-    if ( x>= ( uint ) COLUMNS*Global::itemSize||y>= ( uint ) ROWS*Global::itemSize )
+    if ( num>=COLUMNS*ROWS)
         return;
-    QGraphicsItem* item= this->itemAt ( QPoint ( x,y ) );
-    if ( item!=0 ) dynamic_cast<kmagnetCell*> ( item )->setIsFinal ( true );
+    m_cells[num]->setIsFinal(true);
 }
 
-void kmagnetScene::setNotFreePosition ( QPoint pos )
+void kmagnetScene::setNotFreePosition ( uint num )
 {
-    uint x=pos.x();
-    uint y=pos.y();
-    if ( x>=COLUMNS*Global::itemSize||y>=ROWS*Global::itemSize )
+    if ( num>=COLUMNS*ROWS)
         return;
-    QGraphicsItem* item= this->itemAt ( QPointF ( x,y ) );
-    if ( item!=0 ) dynamic_cast<kmagnetCell*> ( item )->setIsFree ( false );
+    m_cells[num]->setIsFree(false);
 }
 
 void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
+{//FIXME I can do it better
     dynamic_cast<kmagnet*> ( parent() )->setFocus();
     QGraphicsItem* item=0;
     item= ( this->itemAt ( mouseEvent->scenePos() ) );
     if ( item==0 ) return;
     if ( item->zValue() ==5.0 || !item ) return;//if its the ball skip//FIXME
+    uint cell=posToCell(item->pos().toPoint());
     if ( mouseEvent->button() == Qt::LeftButton )
     {
         if ( editorMode )
         {
-            kmagnetCell *currentCell= dynamic_cast<kmagnetCell*> ( item );
+            //kmagnetCell *currentCell= dynamic_cast<kmagnetCell*> ( item );
+            kmagnetCell *currentCell= m_cells[cell];
             if ( mouseEvent->modifiers() ==Qt::ControlModifier )
             {
-                QPoint p =QPoint ( currentCell->x() +0.05*Global::itemSize,currentCell->y() +0.05*Global::itemSize );
-                setBallPos ( posToCell ( p ) );
-                startPosition=posToCell ( p );
+                //QPoint p =QPoint ( currentCell->x() +0.05*Global::itemSize,currentCell->y() +0.05*Global::itemSize );
+                //setBallPos ( posToCell ( p ) );
+                //startPosition=posToCell ( p );
+                setBallPos(cell);
+                startPosition=cell;
+                currentCell->reset();//reset cell
                 restart();
             }
             else
@@ -252,6 +250,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         }
         if ( !editorMode )
         {
+            //better just check row and column
             QPointF p1= m_ball->pos();
             int x1 = p1.x();
             int y1= p1.y();
@@ -372,7 +371,6 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
 
 nextMove kmagnetScene::isPossibleMove ( Moves::Move m )
 {
-    //QPoint p = m_cells.at(getNextPosition(m))->pos().toPoint();
     uint next=getNextPosition ( m );
     if ( currentPosition==next || m_cells[next]->getVisited() )
     {
@@ -383,11 +381,8 @@ nextMove kmagnetScene::isPossibleMove ( Moves::Move m )
 
 void kmagnetScene::setVisited ( uint p,bool b )
 {
-    //QGraphicsItem* item= this->itemAt(p);
-    //if (item!=0) dynamic_cast<kmagnetCell*>(item)->setVisited(b);
     m_cells[p]->setVisited ( b );
 }
-
 
 uint kmagnetScene::posToCell ( QPoint pos )
 {
@@ -424,5 +419,8 @@ uint kmagnetScene::getCurrentCell()
 
 kmagnetCell* kmagnetScene::getCell ( uint n )
 {
-    return m_cells[n];
+    if (n<ROWS*COLUMNS)
+	return m_cells[n];
+    return m_cells[0];
+    //FIXME think how to manage errors or people messing with .kmp files, rename to .kmf?
 }
