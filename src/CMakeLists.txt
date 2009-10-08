@@ -24,4 +24,4 @@ install(TARGETS kmagnet ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 install( FILES kmagnet.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR} )
 install( FILES kmagnet.kcfg  DESTINATION  ${KCFG_INSTALL_DIR} )
-install( FILES kmagnetui.rc  DESTINATION  ${DATA_INSTALL_DIR}/kmagnet )
+install( FILES kmagnetui.rc  DESTINATION  ${DATA_INSTALL_DIR}/kMagnet )

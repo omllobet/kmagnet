@@ -168,7 +168,7 @@ void kmagnet::load()
     QString path = Settings::kmagnetDataPath();
     if (path.isEmpty())
     {
-        QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
+        QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
         if (!dataDir.isEmpty())
             path.prepend(dataDir.first());
     }
@@ -306,7 +306,7 @@ void kmagnet::save()
         return;
     }
     KConfig config (newFilename, KConfig::SimpleConfig);
-    //if (config.isConfigWritable(true))//FIXME, why now does not work now? or why it worked be4?
+    //if (config.isConfigWritable(true))//FIXME, why now does this not work now? or why it worked be4?
     //return;
     qDebug("save slot 3");
     KConfigGroup configGroup = config.group("kmagnet");

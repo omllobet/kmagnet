@@ -18,7 +18,6 @@
 #include <QPainter>
 
 #include <KStandardDirs>
-#include <QDebug>
 #include "kmagnetcell.h"
 
 kmagnetCell::kmagnetCell(QGraphicsItem * parent, QGraphicsScene * scene)
@@ -41,7 +40,6 @@ void kmagnetCell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * o
     Q_UNUSED(option);
     Q_UNUSED(widget);
     QPixmap pixmap;//take a look at the cache documentation
-    qDebug() << "directory:" << KStandardDirs::locate("appdata", "images/notfree.png");
     if (isFinal)
     {
         if (!(cache->find("final", pixmap)))

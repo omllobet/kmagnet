@@ -88,8 +88,8 @@ Please respect the format of the date (YYYY-MM-DD) and of the version
 (V.MM.LL), it could be used by automation scripts.
 Do NOT change these in the translation. -->
 
-<date>2009-07-22</date>
-<releaseinfo>0.02</releaseinfo>
+<date>2009-11-08</date>
+<releaseinfo>0.03</releaseinfo>
 
 <!-- Abstract about this handbook -->
 
@@ -506,7 +506,7 @@ information here.
 -->
 
 <para>
-In order to successfully use &kmyapplication;, you need &kde; 4.1.
+In order to successfully use &kmyapplication;, you need &kde; 4.1 at least
 </para>
 
 <para>

@@ -28,7 +28,7 @@
 static const char description[] =
     I18N_NOOP("A KDE 4 Puzzle-like Game");
 
-static const char version[] = "0.02";
+static const char version[] = "0.03";
 
 uint Global::itemSize=20;
 
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
             KUrl url=KUrl(path);
             if (url.isRelative())
             {
-		QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
+		QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
 		if (!dataDir.isEmpty())
 		    path.prepend(dataDir.first());
             }

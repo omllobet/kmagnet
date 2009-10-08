@@ -308,7 +308,6 @@ void kmagnetScene::restart()
 int kmagnetScene::getNextPosition ( Moves::Move m )
 {
     uint now= currentPosition;
-    qDebug() << "now: " << now;
     switch ( m ) //change switch to if elseif?
     {
     case ( Moves::UP ) :
@@ -351,7 +350,6 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
     {
         for ( uint i=now; i< ( now/COLUMNS ) *COLUMNS+COLUMNS; i=i+1 )
         {
-            qDebug() << "i" << i << "now" << now;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i-1;
@@ -419,8 +417,7 @@ uint kmagnetScene::getCurrentCell()
 
 kmagnetCell* kmagnetScene::getCell ( uint n )
 {
-    if (n<ROWS*COLUMNS)
-	return m_cells[n];
-    return m_cells[0];
-    //FIXME think how to manage errors or people messing with .kmp files, rename to .kmf?
+    //if (n<ROWS*COLUMNS)//not needed for now
+    return m_cells[n];
+
 }
