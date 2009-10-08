@@ -56,7 +56,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
 
     m_scene = new kmagnetScene(this, ROWS, COLUMNS);
     m_scene->setBackgroundBrush(Qt::lightGray);
-    
+
     connect(m_scene, SIGNAL(advanceMovements(int)), this, SLOT(advanceMovements(int)));
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
     m_view->setScene(m_scene);
@@ -82,7 +82,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // It also applies the saved mainwindow settings, if any, and ask the
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
-    setupGUI();    
+    setupGUI();
     setFocus();
 }
 
@@ -90,8 +90,8 @@ kmagnet::~kmagnet()
 {
     delete m_gameClock;
     delete m_solver;
-    delete m_scene;
-    delete m_view;
+    delete m_scene;//qt does this for me// mm on the planet there was an article...
+    delete m_view;//qt does this for me
 }
 
 void kmagnet::newGame()
@@ -168,9 +168,9 @@ void kmagnet::load()
     QString path = Settings::kmagnetDataPath();
     if (path.isEmpty())
     {
-	QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
-	if (!dataDir.isEmpty())
-	    path.prepend(dataDir.first());
+        QStringList dataDir = KStandardDirs().findDirs("data", "kmagnet/data/");
+        if (!dataDir.isEmpty())
+            path.prepend(dataDir.first());
     }
     QString loadFilename = KFileDialog::getOpenFileName (KUrl(path),
                            "*.kmp", this, i18n("Load Puzzle"));
@@ -306,8 +306,8 @@ void kmagnet::save()
         return;
     }
     KConfig config (newFilename, KConfig::SimpleConfig);
-    //if (config.isConfigWritable(true))//FIXME, why now does not work now?
-      //return;
+    //if (config.isConfigWritable(true))//FIXME, why now does not work now? or why it worked be4?
+    //return;
     qDebug("save slot 3");
     KConfigGroup configGroup = config.group("kmagnet");
     qDebug("save slot 10");
@@ -338,7 +338,7 @@ void kmagnet::save()
     list.append (value);
     configGroup.writeEntry ("currentposition", list);
     list.clear();
-    
+
     p =m_scene->getStartPosition();
     value.sprintf ("%u",p );
     list.append (value);
@@ -347,7 +347,7 @@ void kmagnet::save()
 
     QStringList list2;
     QString     value2;
-    
+
     for (uint i=0; i < m_scene->getNumCells(); i++)
     {
         kmagnetCell * item = m_scene->getCell(i);
@@ -426,7 +426,6 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 
 void kmagnet::solveFunc()
 {
-    //if (m_scene->gameIsLost() || m_scene->gameIsWon()) restart();
     QAction * pauseAction = this->action("game_pause");
     if (pauseAction->isChecked())
         pauseAction->activate(KAction::Trigger);
@@ -445,7 +444,7 @@ void kmagnet::solutionFound()
     std::vector<Moves::Move> lm=m_solver->getSolution();
     if (lm.size()!=0)
     {
-      //DEBUG CODE
+        //DEBUG CODE
         for (unsigned int i=0; i< lm.size(); i++) {
             //	System.out.println(lm.get(i));
             QString str=QString();
@@ -469,7 +468,7 @@ void kmagnet::solutionFound()
             }
             qDebug() << str;
         }
-	//FI_DEBUG_CODE
+        //FI_DEBUG_CODE
         QVector<Moves::Move> lm2= QVector<Moves::Move>::fromStdVector(lm);
         m_scene->replay(lm2);
     }
@@ -488,12 +487,12 @@ void kmagnet::settingsChanged()
 void kmagnet::choosePath()
 {
     KUrl dirUrl = KDirSelectDialog::selectDirectory(KUrl(""), false,
-                                               parentWidget(),
-                                               i18n("Save Puzzles To"));
-    if (dirUrl.isValid() ) 
-      {
+                  parentWidget(),
+                  i18n("Save Puzzles To"));
+    if (dirUrl.isValid() )
+    {
         emit  valueChanged(dirUrl.prettyUrl());
-      }
+    }
 }
 
 #include "kmagnet.moc"
