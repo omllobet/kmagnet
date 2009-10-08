@@ -1,6 +1,7 @@
 ->Please don't use this version, use the code released in kde-apps: http://www.kde-apps.org/content/show.php?content=109111
 ->rewrite some things XD
-->postocell function, correct ball position
+->take a look at possible precision problems
+->postocell function?, correct ball position?
 ->correct load and save
 ->improve order
 ->improve code
@@ -14,7 +15,9 @@
 ->split scene in scene+board (graphicitem)?
 ->renderer+support themes
 ->yes it's an alpha...
-->random generator
+->random level generator!!!!
+->AI, maybe hillclimbing?
+->pass the parts of the scene where the animation goes through. m_scene->changed? m_scene->update(rect)?
 ->modificar cmake find libkdegames- ok
 ->a proper scene
 :wq
