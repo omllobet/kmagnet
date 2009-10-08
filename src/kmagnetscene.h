@@ -52,8 +52,8 @@ public:
      * Default Destructor
      */
     virtual ~kmagnetScene();
-    void setFinalPosition(QPoint pos);
-    void setNotFreePosition(QPoint pos);
+    void setFinalPosition(uint num);
+    void setNotFreePosition(uint num);
     void restart();
     void newGame();
     int getMovements() {
@@ -69,18 +69,15 @@ public:
     QPointF getBallPos() {
         return m_ball->pos();
     };
-    void setStartPosition(QPoint p) {
+    void setStartPosition(uint p) {
         startPosition=p;
     };
-    QPoint getStartPosition() {
-        return startPosition;
-    };
-    void setCurrentPosition(QPoint p) {
+    uint getStartPosition();
+    void setCurrentPosition(uint p) {
         currentPosition=p;
     };
-    QPoint getCurrentPosition() {
-        return currentPosition;
-    };
+    QPoint getCurrentPosition();
+    uint getCurrentCell();
     bool getEditorMode() {
         return editorMode;
     };
@@ -91,21 +88,26 @@ public:
     void setHasLost(bool haslostGame) {
         hasLost=haslostGame;
     };
-    bool gameIsLost(){
-	return hasLost;
+    bool gameIsLost() {
+        return hasLost;
     };
-    bool gameIsWon(){
-	return hasWon;
+    bool gameIsWon() {
+        return hasWon;
     };
-    void setBallPos(QPoint p);
-    QPoint getNextPosition(Moves::Move m);
+    void setBallPos(uint cellNumber);
+    int getNextPosition(Moves::Move m);
     nextMove isPossibleMove(Moves::Move m);
-    void setVisited(QPoint p,bool b);
+    void setVisited(uint p,bool b);
     void animateMovement(Moves::Move m);
     void replay(QVector<Moves::Move> lm);
+    kmagnetCell* getCell(uint n);
+    uint getNumCells() {
+        return m_cells.size();
+    };
+
 
 public slots:
-  void resizeScene(int width, int height);
+    void resizeScene(int width, int height);
     void process(Moves::Move mov);
     void finishWait();
 
@@ -119,20 +121,20 @@ protected:
 private:
 
     void setBoardPosition();
-    int posToCell(QPoint p);
-    
-    int COLUMNS;
-    int ROWS;
+    uint posToCell(QPoint p);
+
+    uint COLUMNS;
+    uint ROWS;
     bool hasLost;
     bool hasWon;
     bool editorMode;
-    int movements;
-    QPoint startPosition;
-    QPoint currentPosition;
+    uint movements;
+    uint startPosition;
+    uint currentPosition;
     QPixmapCache* cache;
     QGraphicsEllipseItem* m_ball;
     QVector<kmagnetCell*> m_cells;
-    void movement(int x, int y);
+    void movement(Moves::Move mov);
     QVector<Moves::Move> sol;
     QVector<QTimeLine*> m_timers;
     QVector<QGraphicsItemAnimation*> m_animations;
