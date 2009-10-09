@@ -155,17 +155,18 @@ void kmagnetScene::animateMovement ( Moves::Move mov )
         //hasLost=true;
         return;
     };
-    QPoint end= m_cells[nm.getPosition() ]->pos().toPoint();
+    kmagnetCell* finalCell=m_cells[nm.getPosition() ];
+    QPoint end= finalCell->pos().toPoint();
     QPoint start=m_cells[currentPosition]->pos().toPoint();
     //if (start==end) {hasLost=true; return;}//better use isPossibleMove?
-    if ( dynamic_cast<kmagnetCell*> ( itemAt ( end ) )->getIsFinal() ) hasWon=true;
+    //if ( finalCell->getIsFinal() ) hasWon=true;
     QPoint dif=end-start;
     int time;
     if ( dif.x() !=0 )
         time=dif.x();
     else
         time=dif.y();
-    QTimeLine *timer = new QTimeLine ( 250+abs ( time ) );
+    QTimeLine *timer = new QTimeLine ( 175+abs ( time ) );
     m_timers.append ( timer );
     connect ( timer, SIGNAL ( finished() ),this, SLOT ( finishWait() ) );
     timer->setFrameRange ( 0, 100 );
@@ -195,8 +196,9 @@ void kmagnetScene::finishWait()
     }
     else
     {
-        dynamic_cast<kmagnet*> ( parent() )->action ( "move_solve" )->setEnabled ( true );
-        dynamic_cast<kmagnet*> ( parent() )->action ( "game_restart" )->setEnabled ( true );
+	kmagnet* mainKmagnet = dynamic_cast<kmagnet*> ( parent() );
+        mainKmagnet->action ( "move_solve" )->setEnabled ( true );
+        mainKmagnet->action ( "game_restart" )->setEnabled ( true );
     }
 }
 
