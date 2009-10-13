@@ -106,7 +106,9 @@ void kmagnet::newGame()
     QAction * pauseAction = this->action("game_pause");
     if (pauseAction->isChecked())
         pauseAction->activate(KAction::Trigger);
+    qDebug("ok done XD");
     m_scene->newGame();
+    qDebug("ok done2");
 }
 
 void kmagnet::showHighscores()
@@ -401,7 +403,9 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
     {
         m_scene->setSize(25,20);
     }
-    emit newGame();
+    qDebug("changing size");
+    newGame();
+    qDebug("finito!!");
 }
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)

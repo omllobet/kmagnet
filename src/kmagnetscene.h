@@ -83,7 +83,7 @@ public:
     };
     void setSize(int r, int c) {
         ROWS=r;
-        COLUMNS=c;
+        COLUMNS=c;;
     };
     void setHasLost(bool haslostGame) {
         hasLost=haslostGame;

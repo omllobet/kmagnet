@@ -75,10 +75,12 @@ void kmagnetScene::newGame()
     {
         for ( int i=newSize; i<oldSize; ++i )
         {
+	  qDebug("deleting i=%d", i);
             this->removeItem ( m_cells[i] );
             delete m_cells[i];
         }
     }
+    qDebug("aaaaaaaaa");
     m_cells.resize ( newSize );
     for ( int i=0; i<newSize; ++i )
     {
@@ -104,6 +106,7 @@ void kmagnetScene::newGame()
     }
     setBallPos ( startPosition );
     this->update ( sceneRect() );
+    qDebug("aqsads");
 }
 
 void kmagnetScene::process ( Moves::Move mov )
