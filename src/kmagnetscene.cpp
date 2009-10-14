@@ -22,7 +22,6 @@
 #include <QDebug>
 
 #include "kmagnetscene.h"
-//#include <QThread>
 #include "kmagnet.h"
 
 kmagnetScene::kmagnetScene ( QObject * parent, int rows, int columns ) :
@@ -57,7 +56,7 @@ void kmagnetScene::setBoardPosition()
             m_cells[row*COLUMNS+col]->setPos ( QPointF ( Xcorrection+ ( col ) *itemsize, Ycorrection+ ( row ) *itemsize ) );
         }
     }
-     if ( m_ball!=NULL )
+     if ( m_ball )
     {
         qreal size=itemsize-0.10*itemsize;
         m_ball->setRect ( 0,0, size ,size );
@@ -92,7 +91,7 @@ void kmagnetScene::newGame()
 
     setBoardPosition();
 
-    if ( m_ball==NULL )
+    if ( !m_ball )
     {
         QRadialGradient radialGradient ( 7, 7, 7, 4, 4 );
         radialGradient.setColorAt ( 0.0, Qt::white );
@@ -131,10 +130,12 @@ void kmagnetScene::movement ( Moves::Move mov )
     nextMove nm= isPossibleMove ( mov );
     if ( !nm.getIsPossible() )
     {
-        //hasLost=true;
+        //hasLost=true;//disabled because if we are 
+	//moving towards a cell with a block we dont want the game to end
         return;
     };
     currentPosition=nm.getPosition();
+    if (m_cells[currentPosition]->getIsFinal()) hasWon=true;
     setBallPos ( currentPosition );
 }
 
@@ -173,7 +174,7 @@ void kmagnetScene::animateMovement ( Moves::Move mov )
     QTimeLine *timer = new QTimeLine ( 175+abs ( time ) );
     m_timers.append ( timer );
     connect ( timer, SIGNAL ( finished() ),this, SLOT ( finishWait() ) );
-    timer->setFrameRange ( 0, 100 );
+    timer->setFrameRange ( 0, 150 );
     QGraphicsItemAnimation *animation = new QGraphicsItemAnimation();
     m_animations.append ( animation );
     animation->setItem ( m_ball );
@@ -228,18 +229,17 @@ void kmagnetScene::setNotFreePosition ( uint num )
 
 void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {//FIXME I can do it better
-    dynamic_cast<kmagnet*> ( parent() )->setFocus();
-    QGraphicsItem* item=0;
+    QGraphicsItem* item=NULL;
     item= ( this->itemAt ( mouseEvent->scenePos() ) );
-    if ( item==0 ) return;
-    if ( item->zValue() ==5.0 || !item ) return;//if its the ball skip//FIXME
+    if ( !item ) return;
+    //if ( item->zValue() ==5.0) return;//if its the ball skip//FIXME
     uint cell=posToCell(item->pos().toPoint());
+    kmagnetCell *currentCell= m_cells[cell];
     if ( mouseEvent->button() == Qt::LeftButton )
     {
         if ( editorMode )
         {
-            //kmagnetCell *currentCell= dynamic_cast<kmagnetCell*> ( item );
-            kmagnetCell *currentCell= m_cells[cell];
+            //kmagnetCell *currentCell= dynamic_cast<kmagnetCell*> ( item );     
             if ( mouseEvent->modifiers() ==Qt::ControlModifier )
             {
                 //QPoint p =QPoint ( currentCell->x() +0.05*Global::itemSize,currentCell->y() +0.05*Global::itemSize );
@@ -291,16 +291,20 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         {
             if ( mouseEvent->modifiers() ==Qt::ControlModifier )
             {
-                dynamic_cast<kmagnetCell*> ( item )->reset();
+                //dynamic_cast<kmagnetCell*> ( item )->reset();
+		currentCell->reset();
             }
             else
-                dynamic_cast<kmagnetCell*> ( item )->setIsFinal ( true );
+                //dynamic_cast<kmagnetCell*> ( item )->setIsFinal ( true );
+		currentCell->setIsFinal ( true );
         }
     }
     else if ( mouseEvent->button() == Qt::MidButton )
     {
-        if ( editorMode ) dynamic_cast<kmagnetCell*> ( item )->reset();
+        //if ( editorMode ) dynamic_cast<kmagnetCell*> ( item )->reset();
+	if ( editorMode ) currentCell->reset();
     }
+    dynamic_cast<kmagnet*> ( parent() )->setFocus();
 }
 
 void kmagnetScene::restart()

@@ -43,8 +43,8 @@
 kmagnet::kmagnet() : KXmlGuiWindow()
 {
     this->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-    ROWS=15;
-    COLUMNS=10;
+    ROWS=25;
+    COLUMNS=20;
     m_view= new kmagnetView(this);
     m_view->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     m_view->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
