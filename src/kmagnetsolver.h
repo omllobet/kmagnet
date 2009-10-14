@@ -29,14 +29,14 @@
 using namespace std;
 
 class kmagnetScene;
-class kmagnetSolver: public QObject
+  class kmagnetSolver: public QObject
 {
 
     Q_OBJECT
 
 public:
 
-    kmagnetSolver(kmagnetScene* scene);
+    kmagnetSolver(QObject* parent=0);
     void solve(vector<Moves::Move> &lm, nextMove sg, int numrec);
     vector<Moves::Move> getSolution() {
         return solution;

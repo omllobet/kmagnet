@@ -36,11 +36,12 @@ kmagnetScene::kmagnetScene ( QObject * parent, int rows, int columns ) :
         startPosition ( 0 ),
         sol ( QVector<Moves::Move>() )
 {
+    setItemIndexMethod( NoIndex );
     cache = new QPixmapCache();
     cache->insert ( "free", QPixmap ( KStandardDirs::locate ( "appdata", "images/free.png" ) ) );
     cache->insert ( "notfree", QPixmap ( KStandardDirs::locate ( "appdata", "images/notfree.png" ) ) );
     cache->insert ( "final", QPixmap ( KStandardDirs::locate ( "appdata", "images/final.png" ) ) );
-    m_ball=0;
+    m_ball=NULL;
 }
 
 void kmagnetScene::setBoardPosition()
@@ -56,7 +57,7 @@ void kmagnetScene::setBoardPosition()
             m_cells[row*COLUMNS+col]->setPos ( QPointF ( Xcorrection+ ( col ) *itemsize, Ycorrection+ ( row ) *itemsize ) );
         }
     }
-    if ( m_ball )
+     if ( m_ball!=NULL )
     {
         qreal size=itemsize-0.10*itemsize;
         m_ball->setRect ( 0,0, size ,size );
@@ -75,12 +76,10 @@ void kmagnetScene::newGame()
     {
         for ( int i=newSize; i<oldSize; ++i )
         {
-	  qDebug("deleting i=%d", i);
             this->removeItem ( m_cells[i] );
             delete m_cells[i];
         }
     }
-    qDebug("aaaaaaaaa");
     m_cells.resize ( newSize );
     for ( int i=0; i<newSize; ++i )
     {
@@ -88,12 +87,12 @@ void kmagnetScene::newGame()
         if ( i<oldSize )
             m_cells[i]->reset();
         else
-            m_cells[i] = new kmagnetCell ( 0, this );
+            m_cells[i] = new kmagnetCell (0 , this );
     }
 
     setBoardPosition();
 
-    if ( !m_ball )
+    if ( m_ball==NULL )
     {
         QRadialGradient radialGradient ( 7, 7, 7, 4, 4 );
         radialGradient.setColorAt ( 0.0, Qt::white );
@@ -106,7 +105,6 @@ void kmagnetScene::newGame()
     }
     setBallPos ( startPosition );
     this->update ( sceneRect() );
-    qDebug("aqsads");
 }
 
 void kmagnetScene::process ( Moves::Move mov )
@@ -143,7 +141,10 @@ void kmagnetScene::movement ( Moves::Move mov )
 kmagnetScene::~kmagnetScene()
 {
     delete cache;
-    for ( int i=0;i<m_timers.size();i++ ) //buff que lleig...mirar quan ja no fan falta i esborrar-los llavors
+    for ( int i=0;i<m_cells.size();i++ )//cells have no parent
+        delete m_cells[i];
+    //buff que lleig...mirar quan ja no fan falta i esborrar-los llavors o algo
+    for ( int i=0;i<m_timers.size();i++ ) 
         delete m_timers[i];
     for ( int i=0;i<m_animations.size();i++ )
         delete m_animations[i];
@@ -367,7 +368,7 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
         qDebug() << "invalid move";
         break;
     }
-    qDebug() << "lost!!!!!!!!!!";
+    qDebug() << "lost!";
     hasLost=true;
     return  now;
 }
@@ -424,5 +425,10 @@ kmagnetCell* kmagnetScene::getCell ( uint n )
 {
     //if (n<ROWS*COLUMNS)//not needed for now
     return m_cells[n];
+}
 
+void kmagnetScene::setSize ( int r, int c )
+{
+  this->ROWS=r;
+  this->COLUMNS=c;
 }

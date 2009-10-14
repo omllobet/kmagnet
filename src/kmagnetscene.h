@@ -81,10 +81,7 @@ public:
     bool getEditorMode() {
         return editorMode;
     };
-    void setSize(int r, int c) {
-        ROWS=r;
-        COLUMNS=c;;
-    };
+    void setSize(int r, int c);
     void setHasLost(bool haslostGame) {
         hasLost=haslostGame;
     };

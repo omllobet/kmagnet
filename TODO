@@ -2,14 +2,14 @@
 ->rewrite some things XD
 ->take a look at possible precision problems
 ->postocell function?, correct ball position?
-->correct load and save
+->correct load and save - OK
 ->improve order
 ->improve code
 ->convert from std to Qt?
 ->read Qt documentation
 ->thousand other things
 ->why did I put keyboard moves on kmagnet and mouseevents on kmagnetscene?
-->animations
+->animations - ok
 ->Download puzzles from internet
 ->put solver in a Qthread or something
 ->split scene in scene+board (graphicitem)?
@@ -17,7 +17,8 @@
 ->yes it's an alpha...
 ->random level generator!!!!
 ->AI, maybe hillclimbing?
-->pass the parts of the scene where the animation goes through. m_scene->changed? m_scene->update(rect)?
+->FIX scene glitches->pass the parts of the scene where the animation goes through. m_scene->changed? m_scene->update(rect)?
+->option to configure animation milliseconds?
 ->modificar cmake find libkdegames- ok
 ->a proper scene
 :wq

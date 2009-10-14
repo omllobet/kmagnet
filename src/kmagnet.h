@@ -55,7 +55,8 @@ public:
     virtual ~kmagnet();
     virtual void keyReleaseEvent ( QKeyEvent * keyEvent);
     void calculateMinimiumSize();
-
+    kmagnetScene* get_scene(){return this->m_scene;};
+     
 public slots:
     void loadfile(QString loadFilename);
 

@@ -43,8 +43,8 @@
 kmagnet::kmagnet() : KXmlGuiWindow()
 {
     this->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-    ROWS=25;
-    COLUMNS=20;
+    ROWS=15;
+    COLUMNS=10;
     m_view= new kmagnetView(this);
     m_view->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     m_view->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -62,8 +62,8 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     m_view->setScene(m_scene);
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
 
-    //solver //TODO more qt way
-    m_solver= new kmagnetSolver(m_scene);
+    //solver 
+    m_solver= new kmagnetSolver(this);
     connect(m_solver, SIGNAL(finished()),this,SLOT(solutionFound()));
 
     m_gameClock = new KGameClock(this, KGameClock::MinSecOnly);
@@ -89,9 +89,9 @@ kmagnet::kmagnet() : KXmlGuiWindow()
 kmagnet::~kmagnet()
 {
     delete m_gameClock;
-    delete m_solver;
-    delete m_scene;//qt does this for me// mm on the planet there was an article...
-    delete m_view;//qt does this for me
+    //delete m_solver; //qt does this for me kmagnet is m_solver parent
+    //delete m_scene;//qt does this for me// mm on the planet there was an article...
+    //delete m_view;//qt does this for me
 }
 
 void kmagnet::newGame()
@@ -106,9 +106,7 @@ void kmagnet::newGame()
     QAction * pauseAction = this->action("game_pause");
     if (pauseAction->isChecked())
         pauseAction->activate(KAction::Trigger);
-    qDebug("ok done XD");
     m_scene->newGame();
-    qDebug("ok done2");
 }
 
 void kmagnet::showHighscores()
@@ -128,18 +126,17 @@ void kmagnet::setupActions()
     KStandardGameAction::quit(this, SLOT(close()), actionCollection());
     KStandardAction::preferences( this, SLOT( configureSettings() ), actionCollection() );
     KStandardGameAction::pause( this, SLOT( pause(bool ) ), actionCollection() );
-    KGameDifficulty::init(this,this, SLOT(levelChanged(KGameDifficulty::standardLevel)));
-    KGameDifficulty::setRestartOnChange(KGameDifficulty::RestartOnChange);
-    KGameDifficulty::addStandardLevel(KGameDifficulty::Easy);
-    KGameDifficulty::addStandardLevel(KGameDifficulty::Medium);
-    KGameDifficulty::addStandardLevel(KGameDifficulty::Hard);
-    //KGameDifficulty::setLevel(KGameDifficulty::Hard);
     KAction *editModeAction= new KAction(i18n("Editor Mode"),this);
     editModeAction->setCheckable(true);
     editModeAction->setShortcut(Qt::CTRL + Qt::Key_T);
     actionCollection()->addAction("editmode", editModeAction);
     connect( editModeAction, SIGNAL( triggered(bool) ),this, SLOT( editingMode(bool) ) );
     editModeAction->trigger();
+    KGameDifficulty::init(this,this, SLOT(levelChanged(KGameDifficulty::standardLevel)));
+    KGameDifficulty::setRestartOnChange(KGameDifficulty::RestartOnChange);
+    KGameDifficulty::addStandardLevel(KGameDifficulty::Easy);
+    KGameDifficulty::addStandardLevel(KGameDifficulty::Medium);
+    KGameDifficulty::addStandardLevel(KGameDifficulty::Hard);
     KGameDifficulty::setLevel(KGameDifficulty::Hard);
 }
 
@@ -403,9 +400,7 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
     {
         m_scene->setSize(25,20);
     }
-    qDebug("changing size");
     newGame();
-    qDebug("finito!!");
 }
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)

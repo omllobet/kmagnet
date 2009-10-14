@@ -23,9 +23,9 @@
 
 using namespace std;
 
-kmagnetSolver::kmagnetSolver(kmagnetScene* scene):QObject()
+kmagnetSolver::kmagnetSolver(QObject* parent):QObject(parent)
 {
-    this->m_scene=scene;
+    m_scene=dynamic_cast<kmagnet*>(parent)->get_scene();
 }
 
 void kmagnetSolver::findSolution()
