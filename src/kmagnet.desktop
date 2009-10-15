@@ -1,12 +1,13 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Name=kmagnet
-Name[x-test]=xxkmagnetxx
+Name=kMagnet
+Name[x-test]=xxkMagnetxx
 Exec=kmagnet %i -caption "%c"
-Icon=kmagnet
+Icon=kMagnet
 Type=Application
 DocPath=kmagnet/index.html
 GenericName=Simple puzzle game
 GenericName[ca]=Trencaclosques senzill
 Terminal=0
+Categories=Qt;KDE;Game;PuzzleGame;
 
