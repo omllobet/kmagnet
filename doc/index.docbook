@@ -2,7 +2,7 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!-- Define an entity for your application if it is not part of KDE
        CVS -->
-  <!ENTITY kmyapplication "<application>kmagnet</application>">
+  <!ENTITY kmyapplication "<application>kMagnet</application>">
   <!ENTITY kappname "&kmyapplication;"><!-- replace kmyapplication here
                                             do *not* replace kappname-->
   <!ENTITY package "kde-module"><!-- kdebase, kdeadmin, etc.  Leave
@@ -105,8 +105,9 @@ Please at least include KDE, the KDE package it is in, the name
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>games</keyword>
-<keyword>kmagnet</keyword>
+<keyword>Games</keyword>
+<keyword>PuzzleGame</keyword>
+<keyword>kMagnet</keyword>
 </keywordset>
 
 </bookinfo>
