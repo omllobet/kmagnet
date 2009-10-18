@@ -1,4 +1,6 @@
-->Please don't use this version, use the code released in kde-apps: http://www.kde-apps.org/content/show.php?content=109111
+->Please only use the version from gitorious if you are not a developer, 
+use the code released in kde-apps: http://www.kde-apps.org/content/show.php?content=109111
+or a package from your distro.
 ->rewrite some things XD
 ->take a look at possible precision problems
 ->postocell function?, correct ball position?
