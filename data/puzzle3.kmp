@@ -1,0 +1,8 @@
+[kmagnet]
+currentposition=60
+difficulty=50
+final=116,270,275
+movements=0
+notfree=9,74,89,98,103,154,167,170,201,218,233,238,246,248,303,308,312,336,359,379,388,392,400,406,412,422,437,452,476,494
+startposition=60
+time=0
