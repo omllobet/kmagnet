@@ -228,24 +228,18 @@ void kmagnetScene::setNotFreePosition ( uint num )
 }
 
 void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{//FIXME I can do it better
+{
     QGraphicsItem* item=NULL;
     item= ( this->itemAt ( mouseEvent->scenePos() ) );
     if ( !item ) return;
-    //if ( item->zValue() ==5.0) return;//if its the ball skip//FIXME
     uint cell=posToCell(item->pos().toPoint());
     kmagnetCell *currentCell= m_cells[cell];
     if ( mouseEvent->button() == Qt::LeftButton )
     {
         if ( editorMode )
         {
-	  qDebug() << "editor mode";
-            //kmagnetCell *currentCell= dynamic_cast<kmagnetCell*> ( item );     
             if ( mouseEvent->modifiers() ==Qt::ControlModifier )
             {
-                //QPoint p =QPoint ( currentCell->x() +0.05*Global::itemSize,currentCell->y() +0.05*Global::itemSize );
-                //setBallPos ( posToCell ( p ) );
-                //startPosition=posToCell ( p );
                 setBallPos(cell);
                 startPosition=cell;
                 currentCell->reset();//reset cell
@@ -257,7 +251,6 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         }
         else if ( !editorMode )
         {
-            //better just check row and column
 	    unsigned int p1= currentPosition;
 	    unsigned int p2= cell;
 	    if (p2>p1) //dreta o abaix
@@ -282,17 +275,14 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         {
             if ( mouseEvent->modifiers() ==Qt::ControlModifier )
             {
-                //dynamic_cast<kmagnetCell*> ( item )->reset();
 		currentCell->reset();
             }
             else
-                //dynamic_cast<kmagnetCell*> ( item )->setIsFinal ( true );
 		currentCell->setIsFinal ( true );
         }
     }
     else if ( mouseEvent->button() == Qt::MidButton )
     {
-        //if ( editorMode ) dynamic_cast<kmagnetCell*> ( item )->reset();
 	if ( editorMode ) currentCell->reset();
     }
     dynamic_cast<kmagnet*> ( parent() )->setFocus();
