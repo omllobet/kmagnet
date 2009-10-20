@@ -62,7 +62,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     m_view->setScene(m_scene);
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
 
-    //solver 
+    //solver
     m_solver= new kmagnetSolver(this);
     connect(m_solver, SIGNAL(finished()),this,SLOT(solutionFound()));
 
@@ -401,6 +401,7 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
         m_scene->setSize(25,20);
     }
     newGame();
+    this->setFocus();
 }
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
@@ -422,6 +423,12 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
         break;
     }
 }
+
+/*void kmagnet::mouseReleaseEvent ( QMouseEvent * event )
+{
+
+
+}*/
 
 void kmagnet::solveFunc()
 {

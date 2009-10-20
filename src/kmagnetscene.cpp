@@ -239,6 +239,7 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     {
         if ( editorMode )
         {
+	  qDebug() << "editor mode";
             //kmagnetCell *currentCell= dynamic_cast<kmagnetCell*> ( item );     
             if ( mouseEvent->modifiers() ==Qt::ControlModifier )
             {
@@ -254,35 +255,25 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
                 currentCell->setIsFree ( false );
             return;
         }
-        if ( !editorMode )
+        else if ( !editorMode )
         {
             //better just check row and column
-            QPointF p1= m_ball->pos();
-            int x1 = p1.x();
-            int y1= p1.y();
-            int x1norm =x1 - x1%Global::itemSize;
-            int y1norm=y1 - y1%Global::itemSize;
-            //qDebug("x1 =%d, x1norm elipse=%d, y1=%d, y1norm elipse=%d",x1, x1norm, y1, y1norm);
-            QPointF p2= mouseEvent->scenePos();
-            int x2= p2.x();
-            int y2= p2.y();
-            int x2norm=x2 - x2%Global::itemSize;
-            int y2norm=y2 - y2%Global::itemSize;
-            //qDebug("x2 =%d, x2norm mouse=%d, y2=%d, y2norm mouse=%d",x2, x2norm, y2, y2norm);
-            if ( x1norm==x2norm )
-            {
-                if ( y2>y1 )
-                    process ( Moves::DOWN );
-                else
-                    process ( Moves::UP );
-            }
-            else if ( y1norm==y2norm )
-            {
-                if ( x2>x1 )
-                    process ( Moves::RIGHT );
-                else
-                    process ( Moves::LEFT );
-            }
+	    unsigned int p1= currentPosition;
+	    unsigned int p2= cell;
+	    if (p2>p1) //dreta o abaix
+	    {	      
+	      if (p2/ COLUMNS==p1/ COLUMNS)
+		  process ( Moves::RIGHT );
+	      else if (p2% COLUMNS==p1% COLUMNS)
+		 process ( Moves::DOWN );
+	    }
+	    else //amunt o esquerra
+	    {
+	      if (p2/ COLUMNS==p1/ COLUMNS)
+		  process ( Moves::LEFT );
+	      else if (p2% COLUMNS==p1% COLUMNS)
+		  process ( Moves::UP );
+	    }
         }
     }
     else if ( mouseEvent->button() == Qt::RightButton )

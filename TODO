@@ -12,7 +12,7 @@ or a package from your distro.
 ->thousand other things
 ->why did I put keyboard moves on kmagnet and mouseevents on kmagnetscene?
 ->animations - ok
-->Download puzzles from internet
+->Download puzzles from internet ->knewstuff2
 ->put solver in a Qthread or something
 ->split scene in scene+board (graphicitem)?
 ->renderer+support themes

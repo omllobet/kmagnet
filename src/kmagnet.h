@@ -38,7 +38,7 @@ class KToggleAction;
  *
  * @short Main window class
  * @author Oscar Martinez omllobet@gmail.com
- * @version 0.01
+ * @version 0.03
  */
 class kmagnet : public KXmlGuiWindow
 {
@@ -54,6 +54,7 @@ public:
      */
     virtual ~kmagnet();
     virtual void keyReleaseEvent ( QKeyEvent * keyEvent);
+//    virtual void mouseReleaseEvent ( QMouseEvent * event );
     void calculateMinimiumSize();
     kmagnetScene* get_scene(){return this->m_scene;};
      
