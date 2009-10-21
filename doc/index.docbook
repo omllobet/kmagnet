@@ -428,12 +428,12 @@ Section</link> and the <link linkend="playing-kapp">Playing &kmyapplication;</li
 </qandaentry>
 <qandaentry>
 <question>
-<para>I receive the following message when I try to save a puzzle: "Configuration file "/usr/share/kde4/apps/kmagnet/data/kkk.kmp" not writable.
+<para>I receive the following message when I try to save a puzzle: "Configuration file "/dir/where/I/want/to/save/puzzle.kmp" not writable.
 Please contact your system administrator."</para>
 </question>
 <answer>
 <para>This message means you don't have write permission in the directory you selected. Please
-select a directory in whichyou have write permission. You can set the default directory
+select a directory in which you have write permission. You can set the default directory
 to save and load puzzles from in Settings->Configure &kmyapplication;...</para>
 </answer>
 </qandaentry>
