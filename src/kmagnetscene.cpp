@@ -146,10 +146,11 @@ kmagnetScene::~kmagnetScene()
     for ( int i=0;i<m_cells.size();i++ )//cells have no parent
         delete m_cells[i];
     //buff que lleig...mirar quan ja no fan falta i esborrar-los llavors o algo
-    for ( int i=0;i<m_timers.size();i++ ) 
+    //now have a parent
+    /*for ( int i=0;i<m_timers.size();i++ ) 
         delete m_timers[i];
     for ( int i=0;i<m_animations.size();i++ )
-        delete m_animations[i];
+        delete m_animations[i];*/
 }
 
 void kmagnetScene::animateMovement ( Moves::Move mov )
@@ -161,12 +162,10 @@ void kmagnetScene::animateMovement ( Moves::Move mov )
         //hasLost=true;
         return;
     };
-    QTimeLine *timer = new QTimeLine ( Settings::animationTime() );
-    m_timers.append ( timer );
+    QTimeLine *timer = new QTimeLine ( Settings::animationTime(), this );
     connect ( timer, SIGNAL ( finished() ),this, SLOT ( finishWait() ) );
     timer->setFrameRange ( 0, 150 );
-    QGraphicsItemAnimation *animation = new QGraphicsItemAnimation();
-    m_animations.append ( animation );
+    QGraphicsItemAnimation *animation = new QGraphicsItemAnimation(this);
     animation->setItem ( m_ball );
     animation->setTimeLine ( timer );
     animation->setPosAt ( 1.0,m_cells[nm.getPosition()]->pos() );

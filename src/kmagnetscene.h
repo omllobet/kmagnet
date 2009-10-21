@@ -133,8 +133,6 @@ private:
     QVector<kmagnetCell*> m_cells;
     void movement(Moves::Move mov);
     QVector<Moves::Move> sol;
-    QVector<QTimeLine*> m_timers;
-    QVector<QGraphicsItemAnimation*> m_animations;
 };
 
 #endif // KMAGNETSCENE_H
