@@ -52,7 +52,8 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     m_view->setCacheMode( QGraphicsView::CacheBackground );
     m_view->setOptimizationFlags( QGraphicsView::DontClipPainter |
                                   QGraphicsView::DontSavePainterState |
-                                  QGraphicsView::DontAdjustForAntialiasing );
+                                  QGraphicsView::DontAdjustForAntialiasing 
+				  );
 
     m_scene = new kmagnetScene(this, ROWS, COLUMNS);
     m_scene->setBackgroundBrush(Qt::lightGray);
@@ -423,12 +424,6 @@ void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
         break;
     }
 }
-
-/*void kmagnet::mouseReleaseEvent ( QMouseEvent * event )
-{
-
-
-}*/
 
 void kmagnet::solveFunc()
 {

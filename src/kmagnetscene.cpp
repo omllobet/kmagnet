@@ -23,6 +23,7 @@
 
 #include "kmagnetscene.h"
 #include "kmagnet.h"
+#include <settings.h>
 
 kmagnetScene::kmagnetScene ( QObject * parent, int rows, int columns ) :
         QGraphicsScene ( parent ),
@@ -154,24 +155,13 @@ kmagnetScene::~kmagnetScene()
 void kmagnetScene::animateMovement ( Moves::Move mov )
 {
     nextMove nm= isPossibleMove ( mov );
-    //QPoint end=getNextPosition(m);
+    //need this check?
     if ( !nm.getIsPossible() )
     {
         //hasLost=true;
         return;
     };
-    kmagnetCell* finalCell=m_cells[nm.getPosition() ];
-    QPoint end= finalCell->pos().toPoint();
-    QPoint start=m_cells[currentPosition]->pos().toPoint();
-    //if (start==end) {hasLost=true; return;}//better use isPossibleMove?
-    //if ( finalCell->getIsFinal() ) hasWon=true;
-    QPoint dif=end-start;
-    int time;
-    if ( dif.x() !=0 )
-        time=dif.x();
-    else
-        time=dif.y();
-    QTimeLine *timer = new QTimeLine ( 175+abs ( time ) );
+    QTimeLine *timer = new QTimeLine ( Settings::animationTime() );
     m_timers.append ( timer );
     connect ( timer, SIGNAL ( finished() ),this, SLOT ( finishWait() ) );
     timer->setFrameRange ( 0, 150 );
@@ -179,7 +169,7 @@ void kmagnetScene::animateMovement ( Moves::Move mov )
     m_animations.append ( animation );
     animation->setItem ( m_ball );
     animation->setTimeLine ( timer );
-    animation->setPosAt ( 1.0,end );
+    animation->setPosAt ( 1.0,m_cells[nm.getPosition()]->pos() );
     timer->start();
     currentPosition=nm.getPosition();
 }

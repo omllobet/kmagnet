@@ -12,5 +12,9 @@
 	    <label>Maximium number of steps to find the solution</label>
 	    <default>34</default>
     </entry>
+    <entry name="animationTime" type="Int">
+	    <label>Animation time (in ms)</label>
+	    <default>500</default>
+    </entry>
   </group>
 </kcfg>

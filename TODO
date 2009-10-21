@@ -20,7 +20,7 @@ or a package from your distro.
 ->random level generator!!!!
 ->AI, maybe hillclimbing?
 ->FIX scene glitches->pass the parts of the scene where the animation goes through. m_scene->changed? m_scene->update(rect)?
-->option to configure animation milliseconds?
+->option to configure animation milliseconds?->done
 ->modificar cmake find libkdegames- ok
-->a proper scene
+->a proper scene->ok
 :wq
