@@ -84,6 +84,8 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
     setupGUI();
+
+    fillPuzzleList(puzzles, puzzlesList, "puzzle_list", SLOT(puzzleSelected()));
     setFocus();
 }
 
@@ -94,6 +96,13 @@ kmagnet::~kmagnet()
     //delete m_scene;//qt does this for me// mm on the planet there was an article...
     //delete m_view;//qt does this for me
 }
+
+const kmagnet::PuzzleItem kmagnet::puzzles [] = {
+    {"puzzle1.kmp",		I18N_NOOP("Hard Puzzle 1")},
+    {"puzzle2.kmp",		I18N_NOOP("Hard Puzzle 2")},
+    {"puzzle3.kmp",		I18N_NOOP("Hard Puzzle 3")},
+    {"END",			""}
+};
 
 void kmagnet::newGame()
 {
@@ -125,7 +134,7 @@ void kmagnet::setupActions()
     KStandardGameAction::saveAs(this, SLOT(save()), actionCollection());
     KStandardGameAction::solve(this, SLOT(solveFunc()), actionCollection());
     KStandardGameAction::quit(this, SLOT(close()), actionCollection());
-    KStandardAction::preferences( this, SLOT( configureSettings() ), actionCollection() );
+    KStandardAction::preferences( this, SLOT( configureSettings()) , actionCollection() );
     KStandardGameAction::pause( this, SLOT( pause(bool ) ), actionCollection() );
     KAction *editModeAction= new KAction(i18n("Editor Mode"),this);
     editModeAction->setCheckable(true);
@@ -148,10 +157,10 @@ void kmagnet::configureSettings()
     // compare the names of the widgets in the .ui file
     // to the names of the variables in the .kcfg file
     //avoid to have 2 dialogs shown
-    if ( KConfigDialog::showDialog( "settings" ) )  {
+    if ( KConfigDialog::showDialog( i18n("Settings") ))  {
         return;
     }
-    KConfigDialog *dialog = new KConfigDialog(this, "settings", Settings::self());
+    KConfigDialog *dialog = new KConfigDialog(this, i18n("Settings"), Settings::self());
     QWidget *generalSettingsDlg = new QWidget;
     ui_prefs_base.setupUi(generalSettingsDlg);
 //ui settings
@@ -167,11 +176,7 @@ void kmagnet::load()
 {
     QString path = Settings::kmagnetDataPath();
     if (path.isEmpty())
-    {
-        QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
-        if (!dataDir.isEmpty())
-            path.prepend(dataDir.first());
-    }
+      choosePath();
     QString loadFilename = KFileDialog::getOpenFileName (KUrl(path),
                            "*.kmp", this, i18n("Load Puzzle"));
     if (loadFilename.isNull()) {
@@ -300,7 +305,10 @@ void kmagnet::editingMode(bool b)
 void kmagnet::save()
 {
     QString path = Settings::kmagnetDataPath();
-    QString newFilename = KFileDialog::getSaveFileName (KUrl(path),
+    if (path.isEmpty())
+      choosePath();
+    KUrl startDir = KUrl(path + "/puzzle-" + QDateTime::currentDateTime().toString("yyyy.MM.dd-hh.mm.ss") + ".kmp");
+    QString newFilename = KFileDialog::getSaveFileName ( startDir,
                           "*.kmp", this, i18n("Save Puzzle"));
     if (newFilename.isNull()) {
         return;
@@ -386,7 +394,6 @@ void kmagnet::pause(bool b)
 
 void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
 {
-
     if (level==KGameDifficulty::Easy)
     {
         m_scene->setSize(15,10);
@@ -405,7 +412,6 @@ void kmagnet::levelChanged(KGameDifficulty::standardLevel level)
 
 void kmagnet::keyReleaseEvent ( QKeyEvent * keyEvent)
 {
-
     switch ( keyEvent->key() )
     {
     case Qt::Key_Down:
@@ -485,13 +491,46 @@ void kmagnet::settingsChanged()
 
 void kmagnet::choosePath()
 {
-    KUrl dirUrl = KDirSelectDialog::selectDirectory(KUrl(""), false,
+    KUrl dirUrl = KDirSelectDialog::selectDirectory(KUrl(QDir::homePath()), false,
                   parentWidget(),
-                  i18n("Save Puzzles To"));
+                  i18n("Choose where to load/save puzzles from/to"));
     if (dirUrl.isValid() )
     {
         emit  valueChanged(dirUrl.prettyUrl());
     }
+}
+
+void kmagnet::puzzleSelected()
+{
+//part of the code similar to kubrick
+    const KAction * action = static_cast <const KAction *> (sender());
+    int index = action->data().toInt();
+
+    if (index >= 0)
+    {
+    QString path;
+     QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
+        if (!dataDir.isEmpty())
+		path=dataDir.first();
+	loadfile (path + puzzles[index].filename);
+    }
+}
+
+void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &list,
+			const char *uilist, const char *slot)
+{//part of the code similar to kubrick
+    // Generate an action list with one action for each item in the list.
+    for (uint i = 0; (strcmp (itemList[i].filename, "END") != 0); i++) 
+    {
+	KAction * t = new KAction (i18n (itemList[i].menuText), this);
+	actionCollection()->addAction (QString ("%1%2").arg(uilist).arg(i), t);
+	t->setData (i);		// Save the index of the item inside the action.
+	list.append (t);
+	connect (t, SIGNAL (triggered()), slot);
+    }
+
+    // Plug the action list into the Puzzles menu.
+    plugActionList (uilist, list);
 }
 
 #include "kmagnet.moc"

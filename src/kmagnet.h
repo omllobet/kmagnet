@@ -77,7 +77,7 @@ private slots:
     void solutionFound();
     void settingsChanged();
     void choosePath();
-
+    void puzzleSelected();
 signals:
      void valueChanged(QString newValue);
 
@@ -96,6 +96,18 @@ private:
     kmagnetScene *m_scene;
     kmagnetSolver *m_solver;
     Ui::prefs_base ui_prefs_base ;
+    
+    //like krubik for now
+    struct PuzzleItem {
+	const char * filename;		// File containing demo or "END".
+	const char * menuText;		// Description of the pattern or moves.
+    };
+    static const PuzzleItem puzzles [];
+    
+    QList<QAction*> puzzlesList;
+    
+    void fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &list,
+			const char *uilist, const char *slot);
 };
 
 #endif // _KMAGNET_H_

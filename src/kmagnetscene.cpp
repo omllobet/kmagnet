@@ -67,6 +67,7 @@ void kmagnetScene::setBoardPosition()
 
 void kmagnetScene::newGame()
 {
+  //part of the code similar to kmines
     hasLost=false;
     hasWon=false;
     movements=0;
