@@ -109,6 +109,7 @@ private:
     
     void fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &list,
 			const char *uilist, const char *slot);
+    void loadPredefinedPuzzle(QString name);
 };
 
 #endif // _KMAGNET_H_

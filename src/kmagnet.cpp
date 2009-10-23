@@ -17,7 +17,6 @@
  *************************************************************************************/
 
 #include <QHBoxLayout>
-#include <QToolButton>
 
 #include <KConfigDialog>
 #include <KStatusBar>
@@ -34,8 +33,6 @@
 #include <KStandardDirs>
 #include <KGameDifficulty>
 #include <KDirSelectDialog>
-#include <KXmlGuiWindow>
-#include <KMenu>
 
 #include "kmagnet.h"
 #include "settings.h"
@@ -503,22 +500,6 @@ void kmagnet::choosePath()
     }
 }
 
-void kmagnet::puzzleSelected()
-{
-//part of the code similar to kubrick
-    const KAction * action = static_cast <const KAction *> (sender());
-    int index = action->data().toInt();
-
-    if (index >= 0)
-    {
-    QString path;
-     QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
-        if (!dataDir.isEmpty())
-		path=dataDir.first();
-	loadfile (path + puzzles[index].filename);
-    }
-}
-
 void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &list,
 			const char *uilist, const char *slot)
 {//part of the code similar to kubrick
@@ -541,17 +522,33 @@ void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &li
     plugActionList (uilist, list);
 }
 
+void kmagnet::puzzleSelected()
+{
+//part of the code similar to kubrick
+    const KAction * action = static_cast <const KAction *> (sender());
+    int index = action->data().toInt();
+
+    if (index >= 0)
+    {
+      loadPredefinedPuzzle(puzzles[index].filename);
+    }
+}
+
 void kmagnet::playRandomPuzzle()
 {
   int high=3;//FIXME
   int low=1;
   int random= qrand() % ((high + 1) - low) + low;
-  qDebug() << "random" << random;
+  loadPredefinedPuzzle ("puzzle" + QString::number(random) + ".kmp");
+}
+
+void kmagnet::loadPredefinedPuzzle(QString name)
+{
   QString path;
   QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
     if (!dataDir.isEmpty())
 	  path=dataDir.first();
-  loadfile (path + "puzzle" + QString::number(random) + ".kmp");
+  loadfile(path + name);
 }
 
 #include "kmagnet.moc"
