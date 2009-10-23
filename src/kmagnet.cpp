@@ -504,7 +504,7 @@ void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &li
 			const char *uilist, const char *slot)
 {//part of the code similar to kubrick
     //Add random action
-    KAction * t = new KAction (i18n ("Random"), this);
+    KAction * t = new KAction (i18n ("Random predefined"), this);
     actionCollection()->addAction("random", t);
     connect(t, SIGNAL(triggered()), SLOT(playRandomPuzzle()));
     list.append(t);
