@@ -34,6 +34,8 @@
 #include <KGameDifficulty>
 #include <KDirSelectDialog>
 
+#include <knewstuff2/engine.h>
+
 #include "kmagnet.h"
 #include "settings.h"
 #include "common.h"
@@ -148,6 +150,11 @@ void kmagnet::setupActions()
     KGameDifficulty::addStandardLevel(KGameDifficulty::Medium);
     KGameDifficulty::addStandardLevel(KGameDifficulty::Hard);
     KGameDifficulty::setLevel(KGameDifficulty::Hard);
+    //hotnewstuff
+    KAction *hotNewStuffAction= new KAction(i18n("Get more puzzles"),this);
+    hotNewStuffAction->setShortcut(Qt::CTRL + Qt::Key_H);
+    actionCollection()->addAction("hotnewstuff", hotNewStuffAction);
+    connect( hotNewStuffAction, SIGNAL( triggered() ),this, SLOT( getHotNewStuff()) );
 }
 
 void kmagnet::configureSettings()
@@ -550,5 +557,22 @@ void kmagnet::loadPredefinedPuzzle(QString name)
 	  path=dataDir.first();
   loadfile(path + name);
 }
+
+void kmagnet::getHotNewStuff()
+{
+  qDebug() << KGlobal::activeComponent().componentName();
+  KNS::Entry::List entries = KNS::Engine::download();
+    // list of changed entries
+    foreach(KNS::Entry* entry, entries) {
+        // care only about installed ones
+        if (entry->status() == KNS::Entry::Installed) {
+            // do something with the installed entries
+	    qDebug() << entry->idNumber();
+	    qDebug() << entry->installedFiles();
+            }
+        }
+    
+    qDeleteAll(entries);
+ }
 
 #include "kmagnet.moc"
