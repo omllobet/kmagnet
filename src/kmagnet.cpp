@@ -183,9 +183,11 @@ void kmagnet::configureSettings()
 void kmagnet::load()
 {
     QString path = Settings::kmagnetDataPath();
-    if (path.isEmpty())
+    if (path.isEmpty())//don't need it anymore
       choosePath();
-    QString loadFilename = KFileDialog::getOpenFileName (KUrl(path),
+    if (!QDir(path).exists())
+      path = QDir::home().path() + "/";
+    QString loadFilename = KFileDialog::getOpenFileName (KUrl(path + "/"),
                            "*.kmp", this, i18n("Load Puzzle"));
     if (loadFilename.isNull()) {
         return;
