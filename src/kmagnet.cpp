@@ -17,6 +17,7 @@
  *************************************************************************************/
 
 #include <QHBoxLayout>
+#include <QToolButton>
 
 #include <KConfigDialog>
 #include <KStatusBar>
@@ -33,6 +34,8 @@
 #include <KStandardDirs>
 #include <KGameDifficulty>
 #include <KDirSelectDialog>
+#include <KXmlGuiWindow>
+#include <KMenu>
 
 #include "kmagnet.h"
 #include "settings.h"
@@ -83,8 +86,8 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // It also applies the saved mainwindow settings, if any, and ask the
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
-    setupGUI();
-
+    setupGUI();    
+    
     fillPuzzleList(puzzles, puzzlesList, "puzzle_list", SLOT(puzzleSelected()));
     setFocus();
 }
@@ -519,6 +522,11 @@ void kmagnet::puzzleSelected()
 void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &list,
 			const char *uilist, const char *slot)
 {//part of the code similar to kubrick
+    //Add random action
+    KAction * t = new KAction (i18n ("Random"), this);
+    actionCollection()->addAction("random", t);
+    connect(t, SIGNAL(triggered()), SLOT(playRandomPuzzle()));
+    list.append(t);
     // Generate an action list with one action for each item in the list.
     for (uint i = 0; (strcmp (itemList[i].filename, "END") != 0); i++) 
     {
@@ -531,6 +539,19 @@ void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &li
 
     // Plug the action list into the Puzzles menu.
     plugActionList (uilist, list);
+}
+
+void kmagnet::playRandomPuzzle()
+{
+  int high=3;//FIXME
+  int low=1;
+  int random= qrand() % ((high + 1) - low) + low;
+  qDebug() << "random" << random;
+  QString path;
+  QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
+    if (!dataDir.isEmpty())
+	  path=dataDir.first();
+  loadfile (path + "puzzle" + QString::number(random) + ".kmp");
 }
 
 #include "kmagnet.moc"

@@ -2,6 +2,7 @@
 use the code released in kde-apps: http://www.kde-apps.org/content/show.php?content=109111
 or a package from your distro.
 ->rewrite some things XD
+->use isrunning
 ->take a look at possible precision problems
 ->postocell function?, correct ball position?
 ->correct load and save - OK
