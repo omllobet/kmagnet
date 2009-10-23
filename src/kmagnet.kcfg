@@ -8,7 +8,7 @@
   <group name="general">
     <entry key="kmagnetDataPath" type="Path" >
 	<default code="true">
-	QDir::home().path() + "/" + "kMagnet/data"
+	QDir::home().path() + "/" + ".kMagnet"
 	</default>
     </entry>
     <entry name="maxCalls" type="Int">

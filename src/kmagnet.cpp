@@ -151,8 +151,9 @@ void kmagnet::setupActions()
     KGameDifficulty::addStandardLevel(KGameDifficulty::Hard);
     KGameDifficulty::setLevel(KGameDifficulty::Hard);
     //hotnewstuff
-    KAction *hotNewStuffAction= new KAction(i18n("Get more puzzles"),this);
+    KAction *hotNewStuffAction= new KAction(i18n("Get puzzles!"),this);
     hotNewStuffAction->setShortcut(Qt::CTRL + Qt::Key_H);
+    hotNewStuffAction->setIcon(KIcon("get-hot-new-stuff"));
     actionCollection()->addAction("hotnewstuff", hotNewStuffAction);
     connect( hotNewStuffAction, SIGNAL( triggered() ),this, SLOT( getHotNewStuff()) );
 }
