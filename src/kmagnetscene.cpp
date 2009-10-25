@@ -36,6 +36,8 @@ kmagnetScene::kmagnetScene ( QObject * parent, int rows, int columns ) :
         startPosition ( 0 ),
         sol ( QVector<Moves::Move>() )
 {
+    signalMapper = new QSignalMapper(this);
+    connect(signalMapper, SIGNAL(mapped(int )),this, SLOT(finishWait(int )));
     setItemIndexMethod( NoIndex );
     cache = new QPixmapCache();
     cache->insert ( "free", QPixmap ( KStandardDirs::locate ( "appdata", "images/free.png" ) ) );
@@ -57,7 +59,7 @@ void kmagnetScene::setBoardPosition()
             m_cells[row*COLUMNS+col]->setPos ( QPointF ( Xcorrection+ ( col ) *itemsize, Ycorrection+ ( row ) *itemsize ) );
         }
     }
-     if ( m_ball )
+    if ( m_ball )
     {
         qreal size=itemsize-0.10*itemsize;
         m_ball->setRect ( 0,0, size ,size );
@@ -67,7 +69,7 @@ void kmagnetScene::setBoardPosition()
 
 void kmagnetScene::newGame()
 {
-  //part of the code similar to kmines
+    //part of the code similar to kmines
     hasLost=false;
     hasWon=false;
     movements=0;
@@ -105,7 +107,8 @@ void kmagnetScene::newGame()
         m_ball->setZValue ( 5.0 );
     }
     setBallPos ( startPosition );
-    this->update ( sceneRect() );
+    //this->update ( sceneRect() );
+    this->update ();
 }
 
 void kmagnetScene::process ( Moves::Move mov )
@@ -132,8 +135,8 @@ void kmagnetScene::movement ( Moves::Move mov )
     nextMove nm= isPossibleMove ( mov );
     if ( !nm.getIsPossible() )
     {
-        //hasLost=true;//disabled because if we are 
-	//moving towards a cell with a block we dont want the game to end
+        //hasLost=true;//disabled because if we are
+        //moving towards a cell with a block we dont want the game to end
         return;
     };
     currentPosition=nm.getPosition();
@@ -148,7 +151,7 @@ kmagnetScene::~kmagnetScene()
         delete m_cells[i];
     //buff que lleig...mirar quan ja no fan falta i esborrar-los llavors o algo
     //now have a parent
-    /*for ( int i=0;i<m_timers.size();i++ ) 
+    /*for ( int i=0;i<m_timers.size();i++ )
         delete m_timers[i];
     for ( int i=0;i<m_animations.size();i++ )
         delete m_animations[i];*/
@@ -163,13 +166,17 @@ void kmagnetScene::animateMovement ( Moves::Move mov )
         //hasLost=true;
         return;
     };
+    unsigned int pos=nm.getPosition();
     QTimeLine *timer = new QTimeLine ( Settings::animationTime(), this );
-    connect ( timer, SIGNAL ( finished() ),this, SLOT ( finishWait() ) );
+    signalMapper->setMapping(timer,currentPosition+pos*1000);
+    connect ( timer, SIGNAL ( finished() ),signalMapper, SLOT ( map() ) );
+    //connect(signalMapper, SIGNAL(mapped(int )),this, SIGNAL(finishWait(int )));
+    //connect ( timer, SIGNAL ( finished() ),this, SLOT ( finishWait() ) );
     timer->setFrameRange ( 0, 150 );
     QGraphicsItemAnimation *animation = new QGraphicsItemAnimation(this);
     animation->setItem ( m_ball );
     animation->setTimeLine ( timer );
-    animation->setPosAt ( 1.0,m_cells[nm.getPosition()]->pos() );
+    animation->setPosAt ( 1.0,m_cells[pos]->pos() );
     timer->start();
     currentPosition=nm.getPosition();
 }
@@ -182,18 +189,30 @@ void kmagnetScene::replay ( QVector<Moves::Move> lm )
     sol.pop_front();
 }
 
-void kmagnetScene::finishWait()
+void kmagnetScene::finishWait(int number)
 {
     if ( sol.size() !=0 )
     {
         animateMovement ( sol.at ( 0 ) );
+        unsigned int startNumber = number%1000;
+        unsigned int endNumber = number/1000;
+        QPointF startPos = m_cells[startNumber]->pos();
+        QPointF endPos = m_cells[endNumber]->pos();
+        QRectF rectange = QRectF();
+        if (endNumber > startNumber) {//FIXME qt does not recommend using this constructor
+            rectange = QRectF(m_cells[startNumber]->pos(), QPointF( endPos.x()+Global::itemSize+2,endPos.y()+Global::itemSize+2));
+        } else {
+            rectange = QRectF(m_cells[endNumber]->pos(), QPointF( startPos.x()+Global::itemSize+2,startPos.y()+Global::itemSize+2));
+        }
+        this->update(rectange);
         sol.pop_front();//sol.erase(sol.begin());
     }
     else
     {
-	kmagnet* mainKmagnet = dynamic_cast<kmagnet*> ( parent() );
+        kmagnet* mainKmagnet = dynamic_cast<kmagnet*> ( parent() );
         mainKmagnet->action ( "move_solve" )->setEnabled ( true );
         mainKmagnet->action ( "game_restart" )->setEnabled ( true );
+        this->update();
     }
 }
 
@@ -241,22 +260,22 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         }
         else if ( !editorMode )
         {
-	    unsigned int p1= currentPosition;
-	    unsigned int p2= cell;
-	    if (p2>p1) //dreta o abaix
-	    {	      
-	      if (p2/ COLUMNS==p1/ COLUMNS)
-		  process ( Moves::RIGHT );
-	      else if (p2% COLUMNS==p1% COLUMNS)
-		 process ( Moves::DOWN );
-	    }
-	    else //amunt o esquerra
-	    {
-	      if (p2/ COLUMNS==p1/ COLUMNS)
-		  process ( Moves::LEFT );
-	      else if (p2% COLUMNS==p1% COLUMNS)
-		  process ( Moves::UP );
-	    }
+            unsigned int p1= currentPosition;
+            unsigned int p2= cell;
+            if (p2>p1) //dreta o abaix
+            {
+                if (p2/ COLUMNS==p1/ COLUMNS)
+                    process ( Moves::RIGHT );
+                else if (p2% COLUMNS==p1% COLUMNS)
+                    process ( Moves::DOWN );
+            }
+            else //amunt o esquerra
+            {
+                if (p2/ COLUMNS==p1/ COLUMNS)
+                    process ( Moves::LEFT );
+                else if (p2% COLUMNS==p1% COLUMNS)
+                    process ( Moves::UP );
+            }
         }
     }
     else if ( mouseEvent->button() == Qt::RightButton )
@@ -265,15 +284,15 @@ void kmagnetScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         {
             if ( mouseEvent->modifiers() ==Qt::ControlModifier )
             {
-		currentCell->reset();
+                currentCell->reset();
             }
             else
-		currentCell->setIsFinal ( true );
+                currentCell->setIsFinal ( true );
         }
     }
     else if ( mouseEvent->button() == Qt::MidButton )
     {
-	if ( editorMode ) currentCell->reset();
+        if ( editorMode ) currentCell->reset();
     }
     dynamic_cast<kmagnet*> ( parent() )->setFocus();
 }
@@ -343,7 +362,7 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
         qDebug() << "invalid move";
         break;
     }
-    qDebug() << "lost!";
+    //qDebug() << "lost!";
     hasLost=true;
     return  now;
 }
@@ -404,6 +423,6 @@ kmagnetCell* kmagnetScene::getCell ( uint n )
 
 void kmagnetScene::setSize ( int r, int c )
 {
-  this->ROWS=r;
-  this->COLUMNS=c;
+    this->ROWS=r;
+    this->COLUMNS=c;
 }

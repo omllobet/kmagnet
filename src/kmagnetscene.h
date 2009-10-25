@@ -27,6 +27,7 @@
 #include <QKeyEvent>
 #include <QGraphicsItemAnimation>
 #include <QTimeLine>
+#include <QSignalMapper>
 
 #include "common.h"
 #include "kmagnetcell.h"
@@ -106,7 +107,7 @@ public:
 public slots:
     void resizeScene(int width, int height);
     void process(Moves::Move mov);
-    void finishWait();
+    void finishWait(int number);
 
 signals:
     void advanceMovements(int m);
@@ -133,6 +134,7 @@ private:
     QVector<kmagnetCell*> m_cells;
     void movement(Moves::Move mov);
     QVector<Moves::Move> sol;
+    QSignalMapper *signalMapper;
 };
 
 #endif // KMAGNETSCENE_H

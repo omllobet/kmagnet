@@ -57,7 +57,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
 
     m_scene = new kmagnetScene(this, ROWS, COLUMNS);
     m_scene->setBackgroundBrush(Qt::lightGray);
-
+    
     connect(m_scene, SIGNAL(advanceMovements(int)), this, SLOT(advanceMovements(int)));
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
     m_view->setScene(m_scene);
