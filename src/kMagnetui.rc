@@ -19,7 +19,11 @@
   <Action name="game_load" />
   <Action name="game_pause" />
   <Action name="game_restart" />
+<<<<<<< HEAD:src/kMagnetui.rc
   <Action name="hotnewstuff" icon="get_hot_new_stuff" />
+=======
+  <Action name="hotnewstuff" icon="get-hot-new-stuff" />
+>>>>>>> removed button, icon for hotnewstuff, changed path:src/kMagnetui.rc
 </ToolBar>
 
 </kpartgui>
