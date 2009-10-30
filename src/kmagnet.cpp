@@ -324,8 +324,8 @@ void kmagnet::save()
         return;
     }
     KConfig config (newFilename, KConfig::SimpleConfig);
-    if (config.isConfigWritable(true))
-    return;
+    if (!config.isConfigWritable(true))
+      return;
     KConfigGroup configGroup = config.group("kmagnet");
     QStringList list;
     QString    value;
@@ -566,12 +566,18 @@ void kmagnet::getHotNewStuff()
   qDebug() << KGlobal::activeComponent().componentName();
   KNS::Entry::List entries = KNS::Engine::download();
     // list of changed entries
+     // qDebug() << QDir::home().path() + "/";
     foreach(KNS::Entry* entry, entries) {
+     /*  QString path= QDir::home().path() + "/" + ".kMagnet";
+      QDir dir=QDir(path);
+      if (!dir.exists()) dir.mkdir(path);*/
+	//  qDebug() << entry->idNumber();
         // care only about installed ones
         if (entry->status() == KNS::Entry::Installed) {
             // do something with the installed entries
-	    qDebug() << entry->idNumber();
-	    qDebug() << entry->installedFiles();
+	    //could put an actionlistmenu and update it here
+	  //  qDebug() << entry->idNumber();
+	  //  qDebug() << entry->installedFiles();
             }
         }
     

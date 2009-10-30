@@ -9,6 +9,9 @@
   <Menu name="settings">
     <Action name="editmode" />
   </Menu>
+  <Menu name="help">
+    <Action name="hotnewstuff" icon="get_hot_new_stuff" />
+  </Menu>
 </MenuBar>
   
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
