@@ -1,0 +1,119 @@
+# Copyright (C) 2009 Oscar Martínez
+# This file is distributed under the same license as the kmagnet package.
+#
+# Oscar Martinez, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-01 23:04+0100\n"
+"PO-Revision-Date: 2009-11-01 23:21+0100\n"
+"Last-Translator: Oscar Martinez\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: kmagnet.cpp:76 kmagnet.cpp:113
+msgid "Time: 00:00"
+msgstr "Temps: 00:00"
+
+#: kmagnet.cpp:77
+msgid "Movements: 0"
+msgstr "Moviments: 0"
+
+#: kmagnet.cpp:103
+msgid "Hard Puzzle 1"
+msgstr "Trencaclosques difícil 1"
+
+#: kmagnet.cpp:104
+msgid "Hard Puzzle 2"
+msgstr "Trencaclosques difícil 2"
+
+#: kmagnet.cpp:105
+msgid "Hard Puzzle 3"
+msgstr "Trencaclosques difícil 3"
+
+#: kmagnet.cpp:141
+msgid "Editor Mode"
+msgstr "Mode d'edició"
+
+#: kmagnet.cpp:154
+msgid "Get puzzles!"
+msgstr "Aconsegueix trencaclosques!"
+
+#: kmagnet.cpp:168 kmagnet.cpp:171
+msgid "Settings"
+msgstr "Configuració"
+
+#: kmagnet.cpp:177
+msgid "General"
+msgstr "General"
+
+#: kmagnet.cpp:191
+msgid "Load Puzzle"
+msgstr "Carrega trencaclosques"
+
+#: kmagnet.cpp:204
+msgid "Sorry, The file %1 doesn't exist"
+msgstr "Em sap greu, el fitxer %1 no existeix"
+
+#: kmagnet.cpp:205
+msgid "File doesn't exist"
+msgstr "El fitxer no existeix"
+
+#: kmagnet.cpp:212
+msgid "Sorry, This is not a valid kMagnet Puzzle file"
+msgstr ""
+"Em sap greu, aquest fitxer no sembla un trencaclosques del kMagnet vàlid"
+
+#: kmagnet.cpp:213
+msgid "File Not Valid"
+msgstr "Fitxer no vàlid"
+
+#: kmagnet.cpp:274
+msgid "Time: %1"
+msgstr "Temps: %1"
+
+#: kmagnet.cpp:279
+msgid "Movements: %1"
+msgstr "Moviments: %1"
+
+#: kmagnet.cpp:302
+msgid "Thanks for playing. Do you want to try again?"
+msgstr "Gràcies per jugar. Voleu tornar-ho a intentar?"
+
+#: kmagnet.cpp:302
+msgid "Game ended"
+msgstr "Joc finalitzat"
+
+#: kmagnet.cpp:322
+msgid "Save Puzzle"
+msgstr "Desa el trencaclosques"
+
+#: kmagnet.cpp:506
+msgid "Choose where to load/save puzzles from/to"
+msgstr "Escull d'on carregar o desar els trencaclosques"
+
+#: kmagnet.cpp:518
+msgid "Random predefined"
+msgstr "Predefinit aleatori"
+
+#: main.cpp:29
+msgid "A simple puzzle-like game"
+msgstr "Un trencaclosques senzill"
+
+#: rc.cpp:3 rc.cpp:12
+msgid "&Play puzzle"
+msgstr "&Juga trencaclosques"
+
+#: rc.cpp:6 rc.cpp:15
+msgid "Main Toolbar"
+msgstr "Barra d'eines principal"
+
+#: rc.cpp:9 rc.cpp:18
+msgid "Puzzle"
+msgstr "Trencaclosques"
+

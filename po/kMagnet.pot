@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-01 23:22+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/kmagnet.cpp:76 src/kmagnet.cpp:113
+msgid "Time: 00:00"
+msgstr ""
+
+#: src/kmagnet.cpp:77
+msgid "Movements: 0"
+msgstr ""
+
+#: src/kmagnet.cpp:103
+msgid "Hard Puzzle 1"
+msgstr ""
+
+#: src/kmagnet.cpp:104
+msgid "Hard Puzzle 2"
+msgstr ""
+
+#: src/kmagnet.cpp:105
+msgid "Hard Puzzle 3"
+msgstr ""
+
+#: src/kmagnet.cpp:141
+msgid "Editor Mode"
+msgstr ""
+
+#: src/kmagnet.cpp:154
+msgid "Get puzzles!"
+msgstr ""
+
+#: src/kmagnet.cpp:168 src/kmagnet.cpp:171
+msgid "Settings"
+msgstr ""
+
+#: src/kmagnet.cpp:177
+msgid "General"
+msgstr ""
+
+#: src/kmagnet.cpp:191
+msgid "Load Puzzle"
+msgstr ""
+
+#: src/kmagnet.cpp:204
+msgid "Sorry, The file %1 doesn't exist"
+msgstr ""
+
+#: src/kmagnet.cpp:205
+msgid "File doesn't exist"
+msgstr ""
+
+#: src/kmagnet.cpp:212
+msgid "Sorry, This is not a valid kMagnet Puzzle file"
+msgstr ""
+
+#: src/kmagnet.cpp:213
+msgid "File Not Valid"
+msgstr ""
+
+#: src/kmagnet.cpp:274
+msgid "Time: %1"
+msgstr ""
+
+#: src/kmagnet.cpp:279
+msgid "Movements: %1"
+msgstr ""
+
+#: src/kmagnet.cpp:302
+msgid "Thanks for playing. Do you want to try again?"
+msgstr ""
+
+#: src/kmagnet.cpp:302
+msgid "Game ended"
+msgstr ""
+
+#: src/kmagnet.cpp:322
+msgid "Save Puzzle"
+msgstr ""
+
+#: src/kmagnet.cpp:506
+msgid "Choose where to load/save puzzles from/to"
+msgstr ""
+
+#: src/kmagnet.cpp:518
+msgid "Random predefined"
+msgstr ""
+
+#: src/main.cpp:29
+msgid "A simple puzzle-like game"
+msgstr ""
+
+#: src/rc.cpp:3 src/rc.cpp:12
+msgid "&Play puzzle"
+msgstr ""
+
+#: src/rc.cpp:6 src/rc.cpp:15
+msgid "Main Toolbar"
+msgstr ""
+
+#: src/rc.cpp:9 src/rc.cpp:18
+msgid "Puzzle"
+msgstr ""
