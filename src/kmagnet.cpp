@@ -16,7 +16,13 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-#include <QHBoxLayout>
+
+#include "kmagnet.h"
+#include "settings.h"
+#include "common.h"
+#include "kmagnetcell.h"
+#include "kmagnetsolver.h"
+#include <knewstuff2/engine.h>
 
 #include <KConfigDialog>
 #include <KStatusBar>
@@ -31,16 +37,9 @@
 #include <KStandardGameAction>
 #include <KGameDifficulty>
 #include <KStandardDirs>
-#include <KGameDifficulty>
 #include <KDirSelectDialog>
 
-#include <knewstuff2/engine.h>
-
-#include "kmagnet.h"
-#include "settings.h"
-#include "common.h"
-#include "kmagnetcell.h"
-#include "kmagnetsolver.h"
+#include <QHBoxLayout>
 
 kmagnet::kmagnet() : KXmlGuiWindow()
 {
@@ -88,6 +87,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     setupGUI();    
     
     fillPuzzleList(puzzles, puzzlesList, "puzzle_list", SLOT(puzzleSelected()));
+    //m_toolbarAction
     setFocus();
 }
 
@@ -209,7 +209,7 @@ void kmagnet::loadfile(QString loadFilename)
 
     if (! config.hasGroup ("kmagnet")) {
         KMessageBox::information (this,
-                                  i18n("Sorry, This is not a valid KMagnet Puzzle File"),
+                                  i18n("Sorry, This is not a valid kMagnet Puzzle file"),
                                   i18n("File Not Valid"));
         return;
     }
@@ -462,7 +462,7 @@ void kmagnet::solutionFound()
         //DEBUG CODE
         for (unsigned int i=0; i< lm.size(); i++) {
             //	System.out.println(lm.get(i));
-            QString str=QString();
+            QString str=QString("");
             switch (lm.at(i))
             {
             case 0:
@@ -506,7 +506,8 @@ void kmagnet::choosePath()
                   i18n("Choose where to load/save puzzles from/to"));
     if (dirUrl.isValid() )
     {
-        emit  valueChanged(dirUrl.prettyUrl());
+	 dirUrl.adjustPath(KUrl::AddTrailingSlash);
+         emit  valueChanged(dirUrl.directory(KUrl::ObeyTrailingSlash));
     }
 }
 

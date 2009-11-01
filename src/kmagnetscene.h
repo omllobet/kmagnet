@@ -44,7 +44,7 @@ public:
     /**
      * Constructor
      */
-    kmagnetScene(QObject * parent = 0, int rows = 25, int columns = 20 );
+    explicit kmagnetScene(QObject * parent = 0, int rows = 25, int columns = 20 );
 
     QPixmapCache* getCache() {
         return cache;

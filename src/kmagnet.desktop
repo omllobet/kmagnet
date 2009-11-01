@@ -8,6 +8,6 @@ Type=Application
 DocPath=kmagnet/index.html
 GenericName=Simple puzzle game
 GenericName[ca]=Trencaclosques senzill
-Terminal=0
-Categories=Qt;KDE;Game;PuzzleGame;
+Terminal=false
+Categories=Qt;KDE;Game;LogicGame;
 

@@ -38,7 +38,7 @@ class KToggleAction;
  *
  * @short Main window class
  * @author Oscar Martinez omllobet@gmail.com
- * @version 0.03
+ * @version 0.04
  */
 class kmagnet : public KXmlGuiWindow
 {

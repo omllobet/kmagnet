@@ -19,15 +19,16 @@
 #ifndef KMAGNETCELL_H
 #define KMAGNETCELL_H
 
-#include <QGraphicsItem>
+#include "kmagnetscene.h"
 
 #include "common.h"
-#include "kmagnetscene.h"
+
+#include <QGraphicsItem>
 
 class kmagnetCell : public QGraphicsItem
 {
 public:
-    kmagnetCell(QGraphicsItem* parent=0, QGraphicsScene * scene=0);
+    explicit kmagnetCell(QGraphicsItem* parent=0, QGraphicsScene * scene=0);
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

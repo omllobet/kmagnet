@@ -16,9 +16,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
+#include "kmagnetsolver.h"
+
 #include <string>
 
-#include "kmagnetsolver.h"
 #include <settings.h>
 
 using namespace std;

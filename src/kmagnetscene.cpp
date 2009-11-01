@@ -136,7 +136,7 @@ void kmagnetScene::movement ( Moves::Move mov )
     if ( !nm.getIsPossible() )
     {
         //hasLost=true;//disabled because if we are
-        //moving towards a cell with a block we dont want the game to end
+        //moving towards a cell with a block we don't want the game to end
         return;
     };
     currentPosition=nm.getPosition();
