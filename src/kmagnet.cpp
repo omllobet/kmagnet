@@ -84,10 +84,12 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // It also applies the saved mainwindow settings, if any, and ask the
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
-    setupGUI();    
-    
+    setupGUI();     
+    //toolbar action
+    puzzleAction = new KActionMenu(KIcon("arrow-down"), i18n("Play random") ,this);
     fillPuzzleList(puzzles, puzzlesList, "puzzle_list", SLOT(puzzleSelected()));
-    //m_toolbarAction
+    connect (puzzleAction, SIGNAL(triggered()), SLOT(playRandomPuzzle()));  
+    toolBar()->insertAction(action("game_load"), puzzleAction); 
     setFocus();
 }
 
@@ -522,11 +524,12 @@ void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &li
     // Generate an action list with one action for each item in the list.
     for (uint i = 0; (strcmp (itemList[i].filename, "END") != 0); i++) 
     {
-	KAction * t = new KAction (i18n (itemList[i].menuText), this);
-	actionCollection()->addAction (QString ("%1%2").arg(uilist).arg(i), t);
+        KAction * t = new KAction (i18n (itemList[i].menuText), this);
+    actionCollection()->addAction (QString ("%1%2").arg(uilist).arg(i), t);
 	t->setData (i);		// Save the index of the item inside the action.
 	list.append (t);
 	connect (t, SIGNAL (triggered()), slot);
+    puzzleAction->addAction(t);//put the actions in the menu
     }
 
     // Plug the action list into the Puzzles menu.
@@ -555,7 +558,7 @@ void kmagnet::playRandomPuzzle()
 
 void kmagnet::loadPredefinedPuzzle(QString name)
 {
-  QString path;
+   QString path;
   QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
     if (!dataDir.isEmpty())
 	  path=dataDir.first();

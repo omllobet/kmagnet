@@ -22,6 +22,7 @@
 #include <KXmlGuiWindow>
 #include <KGameClock>
 #include <KGameDifficulty>
+#include <KActionMenu>
 
 #include "kmagnetscene.h"
 #include "kmagnetview.h"
@@ -95,6 +96,7 @@ private:
     kmagnetView *m_view;
     KToggleAction *m_toolbarAction;
     KToggleAction *m_statusbarAction;
+    KActionMenu *puzzleAction;
     KGameClock* m_gameClock;
     kmagnetScene *m_scene;
     kmagnetSolver *m_solver;

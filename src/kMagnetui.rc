@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kMagnet" version="3">
+<kpartgui name="kMagnet" version="4">
 <MenuBar>
   <Menu name="game">
     <Menu name="game_play" icon="arrow-right"> <text>&amp;Play puzzle</text>
@@ -15,10 +15,6 @@
 </MenuBar>
   
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
-  <Menu name="game_play_p" icon="arrow-down">
-    <text>Puzzle</text> 
-    <ActionList name="puzzle_list" />
-  </Menu>
   <Action name="game_load" />
   <Action name="game_pause" />
   <Action name="game_restart" />

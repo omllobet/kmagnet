@@ -1,9 +1,18 @@
-v0.03
-some improvements
-resizable board
-rename kmagnet->kMagnet
-v0.02
-initial release
-solver added
-v0.01
-initial code
+0.05
+*menu reworked
+*translation added
+0.04
+*mouse control rewrite.
+*menu changed
+*hotnewstuff integration (now you can download puzzles from the internet)
+*some small fixes and improvements
+0.03
+*lots of fixes and improvements
+*rename from kmagnet to kMagnet.
+*note: When automagically solving the puzzle there are sometimes some graphic glitches, I'll solve it in the next version.
+0.02
+*first release.
+*solver added
+*note:It is an alpha so please send your comments or backtraces by mail.
+0.01
+*initial code (not released)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-01 23:22+0100\n"
+"POT-Creation-Date: 2010-01-23 19:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,102 +16,106 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/kmagnet.cpp:76 src/kmagnet.cpp:113
+#: kmagnet.cpp:76 kmagnet.cpp:115
 msgid "Time: 00:00"
 msgstr ""
 
-#: src/kmagnet.cpp:77
+#: kmagnet.cpp:77
 msgid "Movements: 0"
 msgstr ""
 
-#: src/kmagnet.cpp:103
+#: kmagnet.cpp:89
+msgid "Play random"
+msgstr ""
+
+#: kmagnet.cpp:105
 msgid "Hard Puzzle 1"
 msgstr ""
 
-#: src/kmagnet.cpp:104
+#: kmagnet.cpp:106
 msgid "Hard Puzzle 2"
 msgstr ""
 
-#: src/kmagnet.cpp:105
+#: kmagnet.cpp:107
 msgid "Hard Puzzle 3"
 msgstr ""
 
-#: src/kmagnet.cpp:141
+#: kmagnet.cpp:143
 msgid "Editor Mode"
 msgstr ""
 
-#: src/kmagnet.cpp:154
+#: kmagnet.cpp:156
 msgid "Get puzzles!"
 msgstr ""
 
-#: src/kmagnet.cpp:168 src/kmagnet.cpp:171
+#: kmagnet.cpp:170 kmagnet.cpp:173
 msgid "Settings"
 msgstr ""
 
-#: src/kmagnet.cpp:177
+#: kmagnet.cpp:179
 msgid "General"
 msgstr ""
 
-#: src/kmagnet.cpp:191
+#: kmagnet.cpp:193
 msgid "Load Puzzle"
 msgstr ""
 
-#: src/kmagnet.cpp:204
+#: kmagnet.cpp:206
 msgid "Sorry, The file %1 doesn't exist"
 msgstr ""
 
-#: src/kmagnet.cpp:205
+#: kmagnet.cpp:207
 msgid "File doesn't exist"
 msgstr ""
 
-#: src/kmagnet.cpp:212
+#: kmagnet.cpp:214
 msgid "Sorry, This is not a valid kMagnet Puzzle file"
 msgstr ""
 
-#: src/kmagnet.cpp:213
+#: kmagnet.cpp:215
 msgid "File Not Valid"
 msgstr ""
 
-#: src/kmagnet.cpp:274
+#: kmagnet.cpp:276
 msgid "Time: %1"
 msgstr ""
 
-#: src/kmagnet.cpp:279
+#: kmagnet.cpp:281
 msgid "Movements: %1"
 msgstr ""
 
-#: src/kmagnet.cpp:302
+#: kmagnet.cpp:304
 msgid "Thanks for playing. Do you want to try again?"
 msgstr ""
 
-#: src/kmagnet.cpp:302
+#: kmagnet.cpp:304
 msgid "Game ended"
 msgstr ""
 
-#: src/kmagnet.cpp:322
+#: kmagnet.cpp:324
 msgid "Save Puzzle"
 msgstr ""
 
-#: src/kmagnet.cpp:506
+#: kmagnet.cpp:508
 msgid "Choose where to load/save puzzles from/to"
 msgstr ""
 
-#: src/kmagnet.cpp:518
+#: kmagnet.cpp:520
 msgid "Random predefined"
 msgstr ""
 
-#: src/main.cpp:29
+#: main.cpp:29
 msgid "A simple puzzle-like game"
 msgstr ""
 
-#: src/rc.cpp:3 src/rc.cpp:12
+#: rc.cpp:3 rc.cpp:12 rc.cpp:21 rc.cpp:27
 msgid "&Play puzzle"
 msgstr ""
 
-#: src/rc.cpp:6 src/rc.cpp:15
+#: rc.cpp:6 rc.cpp:15 rc.cpp:24 rc.cpp:30
 msgid "Main Toolbar"
 msgstr ""
 
-#: src/rc.cpp:9 src/rc.cpp:18
+#: rc.cpp:9 rc.cpp:18
 msgid "Puzzle"
 msgstr ""
