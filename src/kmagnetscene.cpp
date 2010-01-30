@@ -101,7 +101,7 @@ void kmagnetScene::newGame()
         radialGradient.setColorAt ( 0.75, Qt::gray );
         radialGradient.setColorAt ( 1.0, Qt::darkGray );
         qreal size=Global::itemSize-0.10*Global::itemSize;
-        m_ball= addEllipse ( 0,0, size, size, QPen ( Qt::NoPen ),radialGradient );
+        m_ball= addEllipse ( 0,0, size, size,  QPen(Qt::gray, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin), radialGradient);
         m_ball->setZValue ( 5.0 );
     }
     setBallPos ( startPosition );

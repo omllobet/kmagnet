@@ -159,7 +159,9 @@ QPixmap kmagnetRenderer::pixmapForFinalCell() const
     {
 //                kDebug() << "putting" << cacheName << "to cache";
         pix = QPixmap(m_cellSize, m_cellSize);
-        pix.fill( Qt::transparent);
+        pix.fill(Qt::transparent);
+        //pix.fill(Qt::white);
+        RENDER_SVG_ELEMENT(CellDown);
         RENDER_SVG_ELEMENT(Flag);
         m_cache->insert(cacheName, pix);
     }
