@@ -176,7 +176,7 @@ patent issues. -->
 <sect1 id="kapp-window">
 <title>Editor Mode</title>
 <para>In this Mode you can start designing your own puzzles.</para>
-<para>To do so lefclick a cell to put a block on it, rightclick to put a hole and
+<para>To do so lefclick a cell to put a block on it, rightclick to put a hole/flag and
  middleclick to free the it.</para>
 <para>To move the ball to the start position you can use Ctrl+leftclick. In this mode
 you can also play your puzzle using the keyboard.</para>

@@ -1,8 +1,8 @@
 
 install( FILES 
-	kmines_oxygen.svgz
-	kmines_oxygen_brown.svgz 
-	kmines_green.svgz
+	kmagnet_oxygen.svgz
+	kmagnet_oxygen_brown.svgz 
+	kmagnet_green.svgz
 	default.desktop 
 	brown.desktop 
 	green.desktop 

@@ -1,7 +1,7 @@
 Quick reference:
 
 Normal Gameplay:
-you have to put the ball in the hole, like golf.
+you have to put the ball in the hole/flag cell.
 you can only move up, down, left, right. 
 you'll only stop when colliding with an object or hitting the wall.
 if you hit the wall you lose.
@@ -9,7 +9,7 @@ if you hit the wall you lose.
 Editing Mode: Settings-> Edit Mode
 it's a mode you use to design a puzzle.
 leftclick=put a block
-rightclick=put a hole
+rightclick=put a hole/flag
 middleclick=reset the cell
 control+leftclick= put the ball in this cell
 
@@ -31,11 +31,3 @@ make uninstall or su -c 'make uninstall'
 Note: you can use another build path. Then cd in your build dir and:
 export KDE_SRC=path_to_your_src
 cmake $KDE_SRC -DCMAKE_INSTALL_PREFIX=$KDEDIR -DCMAKE_BUILD_TYPE=debugfull
-
-
-----------------------------
-Please send all comments to:
-Anne-Marie Mahfouf
-annma@kde.org
-
-Last update: April 2008
