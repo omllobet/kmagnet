@@ -23,7 +23,6 @@
 #include <QGraphicsEllipseItem>
 #include <QGraphicsItem>
 #include <QVector>
-#include <QPixmapCache>
 #include <QKeyEvent>
 #include <QGraphicsItemAnimation>
 #include <QTimeLine>
@@ -46,9 +45,6 @@ public:
      */
     explicit kmagnetScene(QObject * parent = 0, int rows = 25, int columns = 20 );
 
-    QPixmapCache* getCache() {
-        return cache;
-    };
     /**
      * Default Destructor
      */
@@ -120,6 +116,7 @@ private:
 
     void setBoardPosition();
     uint posToCell(QPoint p);
+    virtual void drawBackground( QPainter*, const QRectF& );
 
     uint COLUMNS;
     uint ROWS;
@@ -129,7 +126,6 @@ private:
     uint movements;
     uint startPosition;
     uint currentPosition;
-    QPixmapCache* cache;
     QGraphicsEllipseItem* m_ball;
     QVector<kmagnetCell*> m_cells;
     void movement(Moves::Move mov);

@@ -23,6 +23,7 @@
 
 #include "kmagnetscene.h"
 #include "kmagnet.h"
+#include "kmagnetrenderer.h"
 #include <settings.h>
 
 kmagnetScene::kmagnetScene ( QObject * parent, int rows, int columns ) :
@@ -39,10 +40,6 @@ kmagnetScene::kmagnetScene ( QObject * parent, int rows, int columns ) :
     signalMapper = new QSignalMapper(this);
     connect(signalMapper, SIGNAL(mapped(int )),this, SLOT(finishWait(int )));
     setItemIndexMethod( NoIndex );
-    cache = new QPixmapCache();
-    cache->insert ( "free", QPixmap ( KStandardDirs::locate ( "appdata", "images/free.png" ) ) );
-    cache->insert ( "notfree", QPixmap ( KStandardDirs::locate ( "appdata", "images/notfree.png" ) ) );
-    cache->insert ( "final", QPixmap ( KStandardDirs::locate ( "appdata", "images/final.png" ) ) );
     m_ball=NULL;
 }
 
@@ -50,6 +47,7 @@ void kmagnetScene::setBoardPosition()
 {
     Global::itemSize = qMin ( this->height() /ROWS, this->width() /COLUMNS );
     qreal itemsize= Global::itemSize;
+    kmagnetRenderer::self()->setCellSize(itemsize);//update cell size for the renderer
     qreal Xcorrection= ( this->width()-COLUMNS*itemsize ) /2;
     qreal Ycorrection= ( this->height()-ROWS*itemsize ) /2;
     for ( uint row=0; row<ROWS; ++row )
@@ -146,15 +144,8 @@ void kmagnetScene::movement ( Moves::Move mov )
 
 kmagnetScene::~kmagnetScene()
 {
-    delete cache;
-    for ( int i=0;i<m_cells.size();i++ )//cells have no parent
+    for ( int i=0;i<m_cells.size();i++ )//cells have no parent//but associated with this scene...just in case...TODO look documentation
         delete m_cells[i];
-    //buff que lleig...mirar quan ja no fan falta i esborrar-los llavors o algo
-    //now have a parent
-    /*for ( int i=0;i<m_timers.size();i++ )
-        delete m_timers[i];
-    for ( int i=0;i<m_animations.size();i++ )
-        delete m_animations[i];*/
 }
 
 void kmagnetScene::animateMovement ( Moves::Move mov )
@@ -420,6 +411,12 @@ kmagnetCell* kmagnetScene::getCell ( uint n )
     //if (n<ROWS*COLUMNS)//not needed for now
     return m_cells[n];
 }
+
+void kmagnetScene::drawBackground( QPainter* p, const QRectF& )
+{
+    p->drawPixmap( 0, 0, kmagnetRenderer::self()->backgroundPixmap(sceneRect().size().toSize()) );
+}
+
 
 void kmagnetScene::setSize ( int r, int c )
 {

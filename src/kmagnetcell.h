@@ -58,9 +58,6 @@ private:
     int y_pos;
     int corx;
     int cory;
-
-    QGraphicsScene* myScene;
-    QPixmapCache* cache;
 };
 
 #endif // KMAGNETCELL_H

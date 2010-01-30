@@ -37,53 +37,7 @@ QString kmagnetRenderer::elementToSvgId( SvgElement e ) const
             return "cell_down";
         case kmagnetRenderer::Flag:
             return "flag";
-        case kmagnetRenderer::Question:
-            return "question";
-        case kmagnetRenderer::Digit1:
-            return "arabicOne";
-        case kmagnetRenderer::Digit2:
-            return "arabicTwo";
-        case kmagnetRenderer::Digit3:
-            return "arabicThree";
-        case kmagnetRenderer::Digit4:
-            return "arabicFour";
-        case kmagnetRenderer::Digit5:
-            return "arabicFive";
-        case kmagnetRenderer::Digit6:
-            return "arabicSix";
-        case kmagnetRenderer::Digit7:
-            return "arabicSeven";
-        case kmagnetRenderer::Digit8:
-            return "arabicEight";
-        case kmagnetRenderer::Mine:
-            return "mine";
-        case kmagnetRenderer::ExplodedMine:
-            return QString(); // dummy. shouldn't be called
-        case kmagnetRenderer::Explosion:
-            return "explosion";
-        case kmagnetRenderer::Error:
-            return "error";
-        case kmagnetRenderer::Hint:
-            return "hint";
-        case kmagnetRenderer::BorderEdgeNorth:
-            return "border.edge.north";
-        case kmagnetRenderer::BorderEdgeSouth:
-            return "border.edge.south";
-        case kmagnetRenderer::BorderEdgeEast:
-            return "border.edge.east";
-        case kmagnetRenderer::BorderEdgeWest:
-            return "border.edge.west";
-        case kmagnetRenderer::BorderOutsideCornerNE:
-            return "border.outsideCorner.ne";
-        case kmagnetRenderer::BorderOutsideCornerNW:
-            return "border.outsideCorner.nw";
-        case kmagnetRenderer::BorderOutsideCornerSW:
-            return "border.outsideCorner.sw";
-        case kmagnetRenderer::BorderOutsideCornerSE:
-            return "border.outsideCorner.se";
-        case kmagnetRenderer::NumElements:
-            return QString();
-    }
+       }
     return QString();
 }
 
@@ -97,7 +51,7 @@ kmagnetRenderer::kmagnetRenderer()
     : m_cellSize(0)
 {
     m_renderer = new KSvgRenderer();
-    m_cache = new KPixmapCache("kmines-cache");
+    m_cache = new KPixmapCache("kmagnet-cache");
     m_cache->setCacheLimit(3*1024);
 
     if(!loadTheme( Settings::theme() ))
@@ -151,21 +105,20 @@ bool kmagnetRenderer::loadTheme( const QString& themeName )
     return true;
 }
 
-
 QPixmap kmagnetRenderer::backgroundPixmap( const QSize& size ) const
 {
     QPixmap bkgnd;
     QString cacheName = QString("mainWidget%1x%2").arg(size.width()).arg(size.height());
     if(!m_cache->find( cacheName, bkgnd ))
     {
-        kDebug() << "re-rendering bkgnd";
+        //kDebug() << "re-rendering bkgnd";
         bkgnd = QPixmap(size);
         bkgnd.fill(Qt::transparent);
         QPainter p(&bkgnd);
         m_renderer->render(&p, "mainWidget");
         p.end();
         m_cache->insert(cacheName, bkgnd);
-        kDebug() << "cache size:" << m_cache->size() << "kb";
+        //kDebug() << "cache size:" << m_cache->size() << "kb";
     }
     return bkgnd;
 }
@@ -181,103 +134,54 @@ kmagnetRenderer::~kmagnetRenderer()
     m_renderer->render( &p, elementToSvgId(SVG_ID) );   \
     p.end();
 
-    
-/*QPixmap kmagnetRenderer::pixmapForCellState( KMinesState::CellState state ) const
+QPixmap kmagnetRenderer::pixmapForFreeCell() const
 {
     QPainter p;
-    switch(state)
+    QPixmap pix;
+    QString cacheName = elementToSvgId(CellDown)+QString::number(m_cellSize);
+    if (!m_cache->find(cacheName, pix))
     {
-        case KMinesState::Released:
-        {
-            QPixmap pix;
-            QString cacheName = elementToSvgId(CellUp)+QString::number(m_cellSize);
-            if(!m_cache->find(cacheName, pix))
-            {
 //                kDebug() << "putting" << cacheName << "to cache";
-                pix = QPixmap(m_cellSize, m_cellSize);
-                pix.fill( Qt::transparent);
-                RENDER_SVG_ELEMENT(CellUp);
-                m_cache->insert(cacheName, pix);
-            }
-            return pix;
-        }
-        case KMinesState::Pressed:
-        case KMinesState::Revealed:// i.e. revealed & digit=0 case
-        {
-            QPixmap pix;
-            QString cacheName = elementToSvgId(CellDown)+QString::number(m_cellSize);
-            if(!m_cache->find(cacheName, pix))
-            {
-//                kDebug() << "putting" << cacheName << "to cache";
-                pix = QPixmap(m_cellSize, m_cellSize);
-                pix.fill( Qt::transparent);
-                RENDER_SVG_ELEMENT(CellDown);
-                m_cache->insert(cacheName, pix);
-            }
-            return pix;
-        }
-        case KMinesState::Questioned:
-        {
-            QPixmap pix;
-            QString cacheName = elementToSvgId(Question)+QString::number(m_cellSize);
-            if(!m_cache->find(cacheName, pix))
-            {
-//                kDebug() << "putting" << cacheName << "to cache";
-                // question (on top of cellup)
-                pix = pixmapForCellState( KMinesState::Released );
-                RENDER_SVG_ELEMENT(Question);
-                m_cache->insert(cacheName, pix);
-            }
-            return pix;
-        }
-        case KMinesState::Flagged:
-        {
-            QPixmap pix;
-            QString cacheName = elementToSvgId(Flag)+QString::number(m_cellSize);
-            if(!m_cache->find(cacheName, pix))
-            {
-                // flag (on top of cellup)
-//                kDebug() << "putting" << cacheName << "to cache";
-                pix = pixmapForCellState( KMinesState::Released );
-                RENDER_SVG_ELEMENT(Flag);
-                m_cache->insert(cacheName, pix);
-            }
-            return pix;
-        }
-        case KMinesState::Error:
-        {
-            QPixmap pix;
-            QString cacheName = elementToSvgId(Error)+QString::number(m_cellSize);
-            if(!m_cache->find(cacheName, pix))
-            {
-//                kDebug() << "putting" << cacheName << "to cache";
-                // flag (on top of mine)
-                pix = pixmapMine();
-                RENDER_SVG_ELEMENT(Error);
-                m_cache->insert(cacheName, pix);
-            }
-            return pix;
-        }
-        case KMinesState::Hint:
-        {
-            QPixmap pix;
-            QString cacheName = elementToSvgId(Hint)+QString::number(m_cellSize);
-            if(!m_cache->find(cacheName, pix))
-            {
-//                kDebug() << "putting" << cacheName << "to cache";
-                // hint (on top of cellup)
-                pix = pixmapForCellState( KMinesState::Released );
-                RENDER_SVG_ELEMENT(Hint);
-                m_cache->insert(cacheName, pix);
-            }
-            return pix;
-        }
-        // no default! this way we'll get compiler warnings if
-        // something is forgotten
+        pix = QPixmap(m_cellSize, m_cellSize);
+        pix.fill( Qt::transparent);
+        RENDER_SVG_ELEMENT(CellDown);
+        m_cache->insert(cacheName, pix);
     }
-    return QPixmap();
-} */   
-    
+    return pix;
+}
+
+QPixmap kmagnetRenderer::pixmapForFinalCell() const
+{
+    QPainter p;
+    QPixmap pix;
+    QString cacheName = elementToSvgId(Flag)+QString::number(m_cellSize);
+    if (!m_cache->find(cacheName, pix))
+    {
+//                kDebug() << "putting" << cacheName << "to cache";
+        pix = QPixmap(m_cellSize, m_cellSize);
+        pix.fill( Qt::transparent);
+        RENDER_SVG_ELEMENT(Flag);
+        m_cache->insert(cacheName, pix);
+    }
+    return pix;
+}
+
+QPixmap kmagnetRenderer::pixmapForNonFreeCell() const
+{
+    QPainter p;
+    QPixmap pix;
+    QString cacheName = elementToSvgId(CellUp)+QString::number(m_cellSize);
+    if (!m_cache->find(cacheName, pix))
+    {
+//                kDebug() << "putting" << cacheName << "to cache";
+        pix = QPixmap(m_cellSize, m_cellSize);
+        pix.fill( Qt::transparent);
+        RENDER_SVG_ELEMENT(CellUp);
+        m_cache->insert(cacheName, pix);
+    }
+    return pix;
+}
+
 void kmagnetRenderer::setCellSize( int size )
 {
     m_cellSize = size;

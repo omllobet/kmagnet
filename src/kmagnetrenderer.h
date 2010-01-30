@@ -59,6 +59,9 @@ public:
      * @return pixmap for background painting.
      */
     QPixmap backgroundPixmap(const QSize& size) const;
+    QPixmap pixmapForFreeCell() const;
+    QPixmap pixmapForFinalCell() const;
+    QPixmap pixmapForNonFreeCell() const;
     
 private:
     // disable copy - it's singleton
@@ -87,29 +90,6 @@ private:
         CellUp=0,
         CellDown,
         Flag,
-        Question,
-        Digit1,
-        Digit2,
-        Digit3,
-        Digit4,
-        Digit5,
-        Digit6,
-        Digit7,
-        Digit8,
-        Mine,
-        Explosion,
-        ExplodedMine, // for convenience - doesn't exist in svg.
-        Error,
-        Hint,
-        BorderEdgeNorth,
-        BorderEdgeSouth,
-        BorderEdgeEast,
-        BorderEdgeWest,
-        BorderOutsideCornerNE,
-        BorderOutsideCornerNW,
-        BorderOutsideCornerSW,
-        BorderOutsideCornerSE,
-        NumElements
     };
     /**
      * Translates enum value to QString name used in svg file.

@@ -38,8 +38,10 @@
 #include <KGameDifficulty>
 #include <KStandardDirs>
 #include <KDirSelectDialog>
+#include <KGameThemeSelector>
 
 #include <QHBoxLayout>
+#include "kmagnetrenderer.h"
 
 kmagnet::kmagnet() : KXmlGuiWindow()
 {
@@ -57,7 +59,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
 				  );
 
     m_scene = new kmagnetScene(this, ROWS, COLUMNS);
-    m_scene->setBackgroundBrush(Qt::lightGray);
+    //m_scene->setBackgroundBrush(Qt::lightGray);//now in themes
     
     connect(m_scene, SIGNAL(advanceMovements(int)), this, SLOT(advanceMovements(int)));
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
@@ -177,6 +179,7 @@ void kmagnet::configureSettings()
     connect(ui_prefs_base.selectPath, SIGNAL(released()), this,SLOT(choosePath()));
     connect(this, SIGNAL(valueChanged(QString)), ui_prefs_base.kcfg_kmagnetDataPath, SLOT(setText(QString)));
     dialog->addPage(generalSettingsDlg, i18n("General"), "games-config-options");
+    dialog->addPage( new KGameThemeSelector( dialog, Settings::self(), KGameThemeSelector::NewStuffDisableDownload ), i18n( "Theme" ), "games-config-theme" );
     connect(dialog, SIGNAL(settingsChanged(QString)), this, SLOT(settingsChanged()));
     dialog->setAttribute( Qt::WA_DeleteOnClose );
     dialog->show();
@@ -498,6 +501,17 @@ void kmagnet::solutionFound()
 
 void kmagnet::settingsChanged()
 {
+    if ( !kmagnetRenderer::self()->loadTheme(Settings::theme()) )
+    {
+        KMessageBox::error( this,  i18n( "Failed to load \"%1\" theme. Please check your installation.", Settings::theme() ) );
+        return;
+    }
+
+    m_view->resetCachedContent();
+    // trigger complete redraw
+    m_scene->resizeScene( (int)m_scene->sceneRect().width(),
+                          (int)m_scene->sceneRect().height() );
+    //save changes on disk
     Settings::self()->writeConfig();
 }
 

@@ -1,4 +1,4 @@
-set(kmagnet_SRCS 
+set(kmagnet_SRCS kmagnetrenderer.cpp 
    kmagnetscene.cpp
    kmagnetview.cpp
    kmagnet.cpp

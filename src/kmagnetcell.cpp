@@ -16,6 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 #include "kmagnetcell.h"
+#include "kmagnetrenderer.h"
 
 #include <KStandardDirs>
 
@@ -25,10 +26,8 @@ kmagnetCell::kmagnetCell(QGraphicsItem * parent, QGraphicsScene * scene)
         : QGraphicsItem(parent, scene),
         isFree(true),
         isFinal(false),
-        visited(false),
-        myScene(scene)
+        visited(false)
 {
-    cache =dynamic_cast<kmagnetScene *>(myScene)->getCache();
 }
 
 QRectF kmagnetCell::boundingRect() const
@@ -40,29 +39,19 @@ void kmagnetCell::paint ( QPainter * painter, const QStyleOptionGraphicsItem * o
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    QPixmap pixmap;//take a look at the cache documentation
+    QPixmap pixmap;
     if (isFinal)
     {
-        if (!(cache->find("final", pixmap)))
-        {
-            pixmap=QPixmap(KStandardDirs::locate("appdata", "images/final.png"));
-        }
+          pixmap=kmagnetRenderer::self()->pixmapForFinalCell();
     }
     else if (!isFree)
     {
-        if (!(cache->find("notfree", pixmap)))
-        {
-            pixmap=QPixmap(KStandardDirs::locate("appdata", "images/notfree.png"));
-        }
+            pixmap=kmagnetRenderer::self()->pixmapForNonFreeCell();
     }
     else if (isFree && !isFinal)
     {
-        if (!(cache->find("free", pixmap)))
-        {
-            pixmap=QPixmap(KStandardDirs::locate("appdata", "images/free.png"));
-        }
+            pixmap=kmagnetRenderer::self()->pixmapForFreeCell();
     }
-    pixmap=pixmap.scaledToHeight(Global::itemSize);
     painter->drawPixmap(0,0,pixmap);
 }
 

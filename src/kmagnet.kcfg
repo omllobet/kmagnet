@@ -19,5 +19,8 @@
 	    <label>Animation time (in ms)</label>
 	    <default>500</default>
     </entry>
+    <entry name="Theme" type="String" key="Theme">
+      <label>The graphical theme to be used.</label>
+    </entry>
   </group>
 </kcfg>
