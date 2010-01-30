@@ -98,9 +98,6 @@ kmagnet::kmagnet() : KXmlGuiWindow()
 kmagnet::~kmagnet()
 {
     delete m_gameClock;
-    //delete m_solver; //qt does this for me kmagnet is m_solver parent
-    //delete m_scene;//qt does this for me// mm on the planet there was an article...
-    //delete m_view;//qt does this for me
 }
 
 const kmagnet::PuzzleItem kmagnet::puzzles [] = {
@@ -175,7 +172,7 @@ void kmagnet::configureSettings()
     KConfigDialog *dialog = new KConfigDialog(this, i18n("Settings"), Settings::self());
     QWidget *generalSettingsDlg = new QWidget;
     ui_prefs_base.setupUi(generalSettingsDlg);
-//ui settings
+    //ui settings
     connect(ui_prefs_base.selectPath, SIGNAL(released()), this,SLOT(choosePath()));
     connect(this, SIGNAL(valueChanged(QString)), ui_prefs_base.kcfg_kmagnetDataPath, SLOT(setText(QString)));
     dialog->addPage(generalSettingsDlg, i18n("General"), "games-config-options");

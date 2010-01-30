@@ -105,7 +105,6 @@ void kmagnetScene::newGame()
         m_ball->setZValue ( 5.0 );
     }
     setBallPos ( startPosition );
-    //this->update ( sceneRect() );
     this->update ();
 }
 
@@ -133,8 +132,6 @@ void kmagnetScene::movement ( Moves::Move mov )
     nextMove nm= isPossibleMove ( mov );
     if ( !nm.getIsPossible() )
     {
-        //hasLost=true;//disabled because if we are
-        //moving towards a cell with a block we don't want the game to end
         return;
     };
     currentPosition=nm.getPosition();
@@ -151,18 +148,14 @@ kmagnetScene::~kmagnetScene()
 void kmagnetScene::animateMovement ( Moves::Move mov )
 {
     nextMove nm= isPossibleMove ( mov );
-    //need this check?
     if ( !nm.getIsPossible() )
     {
-        //hasLost=true;
         return;
     };
     unsigned int pos=nm.getPosition();
     QTimeLine *timer = new QTimeLine ( Settings::animationTime(), this );
     signalMapper->setMapping(timer,currentPosition+pos*1000);
     connect ( timer, SIGNAL ( finished() ),signalMapper, SLOT ( map() ) );
-    //connect(signalMapper, SIGNAL(mapped(int )),this, SIGNAL(finishWait(int )));
-    //connect ( timer, SIGNAL ( finished() ),this, SLOT ( finishWait() ) );
     timer->setFrameRange ( 0, 150 );
     QGraphicsItemAnimation *animation = new QGraphicsItemAnimation(this);
     animation->setItem ( m_ball );

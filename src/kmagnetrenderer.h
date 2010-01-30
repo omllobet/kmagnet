@@ -27,12 +27,12 @@ class KPixmapCache;
 
 class kmagnetRenderer
 {
-/**
- * This class is responsible for rendering all the game graphics.
- * Graphics is rendered from svg file specified by current theme.
- * Only one instance of this class exists during a program run.
- * It can be accessed with static function KLinesRenderer::self().
- */
+    /**
+     * This class is responsible for rendering all the game graphics.
+     * Graphics is rendered from svg file specified by current theme.
+     * Only one instance of this class exists during a program run.
+     * It can be accessed with static function KLinesRenderer::self().
+     */
 public:
     /**
      * Returns one and the only instance of KLinesRenderer
@@ -54,7 +54,9 @@ public:
     /**
      * @return current cell render size
      */
-    int cellSize() const { return m_cellSize; }
+    int cellSize() const {
+        return m_cellSize;
+    }
     /**
      * @return pixmap for background painting.
      */
@@ -62,7 +64,7 @@ public:
     QPixmap pixmapForFreeCell() const;
     QPixmap pixmapForFinalCell() const;
     QPixmap pixmapForNonFreeCell() const;
-    
+
 private:
     // disable copy - it's singleton
     kmagnetRenderer();

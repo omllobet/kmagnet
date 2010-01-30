@@ -39,7 +39,6 @@ class KToggleAction;
  *
  * @short Main window class
  * @author Oscar Martinez omllobet@gmail.com
- * @version 0.04
  */
 class kmagnet : public KXmlGuiWindow
 {
@@ -56,8 +55,10 @@ public:
     virtual ~kmagnet();
     virtual void keyReleaseEvent ( QKeyEvent * keyEvent);
     void calculateMinimiumSize();
-    kmagnetScene* get_scene(){return this->m_scene;};
-     
+    kmagnetScene* get_scene() {
+        return this->m_scene;
+    };
+
 public slots:
     void loadfile(QString loadFilename);
 
@@ -81,13 +82,13 @@ private slots:
     void puzzleSelected();
     void playRandomPuzzle();
     void getHotNewStuff();
-    
+
 signals:
-     void valueChanged(QString newValue);
+    void valueChanged(QString newValue);
 
 private:
     void setupActions();
-    
+
 private:
 
     int ROWS;
@@ -101,18 +102,18 @@ private:
     kmagnetScene *m_scene;
     kmagnetSolver *m_solver;
     Ui::prefs_base ui_prefs_base ;
-    
+
     //like krubik for now
     struct PuzzleItem {
-	const char * filename;		// File containing demo or "END".
-	const char * menuText;		// Description of the pattern or moves.
+        const char * filename;      // File containing demo or "END".
+        const char * menuText;      // Description of the pattern or moves.
     };
     static const PuzzleItem puzzles [];
-    
+
     QList<QAction*> puzzlesList;
-    
+
     void fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &list,
-			const char *uilist, const char *slot);
+                          const char *uilist, const char *slot);
     void loadPredefinedPuzzle(QString name);
 };
 

@@ -29,7 +29,7 @@
 using namespace std;
 
 class kmagnetScene;
-  class kmagnetSolver: public QObject
+class kmagnetSolver: public QObject
 {
 
     Q_OBJECT
