@@ -54,8 +54,8 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     m_view->setFrameStyle(QFrame::NoFrame);
     m_view->setCacheMode( QGraphicsView::CacheBackground );
     m_view->setOptimizationFlags( QGraphicsView::DontClipPainter |
-                                  QGraphicsView::DontSavePainterState |
-                                  QGraphicsView::DontAdjustForAntialiasing 
+                                  QGraphicsView::DontSavePainterState
+                                  //| QGraphicsView::DontAdjustForAntialiasing 
 				  );
 
     m_scene = new kmagnetScene(this, ROWS, COLUMNS);
@@ -119,7 +119,8 @@ void kmagnet::newGame()
     QAction * pauseAction = this->action("game_pause");
     if (pauseAction->isChecked())
         pauseAction->activate(KAction::Trigger);
-    m_scene->newGame();
+    KGameDifficulty::setRunning(true);
+    m_scene->newGame();    
 }
 
 void kmagnet::showHighscores()
@@ -305,10 +306,12 @@ void kmagnet::gameOver(bool won)
         if (answer==KMessageBox::Yes)
             restart();
     }
+        KGameDifficulty::setRunning(false);
 }
 
 void kmagnet::editingMode(bool b)
 {
+    KGameDifficulty::setRunning(false);
     m_scene->toogleEditorMode(b);
     m_gameClock->restart();
     (b) ? m_gameClock->pause():m_gameClock->resume();
@@ -396,6 +399,7 @@ void kmagnet::restart()
     advanceMovements(0);
     m_scene->restart();
     this->action("move_solve")->setEnabled(true);
+    KGameDifficulty::setRunning(true);
 }
 
 void kmagnet::pause(bool b)
@@ -449,6 +453,7 @@ void kmagnet::solveFunc()
     this->action("game_restart")->setEnabled(false);
     this->action("move_solve")->setEnabled(false);
     m_solver->findSolution();
+    KGameDifficulty::setRunning(false);
 }
 
 void kmagnet::solutionFound()
@@ -536,11 +541,11 @@ void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &li
     for (uint i = 0; (strcmp (itemList[i].filename, "END") != 0); i++) 
     {
         KAction * t = new KAction (i18n (itemList[i].menuText), this);
-    actionCollection()->addAction (QString ("%1%2").arg(uilist).arg(i), t);
-	t->setData (i);		// Save the index of the item inside the action.
-	list.append (t);
-	connect (t, SIGNAL (triggered()), slot);
-    puzzleAction->addAction(t);//put the actions in the menu
+        actionCollection()->addAction (QString ("%1%2").arg(uilist).arg(i), t);
+        t->setData (i);		// Save the index of the item inside the action.
+        list.append (t);
+        connect (t, SIGNAL (triggered()), slot);
+        puzzleAction->addAction(t);//put the actions in the menu
     }
 
     // Plug the action list into the Puzzles menu.

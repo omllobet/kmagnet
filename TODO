@@ -1,26 +1,26 @@
-->Please only use the version from gitorious if you are not a developer, 
+->if you are not a developer, 
 use the code released in kde-apps: http://www.kde-apps.org/content/show.php?content=109111
 or a package from your distro.
 ->rewrite some things XD
 ->use isrunning
 ->take a look at possible precision problems
-->postocell function?, correct ball position?
+->postocell function?, correct ball position? ok
 ->correct load and save - OK
-->improve order
-->improve code
+->improve order ok
+->improve code ok
 ->convert from std to Qt?
 ->read Qt documentation
 ->thousand other things
-->why did I put keyboard moves on kmagnet and mouseevents on kmagnetscene?
+->why did I put keyboard moves on kmagnet and mouseevents on kmagnetscene? ok
 ->animations - ok
-->Download puzzles from internet ->knewstuff2
+->Download puzzles from internet ->knewstuff2 ok
 ->put solver in a Qthread or something
 ->split scene in scene+board (graphicitem)?
-->renderer+support themes
+->renderer+support themes ok
 ->yes it's an alpha...
 ->random level generator!!!!
 ->AI, maybe hillclimbing?
-->FIX scene glitches->pass the parts of the scene where the animation goes through. m_scene->changed? m_scene->update(rect)?
+->FIX scene glitches->pass the parts of the scene where the animation goes through. m_scene->changed? m_scene->update(rect)? ok
 ->option to configure animation milliseconds?->done
 ->modificar cmake find libkdegames- ok
 ->a proper scene->ok
