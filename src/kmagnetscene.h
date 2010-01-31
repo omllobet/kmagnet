@@ -98,7 +98,12 @@ public:
     uint getNumCells() {
         return m_cells.size();
     };
-
+    uint getColumns(){
+        return COLUMNS;
+    };
+    uint getRows(){
+        return ROWS;
+    };
 
 public slots:
     void resizeScene(int width, int height);

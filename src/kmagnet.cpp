@@ -21,7 +21,8 @@
 #include "settings.h"
 #include "common.h"
 #include "kmagnetcell.h"
-#include "kmagnetsolver.h"
+//#include "kmagnetsolver.h"
+//#include "kmagnetgenerator.h"
 #include <knewstuff2/engine.h>
 
 #include <KConfigDialog>
@@ -69,7 +70,10 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     //solver
     m_solver= new kmagnetSolver(this);
     connect(m_solver, SIGNAL(finished()),this,SLOT(solutionFound()));
-
+    
+    //generator
+    m_generator =new kmagnetGenerator(this);
+    
     m_gameClock = new KGameClock(this, KGameClock::MinSecOnly);
     connect(m_gameClock, SIGNAL(timeChanged(const QString&)), SLOT(advanceTime(const QString&)));
 

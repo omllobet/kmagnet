@@ -27,10 +27,12 @@
 #include "kmagnetscene.h"
 #include "kmagnetview.h"
 #include "kmagnetsolver.h"
+#include "kmagnetgenerator.h"
 #include "ui_prefs_base.h"
 
 class kmagnetScene;
 class kmagnetSolver;
+class kmagnetGenerator;
 class KToggleAction;
 
 /**
@@ -98,10 +100,11 @@ private:
     KToggleAction *m_toolbarAction;
     KToggleAction *m_statusbarAction;
     KActionMenu *puzzleAction;
-    KGameClock* m_gameClock;
+    KGameClock *m_gameClock;
     kmagnetScene *m_scene;
     kmagnetSolver *m_solver;
-    Ui::prefs_base ui_prefs_base ;
+    kmagnetGenerator *m_generator;
+    Ui::prefs_base ui_prefs_base;
 
     //like krubik for now
     struct PuzzleItem {

@@ -292,7 +292,7 @@ void kmagnetScene::restart()
 int kmagnetScene::getNextPosition ( Moves::Move m )
 {
     uint now= currentPosition;
-    switch ( m ) //change switch to if elseif?
+    switch ( m )
     {
     case ( Moves::UP ) :
     {

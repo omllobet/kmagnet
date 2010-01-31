@@ -43,6 +43,7 @@ int main(int argc, char **argv)
     KCmdLineOptions options;
     options.add("+[file]", ki18n( "Puzzle to open" ));
     KCmdLineArgs::addCmdLineOptions(options);
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
     KApplication app;
 
     KGlobal::locale()->insertCatalog("libkdegames");
