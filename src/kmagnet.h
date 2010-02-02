@@ -42,6 +42,8 @@ class KToggleAction;
  * @short Main window class
  * @author Oscar Martinez omllobet@gmail.com
  */
+using namespace std;
+
 class kmagnet : public KXmlGuiWindow
 {
     Q_OBJECT
@@ -78,7 +80,7 @@ private slots:
     void restart();
     void pause(bool b);
     void levelChanged(KGameDifficulty::standardLevel);
-    void solutionFound();
+    void solutionFound(QVectorMoves);
     void settingsChanged();
     void choosePath();
     void puzzleSelected();
@@ -103,7 +105,6 @@ private:
     KActionMenu *puzzleAction;
     KGameClock *m_gameClock;
     kmagnetScene *m_scene;
-    kmagnetSolver *m_solver;
     kmagnetGenerator *m_generator;
     Ui::prefs_base ui_prefs_base;
 

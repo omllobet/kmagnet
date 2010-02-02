@@ -22,25 +22,29 @@
 
 #include <settings.h>
 
-using namespace std;
-
-kmagnetSolver::kmagnetSolver(QObject* parent):QObject(parent)
+kmagnetSolver::kmagnetSolver(QObject* parent):QThread(parent)
 {
-    m_scene=dynamic_cast<kmagnet*>(parent)->get_scene();
+    qRegisterMetaType<QVectorMoves>("QVectorMoves");
 }
 
-void kmagnetSolver::findSolution()
+void kmagnetSolver::findSolution(kmagnetScene *scene)
 {
-    std::vector<Moves::Move> lm;
+    m_scene=scene;
+    start();
+}
+
+void kmagnetSolver::run()
+{
+    QVector<Moves::Move> lm;
     nextMove nm = nextMove(false, m_scene->getCurrentCell());
     int calls=0;
     solution.clear();
     solve(lm,nm,calls);
-    emit finished();
+    emit sendSolution(solution);
     qDebug("-- .- .-. - .. -. ..");
 }
 
-void kmagnetSolver::solve(vector<Moves::Move> &lm, nextMove sg, int numrec)
+void kmagnetSolver::solve(QVector<Moves::Move> &lm, nextMove sg, int numrec)
 {
     if (numrec>=Settings::maxCalls()) return;
     if (sg.getIsPossible() && (m_scene->getCell(sg.getPosition())->getIsFinal()))
@@ -78,7 +82,7 @@ void kmagnetSolver::solve(vector<Moves::Move> &lm, nextMove sg, int numrec)
     }
 }
 
-void kmagnetSolver::trymove(Moves::Move m, vector<Moves::Move> &l, int n)
+void kmagnetSolver::trymove(Moves::Move m, QVector<Moves::Move> &l, int n)
 {
     nextMove nm = m_scene->isPossibleMove(m);
     if (nm.getIsPossible())

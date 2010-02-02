@@ -19,39 +19,39 @@
 #ifndef KMAGNETSOLVER_H
 #define KMAGNETSOLVER_H
 
-#include <QObject>
-
-#include <vector>
+//#include <QObject>
+#include <QThread>
+#include <QVector>
+//#include <vector>
 
 #include "common.h"
+typedef QVector<Moves::Move> QVectorMoves;
+
 #include "kmagnetscene.h"
 
-using namespace std;
-
 class kmagnetScene;
-class kmagnetSolver: public QObject
+class kmagnetSolver: public QThread //I should read Qts docs about threads
 {
 
-    Q_OBJECT
-
+   Q_OBJECT
+   
 public:
 
     kmagnetSolver(QObject* parent=0);
-    void solve(vector<Moves::Move> &lm, nextMove sg, int numrec);
-    vector<Moves::Move> getSolution() {
-        return solution;
-    };
-    void findSolution();
+    void findSolution(kmagnetScene *scene);
+protected:    
+    virtual void run();
 
 signals:
-    void finished();
+    void sendSolution(QVectorMoves sol);
 
 private:
 
-    void trymove(Moves::Move m, vector<Moves::Move> &l, int n);
-
+    void trymove(Moves::Move m, QVector<Moves::Move> &l, int n);
+    void solve(QVector<Moves::Move> &lm, nextMove sg, int numrec);
+    
     kmagnetScene* m_scene;
-    vector<Moves::Move> solution;
+    QVector<Moves::Move> solution;
 
 };
 

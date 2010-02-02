@@ -63,8 +63,8 @@ void kmagnetGenerator::generate()
     {//make a better function?? check row and column??
         finalpos=qrand() % maxpos;
     }
-    qDebug() << "initialpos: " << initialpos;
-    qDebug() << "finalpos: " << finalpos;
+    //qDebug() << "initialpos: " << initialpos;
+    //qDebug() << "finalpos: " << finalpos;
     m_scene->setCurrentPosition(initialpos);
     m_scene->setStartPosition(initialpos);
     m_scene->setVisited(initialpos,true);
@@ -92,7 +92,7 @@ void kmagnetGenerator::generaterec()
             m_scene->getNextPosition(Moves::RIGHT)==finalpos
        )
     {//path completed
-        qDebug() << "FINITTTTTOOOOOOOOOOOO";
+      //  qDebug() << "FINITTTTTOOOOOOOOOOOO";
         m_scene->resizeScene( (int)m_scene->sceneRect().width(),
                               (int)m_scene->sceneRect().height() );//redraw
     }
@@ -112,7 +112,7 @@ void kmagnetGenerator::generaterec()
         if (newBlock(current)) { generaterec(); return;}
      
      //if its not possible, try to go back
-        qDebug() << "try to continue!! " << " mida= " << movements.size();
+        //qDebug() << "try to continue!! " << " mida= " << movements.size();
         movements.pop_back();
         while (!movements.isEmpty())
         {
@@ -125,7 +125,7 @@ void kmagnetGenerator::generaterec()
             }
             movements.pop_back();
         }
-        qDebug() << "no hay mas llamadas!!!!";
+        //qDebug() << "no hay mas llamadas!!!!";
       //if its not possible try to place a new ending cell
         if (tryplacefinal(lastmove)) return;
         if (tryplacefinal((Moves::Move)((int)(lastmove+1)%4))) return;
@@ -137,7 +137,7 @@ void kmagnetGenerator::generaterec()
 
 bool kmagnetGenerator::tryplacefinal(Moves::Move m)
 {
-    qDebug() << "final size= " << size;
+    //qDebug() << "final size= " << size;
     int cur =lastmovement;
     int size= m_scene->getNumCells();
     kmagnetCell* cell;
@@ -202,7 +202,7 @@ bool kmagnetGenerator::trymove(Moves::Move m)
         //save last movement
         if (movements.size()>size || lastmovement==-1) {
             lastmovement= movements.last();
-            size=movements.size(); qDebug() << "mov: " << lastmovement << " size: " << size;
+            size=movements.size();// qDebug() << "mov: " << lastmovement << " size: " << size;
         }
         lastmove=m;
         
@@ -271,7 +271,7 @@ bool kmagnetGenerator::newBlock(int currentpos)
     if (all.isEmpty()) return false;
     int num=qrand() % all.size();
     num=all.at(num);
-    qDebug() << "setting nonfreecell: " << num;
+    //qDebug() << "setting nonfreecell: " << num;
     m_scene->getCell(num)->setIsFree(false);
     //ban the cells in the direction where it came from
     forbidcells(currentpos, num, u, d, l, r);

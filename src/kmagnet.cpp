@@ -56,24 +56,20 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     m_view->setCacheMode( QGraphicsView::CacheBackground );
     m_view->setOptimizationFlags( QGraphicsView::DontClipPainter |
                                   QGraphicsView::DontSavePainterState
-                                  //| QGraphicsView::DontAdjustForAntialiasing 
-				  );
+                                  //| QGraphicsView::DontAdjustForAntialiasing
+                                );
 
     m_scene = new kmagnetScene(this, ROWS, COLUMNS);
     //m_scene->setBackgroundBrush(Qt::lightGray);//now in themes
-    
+
     connect(m_scene, SIGNAL(advanceMovements(int)), this, SLOT(advanceMovements(int)));
     connect(m_scene, SIGNAL(itsover(bool)), this, SLOT(gameOver(bool)));
     m_view->setScene(m_scene);
     connect(m_view,SIGNAL(resizeScene(int , int )),m_scene,SLOT(resizeScene(int , int )));
 
-    //solver
-    m_solver= new kmagnetSolver(this);
-    connect(m_solver, SIGNAL(finished()),this,SLOT(solutionFound()));
-    
     //generator
     m_generator =new kmagnetGenerator(this);
-    
+
     m_gameClock = new KGameClock(this, KGameClock::MinSecOnly);
     connect(m_gameClock, SIGNAL(timeChanged(const QString&)), SLOT(advanceTime(const QString&)));
 
@@ -90,12 +86,12 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     // It also applies the saved mainwindow settings, if any, and ask the
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
-    setupGUI();     
+    setupGUI();
     //toolbar action
     puzzleAction = new KActionMenu(KIcon("arrow-down"), i18n("Play random") ,this);
     fillPuzzleList(puzzles, puzzlesList, "puzzle_list", SLOT(puzzleSelected()));
-    connect (puzzleAction, SIGNAL(triggered()), SLOT(playRandomPuzzle()));  
-    toolBar()->insertAction(action("game_load"), puzzleAction); 
+    connect (puzzleAction, SIGNAL(triggered()), SLOT(playRandomPuzzle()));
+    toolBar()->insertAction(action("game_load"), puzzleAction);
     setFocus();
 }
 
@@ -105,10 +101,10 @@ kmagnet::~kmagnet()
 }
 
 const kmagnet::PuzzleItem kmagnet::puzzles [] = {
-    {"puzzle1.kmp",		I18N_NOOP("Hard Puzzle 1")},
-    {"puzzle2.kmp",		I18N_NOOP("Hard Puzzle 2")},
-    {"puzzle3.kmp",		I18N_NOOP("Hard Puzzle 3")},
-    {"END",			""}
+    {"puzzle1.kmp",     I18N_NOOP("Hard Puzzle 1")},
+    {"puzzle2.kmp",     I18N_NOOP("Hard Puzzle 2")},
+    {"puzzle3.kmp",     I18N_NOOP("Hard Puzzle 3")},
+    {"END",         ""}
 };
 
 void kmagnet::newGame()
@@ -124,7 +120,7 @@ void kmagnet::newGame()
     if (pauseAction->isChecked())
         pauseAction->activate(KAction::Trigger);
     KGameDifficulty::setRunning(true);
-    m_scene->newGame();    
+    m_scene->newGame();
 }
 
 void kmagnet::showHighscores()
@@ -167,12 +163,12 @@ void kmagnet::setupActions()
     generateAction->setShortcut(Qt::CTRL + Qt::Key_X);
     actionCollection()->addAction("generate", generateAction);
     connect( generateAction, SIGNAL( triggered() ),this, SLOT( generate()) );
-    
+
 }
 
 void kmagnet::generate()
 {
- m_generator->generate();
+    m_generator->generate();
 }
 
 void kmagnet::configureSettings()
@@ -202,9 +198,9 @@ void kmagnet::load()
 {
     QString path = Settings::kmagnetDataPath();
     if (path.isEmpty())//don't need it anymore
-      choosePath();
+        choosePath();
     if (!QDir(path).exists())
-      path = QDir::home().path() + "/";
+        path = QDir::home().path() + "/";
     QString loadFilename = KFileDialog::getOpenFileName (KUrl(path + "/"),
                            "*.kmp", this, i18n("Load Puzzle"));
     if (loadFilename.isNull()) {
@@ -321,7 +317,7 @@ void kmagnet::gameOver(bool won)
         if (answer==KMessageBox::Yes)
             restart();
     }
-        KGameDifficulty::setRunning(false);
+    KGameDifficulty::setRunning(false);
 }
 
 void kmagnet::editingMode(bool b)
@@ -336,7 +332,7 @@ void kmagnet::save()
 {
     QString path = Settings::kmagnetDataPath();
     if (path.isEmpty())
-      choosePath();
+        choosePath();
     KUrl startDir = KUrl(path + "/puzzle-" + QDateTime::currentDateTime().toString("yyyy.MM.dd-hh.mm.ss") + ".kmp");
     QString newFilename = KFileDialog::getSaveFileName ( startDir,
                           "*.kmp", this, i18n("Save Puzzle"));
@@ -345,7 +341,7 @@ void kmagnet::save()
     }
     KConfig config (newFilename, KConfig::SimpleConfig);
     if (!config.isConfigWritable(true))
-      return;
+        return;
     KConfigGroup configGroup = config.group("kmagnet");
     QStringList list;
     QString    value;
@@ -414,6 +410,7 @@ void kmagnet::restart()
     advanceMovements(0);
     m_scene->restart();
     this->action("move_solve")->setEnabled(true);
+    this->action("generate")->setEnabled(true);
     KGameDifficulty::setRunning(true);
 }
 
@@ -467,23 +464,25 @@ void kmagnet::solveFunc()
         pauseAction->activate(KAction::Trigger);
     this->action("game_restart")->setEnabled(false);
     this->action("move_solve")->setEnabled(false);
-    m_solver->findSolution();
+    this->action("generate")->setEnabled(false);
+    //solve
+    kmagnetSolver *m_solver= new kmagnetSolver(this);
+    connect(m_solver, SIGNAL(sendSolution(QVectorMoves)),this,SLOT(solutionFound(QVectorMoves)));
+    m_solver->findSolution(this->get_scene());
+    //fi solve
     KGameDifficulty::setRunning(false);
 }
 
-void kmagnet::solutionFound()
+void kmagnet::solutionFound(QVectorMoves lm)
 {
-//convert data to vector
     m_scene->setHasLost(true);
     m_gameClock->restart();
     m_gameClock->pause();
     advanceMovements(0);
-    std::vector<Moves::Move> lm=m_solver->getSolution();
     if (lm.size()!=0)
     {
         //DEBUG CODE
-        for (unsigned int i=0; i< lm.size(); i++) {
-            //	System.out.println(lm.get(i));
+        for (int i=0; i< lm.size(); i++) {
             QString str=QString("");
             switch (lm.at(i))
             {
@@ -506,13 +505,13 @@ void kmagnet::solutionFound()
             qDebug() << str;
         }
         //FI_DEBUG_CODE
-        QVector<Moves::Move> lm2= QVector<Moves::Move>::fromStdVector(lm);
-        m_scene->replay(lm2);
+        m_scene->replay(lm);
     }
     else
     {
         this->action("move_solve")->setEnabled(true);
         this->action("game_restart")->setEnabled(true);
+        this->action("generate")->setEnabled(true);
     }
 }
 
@@ -539,13 +538,13 @@ void kmagnet::choosePath()
                   i18n("Choose where to load/save puzzles from/to"));
     if (dirUrl.isValid() )
     {
-	 dirUrl.adjustPath(KUrl::AddTrailingSlash);
-         emit  valueChanged(dirUrl.directory(KUrl::ObeyTrailingSlash));
+        dirUrl.adjustPath(KUrl::AddTrailingSlash);
+        emit  valueChanged(dirUrl.directory(KUrl::ObeyTrailingSlash));
     }
 }
 
 void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &list,
-			const char *uilist, const char *slot)
+                               const char *uilist, const char *slot)
 {//part of the code similar to kubrick
     //Add random action
     KAction * t = new KAction (i18n ("Random predefined"), this);
@@ -553,11 +552,11 @@ void kmagnet::fillPuzzleList  (const PuzzleItem itemList [], QList<QAction*> &li
     connect(t, SIGNAL(triggered()), SLOT(playRandomPuzzle()));
     list.append(t);
     // Generate an action list with one action for each item in the list.
-    for (uint i = 0; (strcmp (itemList[i].filename, "END") != 0); i++) 
+    for (uint i = 0; (strcmp (itemList[i].filename, "END") != 0); i++)
     {
         KAction * t = new KAction (i18n (itemList[i].menuText), this);
         actionCollection()->addAction (QString ("%1%2").arg(uilist).arg(i), t);
-        t->setData (i);		// Save the index of the item inside the action.
+        t->setData (i);     // Save the index of the item inside the action.
         list.append (t);
         connect (t, SIGNAL (triggered()), slot);
         puzzleAction->addAction(t);//put the actions in the menu
@@ -575,48 +574,49 @@ void kmagnet::puzzleSelected()
 
     if (index >= 0)
     {
-      loadPredefinedPuzzle(puzzles[index].filename);
+        loadPredefinedPuzzle(puzzles[index].filename);
     }
 }
 
 void kmagnet::playRandomPuzzle()
 {
-  int high=3;//FIXME
-  int low=1;
-  int random= qrand() % ((high + 1) - low) + low;
-  loadPredefinedPuzzle ("puzzle" + QString::number(random) + ".kmp");
+    int high=3;//FIXME
+    int low=1;
+    int random= qrand() % ((high + 1) - low) + low;
+    loadPredefinedPuzzle ("puzzle" + QString::number(random) + ".kmp");
 }
 
 void kmagnet::loadPredefinedPuzzle(QString name)
 {
-   QString path;
-  QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
+    if (!this->action("move_solve")->isEnabled()) return;
+    QString path;
+    QStringList dataDir = KStandardDirs().findDirs("data", "kMagnet/data/");
     if (!dataDir.isEmpty())
-	  path=dataDir.first();
-  loadfile(path + name);
+        path=dataDir.first();
+    loadfile(path + name);
 }
 
 void kmagnet::getHotNewStuff()
 {
-  qDebug() << KGlobal::activeComponent().componentName();
-  KNS::Entry::List entries = KNS::Engine::download();
+    qDebug() << KGlobal::activeComponent().componentName();
+    KNS::Entry::List entries = KNS::Engine::download();
     // list of changed entries
-     // qDebug() << QDir::home().path() + "/";
+    // qDebug() << QDir::home().path() + "/";
     foreach(KNS::Entry* entry, entries) {
-     /*  QString path= QDir::home().path() + "/" + ".kMagnet";
-      QDir dir=QDir(path);
-      if (!dir.exists()) dir.mkdir(path);*/
-	//  qDebug() << entry->idNumber();
+        /*  QString path= QDir::home().path() + "/" + ".kMagnet";
+         QDir dir=QDir(path);
+         if (!dir.exists()) dir.mkdir(path);*/
+        //  qDebug() << entry->idNumber();
         // care only about installed ones
         if (entry->status() == KNS::Entry::Installed) {
             // do something with the installed entries
-	    //could put an actionlistmenu and update it here
-	  //  qDebug() << entry->idNumber();
-	  //  qDebug() << entry->installedFiles();
-            }
+            //could put an actionlistmenu and update it here
+            //  qDebug() << entry->idNumber();
+            //  qDebug() << entry->installedFiles();
         }
-    
+    }
+
     qDeleteAll(entries);
- }
+}
 
 #include "kmagnet.moc"
