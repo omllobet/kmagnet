@@ -48,7 +48,6 @@ int main(int argc, char **argv)
 
     KGlobal::locale()->insertCatalog("libkdegames");
     kmagnet *widget = new kmagnet;
-
     // see if we are starting with session management
     if (app.isSessionRestored())
     {

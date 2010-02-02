@@ -155,7 +155,7 @@ void kmagnetScene::animateMovement ( Moves::Move mov )
         return;
     };
     unsigned int pos=nm.getPosition();
-    QTimeLine *timer = new QTimeLine ( Settings::animationTime(), this );
+    QTimeLine *timer = new QTimeLine ( Settings::animationTime(), this );//better use heap?
     signalMapper->setMapping(timer,currentPosition+pos*1000);
     connect ( timer, SIGNAL ( finished() ),signalMapper, SLOT ( map() ) );
     timer->setFrameRange ( 0, 150 );
@@ -394,7 +394,7 @@ uint kmagnetScene::getCurrentCell()
 
 kmagnetCell* kmagnetScene::getCell ( uint n )
 {
-    //if (n<ROWS*COLUMNS)//not needed for now
+    Q_ASSERT(n<ROWS*COLUMNS && n>=0);
     return m_cells[n];
 }
 
