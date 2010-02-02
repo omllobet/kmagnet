@@ -37,8 +37,21 @@ public:
 private:
 
     void generaterec();
-    kmagnetScene* m_scene;
+    bool trymove(Moves::Move m);
+    bool newBlock(int currentpos);
+    bool tryplacefinal(Moves::Move m);
+    void forbidcells(int currentpos, int num, QVector<int> &u, QVector<int> &d, QVector<int> &l, QVector<int> &r );
     
+    kmagnetScene* m_scene;
+    int finalpos;
+    int columns;
+    QVector<int> forbiddenPos;//posicions on esta prohibit posar un bloc
+    QVector<int> movements;//moviments fets fins ara
+    int numcrides;//numcrides a la funcio genrec
+    
+    int lastmovement;//cell in the last movement
+    int size;//size of the movements made
+    Moves::Move lastmove;//direction of the movement
 };
 
 #endif // KMAGNETGENERATOR_H

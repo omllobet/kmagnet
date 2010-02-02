@@ -162,6 +162,17 @@ void kmagnet::setupActions()
     hotNewStuffAction->setIcon(KIcon("get-hot-new-stuff"));
     actionCollection()->addAction("hotnewstuff", hotNewStuffAction);
     connect( hotNewStuffAction, SIGNAL( triggered() ),this, SLOT( getHotNewStuff()) );
+    //Generator
+    KAction *generateAction= new KAction(i18n("Generate"),this);
+    generateAction->setShortcut(Qt::CTRL + Qt::Key_X);
+    actionCollection()->addAction("generate", generateAction);
+    connect( generateAction, SIGNAL( triggered() ),this, SLOT( generate()) );
+    
+}
+
+void kmagnet::generate()
+{
+ m_generator->generate();
 }
 
 void kmagnet::configureSettings()

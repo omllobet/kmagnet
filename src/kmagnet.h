@@ -84,6 +84,7 @@ private slots:
     void puzzleSelected();
     void playRandomPuzzle();
     void getHotNewStuff();
+    void generate();
 
 signals:
     void valueChanged(QString newValue);

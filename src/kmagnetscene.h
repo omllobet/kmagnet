@@ -104,6 +104,7 @@ public:
     uint getRows(){
         return ROWS;
     };
+    void setAllNotVisited();
 
 public slots:
     void resizeScene(int width, int height);

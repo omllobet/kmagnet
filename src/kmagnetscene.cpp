@@ -91,6 +91,8 @@ void kmagnetScene::newGame()
             m_cells[i] = new kmagnetCell (0 , this );
     }
 
+    currentPosition=21;
+    startPosition=21;
     setBoardPosition();
 
     if ( !m_ball )
@@ -292,59 +294,49 @@ void kmagnetScene::restart()
 int kmagnetScene::getNextPosition ( Moves::Move m )
 {
     uint now= currentPosition;
-    switch ( m )
-    {
-    case ( Moves::UP ) :
-    {
+    if (m==Moves::UP){
         for ( int i=now; i>=0; i=i-COLUMNS )
         {
+            //qDebug() << "cell up: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i+COLUMNS;
             else if ( currentCell->getIsFinal() )
                 return i;
         }
-        break;
     }
-    case ( Moves::DOWN ) :
-    {
+    else if ( m==Moves::DOWN ){
         for ( uint i=now; i< ROWS*COLUMNS; i=i+COLUMNS )
         {
+            //qDebug() << "cell down: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i-COLUMNS;
             else if ( currentCell->getIsFinal() )
                 return i;
         }
-        break;
     }
-    case ( Moves::LEFT ) :
-    {
+    else if ( m==Moves::LEFT ){
         for ( int i =now; i>= static_cast<int> ( ( now/COLUMNS ) *COLUMNS ) ; i=i-1 )
         {
+            //qDebug() << "cell left: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i+1;
             else if ( currentCell->getIsFinal() )
                 return i;
         }
-        break;
     }
-    case ( Moves::RIGHT ) :
-    {
+    else if ( m==Moves::RIGHT ){
         for ( uint i=now; i< ( now/COLUMNS ) *COLUMNS+COLUMNS; i=i+1 )
         {
+            //qDebug() << "cell right: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i-1;
             else if ( currentCell->getIsFinal() )
                 return i;
         }
-        break;
-    }
-    default:
-        qDebug() << "invalid move";
-        break;
     }
     //qDebug() << "lost!";
     hasLost=true;
@@ -415,4 +407,14 @@ void kmagnetScene::setSize ( int r, int c )
 {
     this->ROWS=r;
     this->COLUMNS=c;
+}
+
+void kmagnetScene::setAllNotVisited()
+{
+    int i=0;
+    while (i< m_cells.size())
+    {
+        m_cells[i]->setVisited(false);
+        i++;
+    }
 }

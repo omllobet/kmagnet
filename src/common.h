@@ -22,7 +22,7 @@
 
 namespace Moves
 {
-enum Move { UP, DOWN,LEFT,RIGHT };
+enum Move { UP=0, DOWN,LEFT,RIGHT };
 };
 
 namespace Global
