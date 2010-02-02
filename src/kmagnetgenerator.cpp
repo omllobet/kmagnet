@@ -98,7 +98,7 @@ void kmagnetGenerator::generaterec()
     }
     else
     {
-        qDebug() << "trying to move to a nonvisited";
+        //qDebug() << "trying to move to a nonvisited";
         //try to move to a non visited place
         int nextmove=qrand() % 4;
         if (trymove((Moves::Move)(nextmove))) { generaterec();return;}
@@ -107,7 +107,7 @@ void kmagnetGenerator::generaterec()
         if (trymove((Moves::Move)((int)(nextmove+3)%4))) { generaterec(); return; }
      
      //if its not possible, place a new block
-        qDebug() << "trying to place a block";
+        //qDebug() << "trying to place a block";
         uint current=m_scene->getCurrentCell();
         if (newBlock(current)) { generaterec(); return;}
      
@@ -143,25 +143,25 @@ bool kmagnetGenerator::tryplacefinal(Moves::Move m)
     kmagnetCell* cell;
     if (m==Moves::UP){
         if (cur-columns>=0){
-            cell=m_scene->getCell(cur-columns);
+            cell=m_scene->getCell(cur+columns);
             if (cell->getIsFree()){ cell->setIsFinal(true);return true;}
         }
     }
     else if (m==Moves::DOWN){
         if (cur+columns< size){
-            cell=m_scene->getCell(cur+columns);
+            cell=m_scene->getCell(cur-columns);
             if (cell->getIsFree()){ cell->setIsFinal(true);return true;}
         }
     }
     else if (m==Moves::RIGHT){
         if (cur+1< size){
-            cell=m_scene->getCell(cur+1);
+            cell=m_scene->getCell(cur-1);
             if (cell->getIsFree()){ cell->setIsFinal(true);return true;}
         }
     }
     else if (m==Moves::LEFT){
         if (cur-1>=0){
-            cell=m_scene->getCell(cur-1);
+            cell=m_scene->getCell(cur+1);
             if (cell->getIsFree()){ cell->setIsFinal(true);return true;}
         }
     }
@@ -199,7 +199,7 @@ bool kmagnetGenerator::trymove(Moves::Move m)
         qDebug() << "forbidden positions trymove: " << nums;
         qDebug() << "setting next position to" << nextPos;*/
         //FIDEBUG
-        //save best movement
+        //save last movement
         if (movements.size()>size || lastmovement==-1) {
             lastmovement= movements.last();
             size=movements.size(); qDebug() << "mov: " << lastmovement << " size: " << size;
