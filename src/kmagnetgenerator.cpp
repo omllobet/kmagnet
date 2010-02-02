@@ -73,7 +73,7 @@ void kmagnetGenerator::generate()
     m_scene->getCell(finalpos)->setIsFinal(true);
     numcrides=0;
     generaterec();
-    //TODO makeMorePaths
+    //TODO makeMorePaths();
     //reset
     m_scene->setCurrentPosition(initialpos);
     m_scene->setStartPosition(initialpos);
@@ -223,7 +223,7 @@ bool kmagnetGenerator::newBlock(int currentpos)
     int toadd=currentpos-2*columns;
     int pos=currentpos-columns;
     //generate possible places where to add a block
-    if (pos>=0 && !m_scene->getCell(pos)->getIsFree()) toadd=-1;//put in the while condition better
+    if (pos>=0 && !m_scene->getCell(pos)->getIsFree()) toadd=-1;//inside while cond?
     while (toadd>=0 && m_scene->getCell(toadd)->getIsFree())
     {
         if (!forbiddenPos.contains(toadd)){

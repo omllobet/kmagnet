@@ -198,6 +198,7 @@ void kmagnetScene::finishWait(int number)
         kmagnet* mainKmagnet = dynamic_cast<kmagnet*> ( parent() );
         mainKmagnet->action ( "move_solve" )->setEnabled ( true );
         mainKmagnet->action ( "game_restart" )->setEnabled ( true );
+        mainKmagnet->action ( "generate" )->setEnabled ( true );
         this->update();
     }
 }
