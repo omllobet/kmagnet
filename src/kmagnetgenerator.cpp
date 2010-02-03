@@ -215,12 +215,6 @@ bool kmagnetGenerator::trymove(Moves::Move m)
 }
 
 /* puts a new block in the board*/
-/*mmm maybe I shoud kepp forbiddenpos sorted and then 
-use bsearch.
-!contains doesnt stop at the first ocurrence!!!
-so, i should change contains with find
-and maybe sort the vector and then use bsearch
-its useful to read the documentation XD*/
 bool kmagnetGenerator::newBlock(int currentpos)
 {
     QVector<int> u,d,l,r;
