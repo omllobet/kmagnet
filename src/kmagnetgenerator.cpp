@@ -18,26 +18,9 @@
 
 #include "kmagnetgenerator.h"
 
-#include <QtGlobal>
+#include <QtGlobal>//for qrand
 #include <QDebug>
 
-//This should be fast
-// Hola Victor!!! XD
-//maybe should change kmagnetcell to inherit from simplecell
-//but the redraw only occurs at the end...així que...tampoc es problem
-//TODO Don't drink and code
-//TODO rethink?? cleanup?? simplify??
-//this one first places start and end an then generates a path between them
-//I should try to place blocks randomly and then generate a path? DFS?
-//mmm maybe just generate a random number between 8 and 20
-//dependending on the level, then make a path more or less random
-//and then try to make other paths to go nowhere...
-//I also could make the algorithm find a lot of solutions and then
-//choose one...but the cost wolud me much higher
-//maybe I should just leave this more ot less as is
-//and add a function to try to add more paths to
-//make a fully map and not just a path from the beginning to the end
-//maybe I could add a minimium of three steps or something
 kmagnetGenerator::kmagnetGenerator(QObject* parent):QObject(parent),
     forbiddenPos(QVector<int>()),
     movements(QVector<int>())
@@ -135,6 +118,8 @@ void kmagnetGenerator::generaterec()
     }
 }
 
+/*tries to place a final cell in the direction pointed by the move
+for now just in the immediately precedent cell*/
 bool kmagnetGenerator::tryplacefinal(Moves::Move m)
 {
     //qDebug() << "final size= " << size;
