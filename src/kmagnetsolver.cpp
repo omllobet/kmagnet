@@ -22,28 +22,34 @@
 
 #include <settings.h>
 
+/*This class solves or tries to the current puzzle*/
 kmagnetSolver::kmagnetSolver(QObject* parent):QThread(parent)
 {
+    /*register type from transferring info using signals
+    and slots between this thread and the main loop*/
     qRegisterMetaType<QVectorMoves>("QVectorMoves");
 }
 
+/*Tries to find a solution, starts the thread execution*/
 void kmagnetSolver::findSolution(kmagnetScene *scene)
 {
     m_scene=scene;
     start();
 }
 
+/*Initializes some values and calls the solve function*/
 void kmagnetSolver::run()
 {
     QVector<Moves::Move> lm;
     nextMove nm = nextMove(false, m_scene->getCurrentCell());
-    int calls=0;
+    int calls=0;// what is this for?
     solution.clear();
-    solve(lm,nm,calls);
+    solve(lm,nm,calls);// 0);
     emit sendSolution(solution);
     qDebug("-- .- .-. - .. -. ..");
 }
 
+/*Solves the puzzle*/
 void kmagnetSolver::solve(QVector<Moves::Move> &lm, nextMove sg, int numrec)
 {
     if (numrec>=Settings::maxCalls()) return;
@@ -82,6 +88,7 @@ void kmagnetSolver::solve(QVector<Moves::Move> &lm, nextMove sg, int numrec)
     }
 }
 
+/*Tries to make a move from the current cell*/
 void kmagnetSolver::trymove(Moves::Move m, QVector<Moves::Move> &l, int n)
 {
     nextMove nm = m_scene->isPossibleMove(m);

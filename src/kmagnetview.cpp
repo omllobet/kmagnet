@@ -17,7 +17,7 @@
  *************************************************************************************/
 
 #include "kmagnetview.h"
-
+/*This class represents the view for the scene*/
 kmagnetView::kmagnetView(QWidget * parent): QGraphicsView(parent)
 {
     this->setFocusPolicy(Qt::NoFocus);
@@ -28,6 +28,7 @@ kmagnetView::~kmagnetView()
 {
 }
 
+/*trigger a resize of the scene in case we resize the window*/
 void kmagnetView::resizeEvent( QResizeEvent *ev )
 {
     emit resizeScene( ev->size().width(), ev->size().height() );

@@ -21,7 +21,7 @@
 #include <KStandardDirs>
 
 #include <QPainter>
-
+/*This class represent a cell*/
 kmagnetCell::kmagnetCell(QGraphicsItem * parent, QGraphicsScene * scene)
         : QGraphicsItem(parent, scene),
         isFree(true),

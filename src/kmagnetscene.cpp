@@ -403,7 +403,6 @@ void kmagnetScene::drawBackground( QPainter* p, const QRectF& )
     p->drawPixmap( 0, 0, kmagnetRenderer::self()->backgroundPixmap(sceneRect().size().toSize()) );
 }
 
-
 void kmagnetScene::setSize ( int r, int c )
 {
     this->ROWS=r;

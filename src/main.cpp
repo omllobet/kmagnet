@@ -30,8 +30,9 @@ static const char description[] =
 
 static const char version[] = "0.06";
 
-uint Global::itemSize=20;
+uint Global::itemSize=20;//size of the cells
 
+/*This is the main function. It just creates a new widget.*/
 int main(int argc, char **argv)
 {
     KAboutData about("kMagnet", 0, ki18n("kMagnet"), version, ki18n(description),
@@ -43,6 +44,7 @@ int main(int argc, char **argv)
     KCmdLineOptions options;
     options.add("+[file]", ki18n( "Puzzle to open" ));
     KCmdLineArgs::addCmdLineOptions(options);
+    //seed the random generator
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
     KApplication app;
 
