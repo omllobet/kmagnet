@@ -21,9 +21,11 @@
 #include <QtGlobal>//for qrand
 #include <QDebug>
 
+#include "settings.h"
+
 kmagnetGenerator::kmagnetGenerator(QObject* parent):QObject(parent),
-    forbiddenPos(QVector<int>()),
-    movements(QVector<int>())
+        forbiddenPos(QVector<int>()),
+        movements(QVector<int>())
 {
     m_scene=dynamic_cast<kmagnet*>(parent)->get_scene();
 }
@@ -31,32 +33,28 @@ kmagnetGenerator::kmagnetGenerator(QObject* parent):QObject(parent),
 void kmagnetGenerator::generate()
 {
     forbiddenPos.clear();
+    numcells=m_scene->getNumCells();
+    forbiddenPos.reserve(numcells);
     movements.clear();
+    makingmorepaths=false;
     lastmovement=-1;
     size=0;
     m_scene->newGame();
-    int maxpos=m_scene->getNumCells();
     columns=m_scene->getColumns();
-    int initialpos=qrand() % maxpos;
-    finalpos=qrand() % maxpos;
-    //check if its a valid final pos
-    while (finalpos==initialpos || finalpos+1==initialpos
-            || finalpos-1==initialpos || finalpos-columns==initialpos
-            || finalpos+columns==initialpos)
-    {//make a better function?? check row and column??
-        finalpos=qrand() % maxpos;
-    }
-    //qDebug() << "initialpos: " << initialpos;
-    //qDebug() << "finalpos: " << finalpos;
+    uint initialpos=qrand() % numcells;
+    finalpos=qrand() % numcells;
+    checkValidFinalPos(initialpos);
     m_scene->setCurrentPosition(initialpos);
     m_scene->setStartPosition(initialpos);
     m_scene->setVisited(initialpos,true);
     forbiddenPos.append(initialpos);
+    forbiddenPos.append(finalpos);
     movements.append(initialpos);
     m_scene->getCell(finalpos)->setIsFinal(true);
-    numcrides=0;
     generaterec();
-    //TODO makeMorePaths();
+    m_scene->setCurrentPosition(initialpos);
+    if (Settings::extrapaths())
+        makeMorePaths();
     //reset
     m_scene->setCurrentPosition(initialpos);
     m_scene->setStartPosition(initialpos);
@@ -64,266 +62,417 @@ void kmagnetGenerator::generate()
     m_scene->setAllNotVisited();
 }
 
+void kmagnetGenerator::checkValidFinalPos(uint initialpos)
+{
+    while (finalpos==initialpos || finalpos+1==initialpos
+            || finalpos-1==initialpos || finalpos-columns==initialpos
+            || finalpos+columns==initialpos || finalpos% columns== initialpos %columns
+            || finalpos / columns  == initialpos / columns
+            )
+    {
+        finalpos=qrand() % numcells;
+    }
+}
+
 void kmagnetGenerator::generaterec()
 {
-    if (numcrides>=1500) { qDebug() << "Aiooooooosssssssss"; return; }
-    numcrides++;
-    if (movements.isEmpty()) { qDebug() << "impossible is nothing"; return; }
-    if (m_scene->getNextPosition(Moves::UP)==finalpos ||
-            m_scene->getNextPosition(Moves::DOWN)==finalpos ||
-            m_scene->getNextPosition(Moves::LEFT)==finalpos ||
-            m_scene->getNextPosition(Moves::RIGHT)==finalpos
-       )
-    {//path completed
-      //  qDebug() << "FINITTTTTOOOOOOOOOOOO";
+    if (checkFinalPosition(finalpos))
+    {
         m_scene->resizeScene( (int)m_scene->sceneRect().width(),
                               (int)m_scene->sceneRect().height() );//redraw
     }
     else
     {
-        //qDebug() << "trying to move to a nonvisited";
         //try to move to a non visited place
         int nextmove=qrand() % 4;
-        if (trymove((Moves::Move)(nextmove))) { generaterec();return;}
-        if (trymove((Moves::Move)((int)(nextmove+1)%4))) { generaterec(); return; }
-        if (trymove((Moves::Move)((int)(nextmove+2)%4))) { generaterec(); return; }
-        if (trymove((Moves::Move)((int)(nextmove+3)%4))) { generaterec(); return; }
-     
-     //if its not possible, place a new block
-        //qDebug() << "trying to place a block";
+        if (trymove((Moves::Move)(nextmove))) {
+            generaterec();
+            return;
+        }
+        if (trymove((Moves::Move)((int)(nextmove+1)%4))) {
+            generaterec();
+            return;
+        }
+        if (trymove((Moves::Move)((int)(nextmove+2)%4))) {
+            generaterec();
+            return;
+        }
+        if (trymove((Moves::Move)((int)(nextmove+3)%4))) {
+            generaterec();
+            return;
+        }
+        //if its not possible, place a new block
         uint current=m_scene->getCurrentCell();
-        if (newBlock(current)) { generaterec(); return;}
-     
-     //if its not possible, try to go back
-        //qDebug() << "try to continue!! " << " mida= " << movements.size();
+        nextmove=qrand() % 4;
+        if (newBlock(current, (Moves::Move)(nextmove))) {
+            generaterec();
+            return;
+        }
+        if (newBlock(current, (Moves::Move)((int)(nextmove+1)%4))) {
+            generaterec();
+            return;
+        }
+        if (newBlock(current, (Moves::Move)((int)(nextmove+2)%4))) {
+            generaterec();
+            return;
+        }
+        if (newBlock(current, (Moves::Move)((int)(nextmove+3)%4))) {
+            generaterec();
+            return;
+        }
+        //if its not possible, try to go back
         movements.pop_back();
         while (!movements.isEmpty())
         {
             int n=movements.last();
             kmagnetCell* c= m_scene->getCell(n);
-            if (c->getIsFree()){
+            if (c->getIsFree()) {
                 m_scene->setCurrentPosition(n);
-                generaterec();
-                return;
+                if (checkFinalPosition(finalpos))
+                    return;
             }
             movements.pop_back();
         }
-        //qDebug() << "no hay mas llamadas!!!!";
-      //if its not possible try to place a new ending cell
+        //if its not possible try to place a new ending cell
         if (tryplacefinal(lastmove)) return;
         if (tryplacefinal((Moves::Move)((int)(lastmove+1)%4))) return;
         if (tryplacefinal((Moves::Move)((int)(lastmove+2)%4))) return;
         if (tryplacefinal((Moves::Move)((int)(lastmove+3)%4))) return;
-        qDebug() << "GAME OVER !!!!";
+        //qDebug() << "GAME OVER !!!!";
     }
+}
+
+/*checks if the next movement could end the game*/
+bool kmagnetGenerator::checkFinalPosition(uint finalpos)
+{
+    nextMove nmUp=m_scene->isPossibleMove(Moves::UP);
+    nextMove nmDo=m_scene->isPossibleMove(Moves::DOWN);
+    nextMove nmL=m_scene->isPossibleMove(Moves::LEFT);
+    nextMove nmR=m_scene->isPossibleMove(Moves::RIGHT);
+    int i=0;//No posar com uint!!!!
+    uint curCell=m_scene->getCurrentCell();
+    bool ret= false;
+    if (nmUp.getIsPossible() && nmUp.getPosition()==finalpos)
+    {
+        for (i=curCell;i>= (int)nmUp.getPosition();i=i-columns) {
+            forbiddenPos.append(i);
+        }
+        ret=true;
+    }
+    else if (nmDo.getIsPossible() && nmDo.getPosition()==finalpos)
+    {
+        for (i=curCell;(uint)i<= nmDo.getPosition();i=i+columns) {
+            forbiddenPos.append(i);
+        }
+        ret=true;
+    }
+    else if (nmL.getIsPossible() && nmL.getPosition()==finalpos)
+    {
+        for (i=curCell;i>= (int)nmL.getPosition();i--) {
+            forbiddenPos.append(i);
+        }
+        ret=true;
+    }
+    else if (nmR.getIsPossible() && nmR.getPosition()==finalpos)
+    {
+        for (i=curCell;(uint)i<= nmR.getPosition();i++) {
+            forbiddenPos.append(i);
+        }
+        ret=true;
+    }
+    return ret;
 }
 
 /*tries to place a final cell in the direction pointed by the move
 for now just in the immediately precedent cell*/
 bool kmagnetGenerator::tryplacefinal(Moves::Move m)
 {
-    //qDebug() << "final size= " << size;
     int cur =lastmovement;
     int size= m_scene->getNumCells();
     kmagnetCell* cell;
-    if (m==Moves::UP){
-        if (cur-columns>=0){
+    if (m==Moves::UP) {
+        if (cur+columns<size) {
             cell=m_scene->getCell(cur+columns);
-            if (cell->getIsFree()){ cell->setIsFinal(true);return true;}
+            if (cell->getIsFree()) {
+                cell->setIsFinal(true);
+                return true;
+            }
         }
     }
-    else if (m==Moves::DOWN){
-        if (cur+columns< size){
+    else if (m==Moves::DOWN) {
+        if (cur-columns>= 0) {
             cell=m_scene->getCell(cur-columns);
-            if (cell->getIsFree()){ cell->setIsFinal(true);return true;}
+            if (cell->getIsFree()) {
+                cell->setIsFinal(true);
+                return true;
+            }
         }
     }
-    else if (m==Moves::RIGHT){
-        if (cur+1< size){
+    else if (m==Moves::RIGHT) {
+        if (cur-1>=0) {
             cell=m_scene->getCell(cur-1);
-            if (cell->getIsFree()){ cell->setIsFinal(true);return true;}
+            if (cell->getIsFree()) {
+                cell->setIsFinal(true);
+                return true;
+            }
         }
     }
-    else if (m==Moves::LEFT){
-        if (cur-1>=0){
+    else if (m==Moves::LEFT) {
+        if (cur+1< size) {
             cell=m_scene->getCell(cur+1);
-            if (cell->getIsFree()){ cell->setIsFinal(true);return true;}
+            if (cell->getIsFree()) {
+                cell->setIsFinal(true);
+                return true;
+            }
         }
     }
     return false;
 }
 
+/*tries to move to the direction pointed by Move::m
+returns true if can move, false if couldnt*/
 bool kmagnetGenerator::trymove(Moves::Move m)
 {
-    int nextPos= m_scene->getNextPosition(m);
+    //avoid returning from the same path
+    if (m==lastmove ||
+            (lastmove==Moves::UP && m==Moves::DOWN) ||
+            (m==Moves::UP && lastmove==Moves::DOWN) ||
+            (lastmove==Moves::LEFT && m==Moves::RIGHT) ||
+            (m==Moves::LEFT && lastmove==Moves::RIGHT)
+       )
+        return false;
+    nextMove nm=m_scene->isPossibleMove(m);
+    int nextPos= nm.getPosition();
     int curCell=m_scene->getCurrentCell();
-    //qDebug() << "next position= " << nextPos << "while moving: " << m << "from pos :" << curCell;
-    if ( nextPos != curCell && !m_scene->getCell(nextPos)->getVisited())
+    if ( nm.getIsPossible()  && nextPos != curCell && !m_scene->getCell(nextPos)->getVisited())
     {
-        // qDebug() << "forbiding positions!!";
         int i=0;
-        if (m==Moves::UP){
-            for (i=curCell;i>= nextPos;i=i-columns) {forbiddenPos.append(i);}
-        } 
-        else if (m==Moves::DOWN){
-            for (i=curCell;i<= nextPos;i=i+columns) {forbiddenPos.append(i);}
-        } 
-        else if (m==Moves::LEFT){
-            for (i=curCell;i>= nextPos;i--) {forbiddenPos.append(i);}
+        if (m==Moves::UP) {
+            for (i=curCell;i>= nextPos;i=i-columns) {
+                forbiddenPos.append(i);
+            }
         }
-        else if (m==Moves::RIGHT){
-            for (i=curCell;i<= nextPos;i++) {forbiddenPos.append(i);}
+        else if (m==Moves::DOWN) {
+            for (i=curCell;i<= nextPos;i=i+columns) {
+                forbiddenPos.append(i);
+            }
         }
-        //DEBUG
-        /*QString nums=QString("");
-        QString temp;
-        for (i=0; i< forbiddenPos.size(); i++)
-        {
-            nums.append( temp.setNum(forbiddenPos.at(i)) + " " );
+        else if (m==Moves::LEFT) {
+            for (i=curCell;i>= nextPos;i--) {
+                forbiddenPos.append(i);
+            }
         }
-        qDebug() << "forbidden positions trymove: " << nums;
-        qDebug() << "setting next position to" << nextPos;*/
-        //FIDEBUG
+        else if (m==Moves::RIGHT) {
+            for (i=curCell;i<= nextPos;i++) {
+                forbiddenPos.append(i);
+            }
+        }
         //save last movement
         if (movements.size()>size || lastmovement==-1) {
             lastmovement= movements.last();
-            size=movements.size();// qDebug() << "mov: " << lastmovement << " size: " << size;
+            size=movements.size();
         }
         lastmove=m;
-        
         m_scene->setCurrentPosition(nextPos);
         m_scene->setVisited(nextPos, true);
         movements.append(nextPos);
+        forbiddenPos.append(nextPos);
         return true;
     }
-    return false;
+    return false;//couldn't move
 }
 
 /* puts a new block in the board*/
-bool kmagnetGenerator::newBlock(int currentpos)
+bool kmagnetGenerator::newBlock(int currentpos, Moves::Move m)
 {
     QVector<int> u,d,l,r;
-    QVector<int> all;
-    int numcells=m_scene->getNumCells();
-    int toadd=currentpos-2*columns;
-    int pos=currentpos-columns;
-    //generate possible places where to add a block
-    if (pos>=0 && !m_scene->getCell(pos)->getIsFree()) toadd=-1;//inside while cond?
-    while (toadd>=0 && m_scene->getCell(toadd)->getIsFree())
+    int toadd=0;
+    int pos=0;
+    if (m==Moves::UP)
     {
-        if (!forbiddenPos.contains(toadd)){
-            u.append(toadd);
-            all.append(toadd);
+        toadd=currentpos-2*columns;
+        pos=currentpos-columns;
+        if (pos>=0 && !m_scene->getCell(pos)->getIsFree()) toadd=-1;//ugly
+        while (toadd>=0 && m_scene->getCell(toadd)->getIsFree())
+        {
+            if (!forbiddenPos.contains(toadd)) {
+                u.append(toadd);
+            }
+            toadd=toadd-columns;
         }
-        toadd=toadd-columns;
+        return placeBlock(u, m);
     }
-    toadd=currentpos+2*columns;
-    pos=currentpos+columns;
-    if (pos <numcells && !m_scene->getCell(pos)->getIsFree()) toadd=numcells+1;
-    while (toadd<numcells && m_scene->getCell(toadd)->getIsFree())
+    else if (m==Moves::DOWN)
     {
-        if (!forbiddenPos.contains(toadd)){
-            d.append(toadd);
-            all.append(toadd);
+        toadd=currentpos+2*columns;
+        pos=currentpos+columns;
+        if (pos <numcells && !m_scene->getCell(pos)->getIsFree()) toadd=numcells;
+        while (toadd<numcells && m_scene->getCell(toadd)->getIsFree())
+        {
+            if (!forbiddenPos.contains(toadd)) {
+                d.append(toadd);
+            }
+            toadd=toadd+columns;
         }
-        toadd=toadd+columns;
+        return placeBlock(d, m);
     }
-    toadd=currentpos+2;
-    int endr=( currentpos/columns ) *columns+columns;
-    pos=currentpos+1;
-    if (pos < numcells && !m_scene->getCell(pos)->getIsFree()) toadd=endr;
-    while (toadd<endr && m_scene->getCell(toadd)->getIsFree())
+    else if (m==Moves::LEFT)
     {
-        if (!forbiddenPos.contains(toadd)){
-            r.append(toadd);
-            all.append(toadd);
+        toadd=currentpos+2;
+        int endr=( currentpos/columns ) *columns+columns;
+        pos=currentpos+1;
+        if (pos < numcells && !m_scene->getCell(pos)->getIsFree()) toadd=endr;
+        while (toadd<endr && m_scene->getCell(toadd)->getIsFree())
+        {
+            if (!forbiddenPos.contains(toadd)) {
+                r.append(toadd);
+            }
+            toadd++;
         }
-        toadd++;
+        return placeBlock(r, m);
     }
-    toadd=currentpos-2;
-    int endl=static_cast<int> ( ( currentpos/columns ) *columns );
-    pos=currentpos-1;
-    if (pos >=0 && !m_scene->getCell(pos)->getIsFree()) toadd=endl-1;
-    while (toadd>=endl && m_scene->getCell(toadd)->getIsFree())
+    else if (Moves::RIGHT)
     {
-        if (!forbiddenPos.contains(toadd)){
-            l.append(toadd);
-            all.append(toadd);
+        toadd=currentpos-2;
+        int endl=static_cast<int> ( ( currentpos/columns ) *columns );
+        pos=currentpos-1;
+        if (pos >=0 && !m_scene->getCell(pos)->getIsFree()) toadd=endl-1;
+        while (toadd>=endl && m_scene->getCell(toadd)->getIsFree())
+        {
+            if (!forbiddenPos.contains(toadd)) {
+                l.append(toadd);
+            }
+            toadd--;
         }
-        toadd--;
+        return placeBlock(l, m);
     }
-    //choose one place where to add the block
-    if (all.isEmpty()) return false;
-    int num=qrand() % all.size();
-    num=all.at(num);
-    //qDebug() << "setting nonfreecell: " << num;
-    m_scene->getCell(num)->setIsFree(false);
-    //ban the cells in the direction where it came from
-    forbidcells(currentpos, num, u, d, l, r);
     return true;
 }
 
-void kmagnetGenerator::forbidcells(int currentpos, int num, QVector<int> &u, QVector<int> &d, QVector<int> &l, QVector<int> &r )
+bool kmagnetGenerator::placeBlock(QVector<int> &positions, Moves::Move m)
 {
-    //forbid cells//does not check for dupes...yet?
+    if (positions.isEmpty()) return false;
+    int num=qrand() % positions.size();
+    num=positions.at(num);
+    m_scene->getCell(num)->setIsFree(false);
+    forbidcells(num,positions, m);
+    if (makingmorepaths) {
+        int posorig=m_scene->getCurrentCell();
+        if (trymove(m) && checkFinalPosition(finalpos))
+        {
+            m_scene->getCell(num)->setIsFree(true);
+        }
+        m_scene->setCurrentPosition(posorig);
+    }
+    return true;
+}
+
+/*forbids cells so no block is put there to avoid blocking the a path*/
+void kmagnetGenerator::forbidcells(int num, QVector<int> &positions, Moves::Move m)
+{
     int i=0;
     int vecnum;
+    int banpos=0;
+    int currentpos=m_scene->getCurrentCell();
     bool finished=false;
-    if (u.contains(num))
+    if (m==Moves::UP)
     {
-        forbiddenPos.append(currentpos-columns);
-        for (i=0;i < u.size() && !finished ;i++)
+        banpos=currentpos-columns;
+        if (banpos>=0)
+            forbiddenPos.append(banpos);
+        for (i=0;i < positions.size() && !finished ;i++)
         {
-            vecnum=u.at(i);
+            vecnum=positions.at(i);
             if (vecnum>=num) {
                 forbiddenPos.append(vecnum);
-                if (vecnum<=num)finished=true;
+                if (vecnum==num)finished=true;
             }
         }
     }
-    else if (d.contains(num))
+    else if (m==Moves::DOWN)
     {
-        forbiddenPos.append(currentpos+columns);
-        for (i=d.size()-1; i>=0 && !finished ;i--)
+        finished=false;
+        banpos= currentpos+columns;
+        if (banpos<=numcells) forbiddenPos.append(banpos);
+        for (i=positions.size()-1; i>=0 && !finished ;i--)
         {
-            vecnum=d.at(i);
+            vecnum=positions.at(i);
             if (vecnum<=num) {
                 forbiddenPos.append(vecnum);
-                if (vecnum>=num)finished=true;
+                if (vecnum==num)finished=true;
             }
         }
     }
-    else if (l.contains(num))
+    else if (m==Moves::LEFT)
     {
-        forbiddenPos.append(currentpos-1);
-        for (i=0; i< l.size() && !finished;i++)
+        finished=false;
+        if ((currentpos % columns)!=0)
+            forbiddenPos.append(currentpos-1);
+        for (i=0; i < positions.size() && !finished;i++)
         {
-            vecnum=l.at(i);
+            vecnum=positions.at(i);
             if (vecnum>=num) {
                 forbiddenPos.append(vecnum);
-                if (vecnum<=num)finished=true;
+                if (vecnum==num)finished=true;
             }
         }
     }
-    else if (r.contains(num))
+    else if (m==Moves::RIGHT)
     {
-        forbiddenPos.append(currentpos+1);
-        for (i=r.size()-1; i>=0 && !finished ;i--)
+        finished=false;
+        if ((currentpos % columns)!=9)
+            forbiddenPos.append(currentpos+1);
+        for (i=positions.size()-1; i>=0 && !finished ;i--)
         {
-            vecnum=r.at(i);
+            vecnum=positions.at(i);
             if (vecnum<=num) {
                 forbiddenPos.append(vecnum);
-                if (vecnum>=num)finished=true;
+                if (vecnum==num)finished=true;
             }
         }
     }
-    //DEBUG
-    /*QString nums=QString("");
-    QString temp;
-    for (i=0; i< forbiddenPos.size(); i++)
+}
+
+void kmagnetGenerator::makeMorePaths()
+{
+    int i=0;
+    makingmorepaths=true;
+    while ( i < movements.size())
     {
-        nums.append( temp.setNum(forbiddenPos.at(i)) + " " );
+        int move=movements.at(i);
+        if (m_scene->getCell(move)->getIsFree())
+            m_scene->setCurrentPosition(move);
+        int moveDirection=qrand() % 4;
+        Moves::Move m = (Moves::Move)moveDirection;
+        makeAction(move,m);
+        m=(Moves::Move)((int)(moveDirection+1) %4);
+        makeAction(move,m);
+        m=(Moves::Move)((int)(moveDirection+2) %4);
+        makeAction(move,m);
+        m=(Moves::Move)((int)(moveDirection+3) %4);
+        makeAction(move,m);
+        i++;
     }
-    qDebug() << "forbidden positions: " << nums;*/
-    //FIDEBUG
+}
+
+/*if its possible to makes a move, adds the move to the movements vector
+if not, tries to add a block*/
+void kmagnetGenerator::makeAction(int move, Moves::Move m)
+{
+    nextMove nm= m_scene->isPossibleMove(m);
+    int nextpos=nm.getPosition();
+    if (nm.getIsPossible())
+    {
+        if (!movements.contains(nextpos))
+            movements.append(nextpos);
+    }
+    else//new block
+    {
+        bool b= newBlock(move,m);
+        nm= m_scene->isPossibleMove(m);
+        nextpos=nm.getPosition();
+        if (b && nm.getIsPossible() && !movements.contains(nextpos)) {
+            movements.append(nextpos);
+        }
+    }
 }

@@ -63,6 +63,7 @@ void kmagnetScene::setBoardPosition()
         m_ball->setRect ( 0,0, size ,size );
         setBallPos ( currentPosition );
     }
+    update();
 }
 
 void kmagnetScene::newGame()
@@ -295,10 +296,11 @@ void kmagnetScene::restart()
 int kmagnetScene::getNextPosition ( Moves::Move m )
 {
     uint now= currentPosition;
+//     qDebug() << "now= " << now;
     if (m==Moves::UP){
         for ( int i=now; i>=0; i=i-COLUMNS )
         {
-            //qDebug() << "cell up: " << i;
+//             qDebug() << "cell up: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i+COLUMNS;
@@ -309,8 +311,9 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
     else if ( m==Moves::DOWN ){
         for ( uint i=now; i< ROWS*COLUMNS; i=i+COLUMNS )
         {
-            //qDebug() << "cell down: " << i;
+//             qDebug() << "cell down: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
+//            qDebug() << "free=: " << currentCell->getIsFree() << "final" << currentCell->getIsFinal();
             if ( !currentCell->getIsFree() )
                 return i-COLUMNS;
             else if ( currentCell->getIsFinal() )
@@ -320,7 +323,7 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
     else if ( m==Moves::LEFT ){
         for ( int i =now; i>= static_cast<int> ( ( now/COLUMNS ) *COLUMNS ) ; i=i-1 )
         {
-            //qDebug() << "cell left: " << i;
+//             qDebug() << "cell left: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i+1;
@@ -331,7 +334,7 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
     else if ( m==Moves::RIGHT ){
         for ( uint i=now; i< ( now/COLUMNS ) *COLUMNS+COLUMNS; i=i+1 )
         {
-            //qDebug() << "cell right: " << i;
+//              qDebug() << "cell right: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i-1;
@@ -347,8 +350,10 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
 nextMove kmagnetScene::isPossibleMove ( Moves::Move m )
 {
     uint next=getNextPosition ( m );
-    if ( currentPosition==next || m_cells[next]->getVisited() )
+    //qDebug("nextpos =%d",next);
+    if ( currentPosition==next || m_cells.at(next)->getVisited() )
     {
+//        qDebug("nextpos =%d false!!",next);
         return nextMove ( false,next );
     }
     return nextMove ( true,next );

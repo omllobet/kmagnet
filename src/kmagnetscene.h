@@ -71,6 +71,7 @@ public:
     };
     uint getStartPosition();
     void setCurrentPosition(uint p) {
+        Q_ASSERT(p>=0 && p< m_cells.size());
         currentPosition=p;
     };
     QPoint getCurrentPosition();
@@ -89,7 +90,7 @@ public:
         return hasWon;
     };
     void setBallPos(uint cellNumber);
-    int getNextPosition(Moves::Move m);
+    //int getNextPosition(Moves::Move m);
     nextMove isPossibleMove(Moves::Move m);
     void setVisited(uint p,bool b);
     void animateMovement(Moves::Move m);
@@ -123,6 +124,7 @@ private:
     void setBoardPosition();
     uint posToCell(QPoint p);
     virtual void drawBackground( QPainter*, const QRectF& );
+    int getNextPosition(Moves::Move m);
 
     uint COLUMNS;
     uint ROWS;

@@ -21,7 +21,7 @@
 kmagnetView::kmagnetView(QWidget * parent): QGraphicsView(parent)
 {
     this->setFocusPolicy(Qt::NoFocus);
-    this->setCacheMode(CacheBackground);
+    //this->setCacheMode(CacheBackground);
 }
 
 kmagnetView::~kmagnetView()

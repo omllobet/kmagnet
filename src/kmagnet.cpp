@@ -169,6 +169,10 @@ void kmagnet::setupActions()
 void kmagnet::generate()
 {
     m_generator->generate();
+    QAction * editAction = this->action("editmode");
+    if (editAction->isChecked())
+        editAction->activate(KAction::Trigger);
+    this->restart();
 }
 
 void kmagnet::configureSettings()
