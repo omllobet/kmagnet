@@ -137,14 +137,15 @@ void kmagnetScene::movement ( Moves::Move mov )
     {
         return;
     };
-    currentPosition=nm.getPosition();
+    int pos=nm.getPosition();
+    setCurrentPosition(pos);
     if (m_cells[currentPosition]->getIsFinal()) hasWon=true;
-    setBallPos ( currentPosition );
+    setBallPos ( pos );
 }
 
 kmagnetScene::~kmagnetScene()
 {
-    for ( int i=0;i<m_cells.size();i++ )//cells have no parent//but associated with this scene...just in case...TODO look documentation
+    for ( int i=0;i<m_cells.size();i++ )//cells have no parent//but are associated with this scene
         delete m_cells[i];
 }
 
@@ -165,7 +166,7 @@ void kmagnetScene::animateMovement ( Moves::Move mov )
     animation->setTimeLine ( timer );
     animation->setPosAt ( 1.0,m_cells[pos]->pos() );
     timer->start();
-    currentPosition=nm.getPosition();
+    setCurrentPosition(nm.getPosition());
 }
 
 void kmagnetScene::replay ( QVector<Moves::Move> lm )
@@ -192,7 +193,7 @@ void kmagnetScene::finishWait(int number)
             rectange = QRectF(m_cells[endNumber]->pos(), QPointF( startPos.x()+Global::itemSize+2,startPos.y()+Global::itemSize+2));
         }
         this->update(rectange);
-        sol.pop_front();//sol.erase(sol.begin());
+        sol.pop_front();
     }
     else
     {
@@ -296,11 +297,9 @@ void kmagnetScene::restart()
 int kmagnetScene::getNextPosition ( Moves::Move m )
 {
     uint now= currentPosition;
-//     qDebug() << "now= " << now;
     if (m==Moves::UP){
         for ( int i=now; i>=0; i=i-COLUMNS )
         {
-//             qDebug() << "cell up: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i+COLUMNS;
@@ -311,9 +310,7 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
     else if ( m==Moves::DOWN ){
         for ( uint i=now; i< ROWS*COLUMNS; i=i+COLUMNS )
         {
-//             qDebug() << "cell down: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
-//            qDebug() << "free=: " << currentCell->getIsFree() << "final" << currentCell->getIsFinal();
             if ( !currentCell->getIsFree() )
                 return i-COLUMNS;
             else if ( currentCell->getIsFinal() )
@@ -323,7 +320,6 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
     else if ( m==Moves::LEFT ){
         for ( int i =now; i>= static_cast<int> ( ( now/COLUMNS ) *COLUMNS ) ; i=i-1 )
         {
-//             qDebug() << "cell left: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i+1;
@@ -334,7 +330,6 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
     else if ( m==Moves::RIGHT ){
         for ( uint i=now; i< ( now/COLUMNS ) *COLUMNS+COLUMNS; i=i+1 )
         {
-//              qDebug() << "cell right: " << i;
             kmagnetCell* currentCell= m_cells.at ( i );
             if ( !currentCell->getIsFree() )
                 return i-1;
@@ -349,11 +344,10 @@ int kmagnetScene::getNextPosition ( Moves::Move m )
 
 nextMove kmagnetScene::isPossibleMove ( Moves::Move m )
 {
-    uint next=getNextPosition ( m );
-    //qDebug("nextpos =%d",next);
-    if ( currentPosition==next || m_cells.at(next)->getVisited() )
+    int next=getNextPosition ( m );
+    Q_ASSERT(next >=0 && next < m_cells.size());
+    if ( (int)currentPosition==next || m_cells.at(next)->getVisited() )
     {
-//        qDebug("nextpos =%d false!!",next);
         return nextMove ( false,next );
     }
     return nextMove ( true,next );
@@ -379,7 +373,7 @@ void kmagnetScene::setBallPos ( uint cellNumber )
     qreal correction=0.05*Global::itemSize;
     QPointF pos=m_cells[cellNumber]->pos();
     m_ball->setPos ( QPointF ( pos.x() +correction, pos.y() +correction ) );
-    currentPosition=cellNumber;
+    setCurrentPosition(cellNumber);
 }
 
 uint kmagnetScene::getStartPosition()
@@ -422,4 +416,47 @@ void kmagnetScene::setAllNotVisited()
         m_cells[i]->setVisited(false);
         i++;
     }
+}
+
+void kmagnetScene::printPuzzle()
+{
+    QString text;
+    for (uint i=0; i< COLUMNS; i++)
+    {
+        text.append("-");
+    }
+    qDebug() << text;
+    text.clear();
+    for (uint i=0; i< ROWS; i++)
+    {
+        for (uint j=0;j< COLUMNS; j++)
+        {
+            int num=j+i*COLUMNS;
+            kmagnetCell *cell =m_cells.at(num);
+            if (num==(int)currentPosition)
+            {
+                text.append("O");
+            }
+            else if (!cell->getIsFree())
+            {
+                text.append("X");
+            }
+            else if (cell->getIsFinal())
+            {
+                text.append("F");
+            }
+            else
+            {
+                text.append(" ");
+            }
+        }
+        qDebug() << text;
+        text.clear();
+    }
+    text.clear();
+    for (uint i=0; i< COLUMNS; i++)
+    {
+        text.append("-");
+    }
+    qDebug() << text;
 }

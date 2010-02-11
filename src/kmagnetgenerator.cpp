@@ -17,11 +17,10 @@
  *************************************************************************************/
 
 #include "kmagnetgenerator.h"
+#include "settings.h"
 
 #include <QtGlobal>//for qrand
 #include <QDebug>
-
-#include "settings.h"
 
 kmagnetGenerator::kmagnetGenerator(QObject* parent):QObject(parent),
         forbiddenPos(QVector<int>()),
@@ -34,7 +33,6 @@ void kmagnetGenerator::generate()
 {
     forbiddenPos.clear();
     numcells=m_scene->getNumCells();
-    forbiddenPos.reserve(numcells);
     movements.clear();
     makingmorepaths=false;
     lastmovement=-1;
@@ -126,7 +124,7 @@ void kmagnetGenerator::generaterec()
         {
             int n=movements.last();
             kmagnetCell* c= m_scene->getCell(n);
-            if (c->getIsFree()) {
+            if (c->getIsFree() && !c->getIsFinal()) {
                 m_scene->setCurrentPosition(n);
                 if (checkFinalPosition(finalpos))
                     return;
@@ -195,6 +193,7 @@ bool kmagnetGenerator::tryplacefinal(Moves::Move m)
             cell=m_scene->getCell(cur+columns);
             if (cell->getIsFree()) {
                 cell->setIsFinal(true);
+                forbiddenPos.append(cur+columns);
                 return true;
             }
         }
@@ -204,15 +203,7 @@ bool kmagnetGenerator::tryplacefinal(Moves::Move m)
             cell=m_scene->getCell(cur-columns);
             if (cell->getIsFree()) {
                 cell->setIsFinal(true);
-                return true;
-            }
-        }
-    }
-    else if (m==Moves::RIGHT) {
-        if (cur-1>=0) {
-            cell=m_scene->getCell(cur-1);
-            if (cell->getIsFree()) {
-                cell->setIsFinal(true);
+                forbiddenPos.append(cur-columns);
                 return true;
             }
         }
@@ -222,6 +213,17 @@ bool kmagnetGenerator::tryplacefinal(Moves::Move m)
             cell=m_scene->getCell(cur+1);
             if (cell->getIsFree()) {
                 cell->setIsFinal(true);
+                forbiddenPos.append(cur+1);
+                return true;
+            }
+        }
+    }
+    else if (m==Moves::RIGHT) {
+        if (cur-1>=0) {
+            cell=m_scene->getCell(cur-1);
+            if (cell->getIsFree()) {
+                cell->setIsFinal(true);
+                forbiddenPos.append(cur-1);
                 return true;
             }
         }
@@ -440,8 +442,15 @@ void kmagnetGenerator::makeMorePaths()
     while ( i < movements.size())
     {
         int move=movements.at(i);
-        if (m_scene->getCell(move)->getIsFree())
+        if (m_scene->getCell(move)->getIsFree() && !m_scene->getCell(move)->getIsFinal())
+        {
             m_scene->setCurrentPosition(move);
+        }
+        else
+        {   
+            i++;
+            continue;
+        }
         int moveDirection=qrand() % 4;
         Moves::Move m = (Moves::Move)moveDirection;
         makeAction(move,m);

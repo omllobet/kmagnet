@@ -108,7 +108,6 @@ private:
     kmagnetGenerator *m_generator;
     Ui::prefs_base ui_prefs_base;
 
-    //like krubik for now
     struct PuzzleItem {
         const char * filename;      // File containing demo or "END".
         const char * menuText;      // Description of the pattern or moves.

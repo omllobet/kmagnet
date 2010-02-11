@@ -72,6 +72,7 @@ public:
     uint getStartPosition();
     void setCurrentPosition(uint p) {
         Q_ASSERT(p>=0 && p< m_cells.size());
+        //qDebug("from: %d", currentPosition);
         currentPosition=p;
     };
     QPoint getCurrentPosition();
@@ -125,6 +126,7 @@ private:
     uint posToCell(QPoint p);
     virtual void drawBackground( QPainter*, const QRectF& );
     int getNextPosition(Moves::Move m);
+    void printPuzzle();
 
     uint COLUMNS;
     uint ROWS;
