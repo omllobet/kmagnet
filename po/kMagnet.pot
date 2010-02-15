@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-23 19:12+0100\n"
+"POT-Creation-Date: 2010-02-15 11:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,27 +16,27 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: kmagnet.cpp:76 kmagnet.cpp:115
+#: kmagnet.cpp:78 kmagnet.cpp:114
 msgid "Time: 00:00"
 msgstr ""
 
-#: kmagnet.cpp:77
+#: kmagnet.cpp:79
 msgid "Movements: 0"
 msgstr ""
 
-#: kmagnet.cpp:89
+#: kmagnet.cpp:91
 msgid "Play random"
 msgstr ""
 
-#: kmagnet.cpp:105
+#: kmagnet.cpp:104
 msgid "Hard Puzzle 1"
 msgstr ""
 
-#: kmagnet.cpp:106
+#: kmagnet.cpp:105
 msgid "Hard Puzzle 2"
 msgstr ""
 
-#: kmagnet.cpp:107
+#: kmagnet.cpp:106
 msgid "Hard Puzzle 3"
 msgstr ""
 
@@ -48,59 +48,71 @@ msgstr ""
 msgid "Get puzzles!"
 msgstr ""
 
-#: kmagnet.cpp:170 kmagnet.cpp:173
+#: kmagnet.cpp:162
+msgid "Generate"
+msgstr ""
+
+#: kmagnet.cpp:185 kmagnet.cpp:188
 msgid "Settings"
 msgstr ""
 
-#: kmagnet.cpp:179
+#: kmagnet.cpp:194
 msgid "General"
 msgstr ""
 
-#: kmagnet.cpp:193
+#: kmagnet.cpp:195
+msgid "Theme"
+msgstr ""
+
+#: kmagnet.cpp:209
 msgid "Load Puzzle"
 msgstr ""
 
-#: kmagnet.cpp:206
+#: kmagnet.cpp:222
 msgid "Sorry, The file %1 doesn't exist"
 msgstr ""
 
-#: kmagnet.cpp:207
+#: kmagnet.cpp:223
 msgid "File doesn't exist"
 msgstr ""
 
-#: kmagnet.cpp:214
+#: kmagnet.cpp:230
 msgid "Sorry, This is not a valid kMagnet Puzzle file"
 msgstr ""
 
-#: kmagnet.cpp:215
+#: kmagnet.cpp:231
 msgid "File Not Valid"
 msgstr ""
 
-#: kmagnet.cpp:276
+#: kmagnet.cpp:292
 msgid "Time: %1"
 msgstr ""
 
-#: kmagnet.cpp:281
+#: kmagnet.cpp:297
 msgid "Movements: %1"
 msgstr ""
 
-#: kmagnet.cpp:304
+#: kmagnet.cpp:320
 msgid "Thanks for playing. Do you want to try again?"
 msgstr ""
 
-#: kmagnet.cpp:304
+#: kmagnet.cpp:320
 msgid "Game ended"
 msgstr ""
 
-#: kmagnet.cpp:324
+#: kmagnet.cpp:342
 msgid "Save Puzzle"
 msgstr ""
 
-#: kmagnet.cpp:508
+#: kmagnet.cpp:526
+msgid "Failed to load \"%1\" theme. Please check your installation."
+msgstr ""
+
+#: kmagnet.cpp:542
 msgid "Choose where to load/save puzzles from/to"
 msgstr ""
 
-#: kmagnet.cpp:520
+#: kmagnet.cpp:554
 msgid "Random predefined"
 msgstr ""
 
@@ -108,11 +120,11 @@ msgstr ""
 msgid "A simple puzzle-like game"
 msgstr ""
 
-#: rc.cpp:3 rc.cpp:12 rc.cpp:21 rc.cpp:27
+#: rc.cpp:3 rc.cpp:12 rc.cpp:21 rc.cpp:27 rc.cpp:33
 msgid "&Play puzzle"
 msgstr ""
 
-#: rc.cpp:6 rc.cpp:15 rc.cpp:24 rc.cpp:30
+#: rc.cpp:6 rc.cpp:15 rc.cpp:24 rc.cpp:30 rc.cpp:36
 msgid "Main Toolbar"
 msgstr ""
 
