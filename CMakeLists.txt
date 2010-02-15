@@ -1,4 +1,4 @@
-project(kmagnet)
+project(kMagnet)
 
 find_package(KDE4 REQUIRED)
 find_package(LibKDEGames REQUIRED)

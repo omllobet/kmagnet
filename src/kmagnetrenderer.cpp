@@ -55,7 +55,9 @@ kmagnetRenderer::kmagnetRenderer()
     m_cache->setCacheLimit(3*1024);
 
     if (!loadTheme( Settings::theme() ))
+    {
         kDebug() << "Failed to load any game theme!";
+    }
 }
 
 bool kmagnetRenderer::loadTheme( const QString& themeName )
