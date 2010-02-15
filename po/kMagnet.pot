@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:31+0100\n"
+"POT-Creation-Date: 2010-02-15 18:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,6 +118,38 @@ msgstr ""
 
 #: main.cpp:29
 msgid "A simple puzzle-like game"
+msgstr ""
+
+#: main.cpp:40
+msgid "Oscar Martinez"
+msgstr ""
+
+#: main.cpp:42
+msgid "NAME OF TRANSLATORS"
+msgstr ""
+
+#: main.cpp:43
+msgid "EMAIL OF TRANSLATORS"
+msgstr ""
+
+#: main.cpp:44
+msgid "Fedora packages and bug reporting."
+msgstr ""
+
+#: main.cpp:45
+msgid "HotNewStuff repository."
+msgstr ""
+
+#: main.cpp:46
+msgid "Gentoo packages."
+msgstr ""
+
+#: main.cpp:47
+msgid "Slackware packages."
+msgstr ""
+
+#: main.cpp:52
+msgid "Puzzle to open"
 msgstr ""
 
 #: rc.cpp:3

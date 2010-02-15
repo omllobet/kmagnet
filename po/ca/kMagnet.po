@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:31+0100\n"
+"POT-Creation-Date: 2010-02-15 18:51+0100\n"
 "PO-Revision-Date: 2010-02-15 18:30+0100\n"
 "Last-Translator: Oscar Martinez <omllobet@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -123,6 +123,40 @@ msgstr "Predefinit aleatori"
 msgid "A simple puzzle-like game"
 msgstr "Un joc tipus trencaclosques senzill"
 
+#: main.cpp:40
+msgid "Oscar Martinez"
+msgstr ""
+
+#: main.cpp:42
+msgid "NAME OF TRANSLATORS"
+msgstr ""
+
+#: main.cpp:43
+msgid "EMAIL OF TRANSLATORS"
+msgstr ""
+
+#: main.cpp:44
+msgid "Fedora packages and bug reporting."
+msgstr ""
+
+#: main.cpp:45
+msgid "HotNewStuff repository."
+msgstr ""
+
+#: main.cpp:46
+msgid "Gentoo packages."
+msgstr ""
+
+#: main.cpp:47
+msgid "Slackware packages."
+msgstr ""
+
+#: main.cpp:52
+#, fuzzy
+#| msgid "Puzzle"
+msgid "Puzzle to open"
+msgstr "Trencaclosques"
+
 #: rc.cpp:3
 msgid "&Play puzzle"
 msgstr "&Juga trencaclosques"
@@ -130,6 +164,3 @@ msgstr "&Juga trencaclosques"
 #: rc.cpp:6
 msgid "Main Toolbar"
 msgstr "Barra d'eines principal"
-
-#~ msgid "Puzzle"
-#~ msgstr "Trencaclosques"

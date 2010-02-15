@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:31+0100\n"
+"POT-Creation-Date: 2010-02-15 18:51+0100\n"
 "PO-Revision-Date: 2010-02-14 20:50+0100\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -122,6 +122,40 @@ msgstr "Přednastaven náhodný"
 msgid "A simple puzzle-like game"
 msgstr "Jednoduchá hra na způsob hlavolamu"
 
+#: main.cpp:40
+msgid "Oscar Martinez"
+msgstr ""
+
+#: main.cpp:42
+msgid "NAME OF TRANSLATORS"
+msgstr ""
+
+#: main.cpp:43
+msgid "EMAIL OF TRANSLATORS"
+msgstr ""
+
+#: main.cpp:44
+msgid "Fedora packages and bug reporting."
+msgstr ""
+
+#: main.cpp:45
+msgid "HotNewStuff repository."
+msgstr ""
+
+#: main.cpp:46
+msgid "Gentoo packages."
+msgstr ""
+
+#: main.cpp:47
+msgid "Slackware packages."
+msgstr ""
+
+#: main.cpp:52
+#, fuzzy
+#| msgid "Puzzle"
+msgid "Puzzle to open"
+msgstr "Hlavolam"
+
 #: rc.cpp:3
 msgid "&Play puzzle"
 msgstr "&Hrát hlavolam"
@@ -129,6 +163,3 @@ msgstr "&Hrát hlavolam"
 #: rc.cpp:6
 msgid "Main Toolbar"
 msgstr "Hlavní nástrojový pruh"
-
-#~ msgid "Puzzle"
-#~ msgstr "Hlavolam"
