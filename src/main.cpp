@@ -35,21 +35,21 @@ uint Global::itemSize=20;//size of the cells
 /*This is the main function. It just creates a new widget.*/
 int main(int argc, char **argv)
 {
-    KAboutData about("kMagnet", 0, I18N_NOOP("kMagnet"), version, ki18n(description),
+    KAboutData about("kMagnet", 0, ki18n("kMagnet"), version, ki18n(description),
                      KAboutData::License_GPL, ki18n("(C) 2009-2010 Oscar Martinez"), KLocalizedString(), 0, "omllobet@gmail.com");
-    about.addAuthor( "Oscar Martinez", KLocalizedString(), "omllobet@gmail.com" );
+    about.addAuthor( ki18n("Oscar Martinez"), KLocalizedString(), "omllobet@gmail.com" );
     about.setHomepage( "http://personal.telefonica.terra.es/web/oscarmartinez/v2/");
-    about.setTranslator(I18N_NOOP("NAME OF TRANSLATORS", "Your names"),
-               I18N_NOOP("EMAIL OF TRANSLATORS", "Your emails"));
-    about.addCredit("Ryan Rix", I18N_NOOP("Fedora packages and bug reporting."));
-    about.addCredit("Josef Spillner", I18N_NOOP("HotNewStuff repository."));
-    about.addCredit("Samuli Suominen", I18N_NOOP("Gentoo packages."));
-    about.addCredit("Andrea Sciucca", I18N_NOOP("Slackware packages."));   
+    about.setTranslator(ki18nc("NAME OF TRANSLATORS", "Your names"),
+               ki18nc("EMAIL OF TRANSLATORS", "Your emails"));
+    about.addCredit(ki18n("Ryan Rix"), ki18n("Fedora packages and bug reporting."));
+    about.addCredit(ki18n("Josef Spillner"), ki18n("HotNewStuff repository."));
+    about.addCredit(ki18n("Samuli Suominen"), ki18n("Gentoo packages."));
+    about.addCredit(ki18n("Andrea Sciucca"), ki18n("Slackware packages."));   
 
     KCmdLineArgs::init(argc, argv, &about);
 
     KCmdLineOptions options;
-    options.add("+[file]", I18N_NOOP( "Puzzle to open" ));
+    options.add("+[file]", ki18n( "Puzzle to open" ));
     KCmdLineArgs::addCmdLineOptions(options);
     //seed the random generator
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));

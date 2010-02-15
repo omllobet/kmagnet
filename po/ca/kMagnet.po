@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:51+0100\n"
+"POT-Creation-Date: 2010-02-15 23:50+0100\n"
 "PO-Revision-Date: 2010-02-15 19:11+0100\n"
 "Last-Translator: Oscar Martinez <omllobet@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -123,44 +123,79 @@ msgstr "Predefinit aleatori"
 msgid "A simple puzzle-like game"
 msgstr "Un joc tipus trencaclosques senzill"
 
+#: main.cpp:38
+msgid "kMagnet"
+msgstr ""
+
+#: main.cpp:39
+#, fuzzy
+msgid "(C) 2009-2010 Oscar Martinez"
+msgstr "Oscar Martinez"
+
 #: main.cpp:40
 msgid "Oscar Martinez"
 msgstr "Oscar Martinez"
 
 #: main.cpp:42
-msgid "NAME OF TRANSLATORS"
-msgstr "Oscar Martinez"
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
 
 #: main.cpp:43
-msgid "EMAIL OF TRANSLATORS"
-msgstr "omllobet@gmail.com"
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: main.cpp:44
+msgid "Ryan Rix"
+msgstr ""
 
 #: main.cpp:44
 msgid "Fedora packages and bug reporting."
 msgstr "Paquets per Fedora i informe d'errors."
 
 #: main.cpp:45
+msgid "Josef Spillner"
+msgstr ""
+
+#: main.cpp:45
 msgid "HotNewStuff repository."
 msgstr "Repositori HotNewStuff"
+
+#: main.cpp:46
+msgid "Samuli Suominen"
+msgstr ""
 
 #: main.cpp:46
 msgid "Gentoo packages."
 msgstr "Paquets Gentoo"
 
 #: main.cpp:47
+msgid "Andrea Sciucca"
+msgstr ""
+
+#: main.cpp:47
 msgid "Slackware packages."
 msgstr "Paquets Slackware"
 
 #: main.cpp:52
-#| msgid "Puzzle"
 msgid "Puzzle to open"
 msgstr "Trencaclosques a obrir"
 
+#. i18n: file: kMagnetui.rc:5
+#. i18n: ectx: Menu (game_play)
 #: rc.cpp:3
 msgid "&Play puzzle"
 msgstr "&Juga trencaclosques"
 
+#. i18n: file: kMagnetui.rc:18
+#. i18n: ectx: ToolBar (mainToolBar)
 #: rc.cpp:6
 msgid "Main Toolbar"
 msgstr "Barra d'eines principal"
 
+#~ msgid "NAME OF TRANSLATORS"
+#~ msgstr "Oscar Martinez"
+
+#~ msgid "EMAIL OF TRANSLATORS"
+#~ msgstr "omllobet@gmail.com"
