@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-15 18:51+0100\n"
-"PO-Revision-Date: 2010-02-15 18:30+0100\n"
+"PO-Revision-Date: 2010-02-15 19:11+0100\n"
 "Last-Translator: Oscar Martinez <omllobet@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: kmagnet.cpp:542
 msgid "Choose where to load/save puzzles from/to"
-msgstr "Escull d'on carregar o desar els trencaclosques"
+msgstr "Escull d'on carregar/desar els trencaclosques"
 
 #: kmagnet.cpp:554
 msgid "Random predefined"
@@ -125,37 +125,36 @@ msgstr "Un joc tipus trencaclosques senzill"
 
 #: main.cpp:40
 msgid "Oscar Martinez"
-msgstr ""
+msgstr "Oscar Martinez"
 
 #: main.cpp:42
 msgid "NAME OF TRANSLATORS"
-msgstr ""
+msgstr "Oscar Martinez"
 
 #: main.cpp:43
 msgid "EMAIL OF TRANSLATORS"
-msgstr ""
+msgstr "omllobet@gmail.com"
 
 #: main.cpp:44
 msgid "Fedora packages and bug reporting."
-msgstr ""
+msgstr "Paquets per Fedora i informe d'errors."
 
 #: main.cpp:45
 msgid "HotNewStuff repository."
-msgstr ""
+msgstr "Repositori HotNewStuff"
 
 #: main.cpp:46
 msgid "Gentoo packages."
-msgstr ""
+msgstr "Paquets Gentoo"
 
 #: main.cpp:47
 msgid "Slackware packages."
-msgstr ""
+msgstr "Paquets Slackware"
 
 #: main.cpp:52
-#, fuzzy
 #| msgid "Puzzle"
 msgid "Puzzle to open"
-msgstr "Trencaclosques"
+msgstr "Trencaclosques a obrir"
 
 #: rc.cpp:3
 msgid "&Play puzzle"
@@ -164,3 +163,4 @@ msgstr "&Juga trencaclosques"
 #: rc.cpp:6
 msgid "Main Toolbar"
 msgstr "Barra d'eines principal"
+
