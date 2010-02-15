@@ -1,0 +1,122 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Pavel Fric <pavelfric@seznam.cz>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-23 19:12+0100\n"
+"PO-Revision-Date: 2010-02-14 20:50+0100\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: kmagnet.cpp:76 kmagnet.cpp:115
+msgid "Time: 00:00"
+msgstr "Čas: 00:00"
+
+#: kmagnet.cpp:77
+msgid "Movements: 0"
+msgstr "Pohyby: 0"
+
+#: kmagnet.cpp:89
+msgid "Play random"
+msgstr "Hrát náhodně"
+
+#: kmagnet.cpp:105
+msgid "Hard Puzzle 1"
+msgstr "Těžký hlavolam 1"
+
+#: kmagnet.cpp:106
+msgid "Hard Puzzle 2"
+msgstr "Těžký hlavolam 2"
+
+#: kmagnet.cpp:107
+msgid "Hard Puzzle 3"
+msgstr "Těžký hlavolam 3"
+
+#: kmagnet.cpp:143
+msgid "Editor Mode"
+msgstr "Režim úprav"
+
+#: kmagnet.cpp:156
+msgid "Get puzzles!"
+msgstr "Získat hlavolamy"
+
+#: kmagnet.cpp:170 kmagnet.cpp:173
+msgid "Settings"
+msgstr "Nastavení"
+
+#: kmagnet.cpp:179
+msgid "General"
+msgstr "Obecné"
+
+#: kmagnet.cpp:193
+msgid "Load Puzzle"
+msgstr "Nahrát hlavolam"
+
+#: kmagnet.cpp:206
+msgid "Sorry, The file %1 doesn't exist"
+msgstr "Promiňte, ale soubor %1 neexistuje"
+
+#: kmagnet.cpp:207
+msgid "File doesn't exist"
+msgstr "Soubor neexistuje"
+
+#: kmagnet.cpp:214
+msgid "Sorry, This is not a valid kMagnet Puzzle file"
+msgstr "Promiňte, ale toto není platný soubor s hlavolamem kMagnet"
+
+#: kmagnet.cpp:215
+msgid "File Not Valid"
+msgstr "Soubor není platný"
+
+#: kmagnet.cpp:276
+msgid "Time: %1"
+msgstr "Čas: %1"
+
+#: kmagnet.cpp:281
+msgid "Movements: %1"
+msgstr "Pohyby: %1"
+
+#: kmagnet.cpp:304
+msgid "Thanks for playing. Do you want to try again?"
+msgstr "Díky za hru. Chcete to zkusit znovu?"
+
+#: kmagnet.cpp:304
+msgid "Game ended"
+msgstr "Hra skončila"
+
+#: kmagnet.cpp:324
+msgid "Save Puzzle"
+msgstr "Uložit hlavolam"
+
+#: kmagnet.cpp:508
+msgid "Choose where to load/save puzzles from/to"
+msgstr "Vybrat odkud/kam nahrát/uložit hlavolamy"
+
+#: kmagnet.cpp:520
+msgid "Random predefined"
+msgstr "Přednastaven náhodný"
+
+#: main.cpp:29
+msgid "A simple puzzle-like game"
+msgstr "Jednoduchá hra na způsob hlavolamu"
+
+#: rc.cpp:3 rc.cpp:12 rc.cpp:21 rc.cpp:27
+msgid "&Play puzzle"
+msgstr "&Hrát hlavolam"
+
+#: rc.cpp:6 rc.cpp:15 rc.cpp:24 rc.cpp:30
+msgid "Main Toolbar"
+msgstr "Hlavní nástrojový pruh"
+
+#: rc.cpp:9 rc.cpp:18
+msgid "Puzzle"
+msgstr "Hlavolam"
+
