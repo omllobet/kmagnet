@@ -15,7 +15,6 @@ or a package from your distro.
 ->put solver in a Qthread or something ok
 ->split scene in scene+board (graphicitem)?
 ->renderer+support themes ok
-->yes it's an alpha...
 ->random level generator!!!! on progress
 ->AI, maybe hillclimbing?
 ->FIX scene glitches->pass the parts of the scene where the animation goes through. m_scene->changed? m_scene->update(rect)? ok
@@ -25,7 +24,12 @@ or a package from your distro.
 ->tunels teltransporte
 ->forat negre
 ->custom size
-->fix animation time!!!
 ->nicer ball
 ->difficult
+to version 0.08:
+    ->fix animation time!!!
+    ->fix isrunning
+    ->nicer ball
+to version 0.09:
+    ->custom size
 :wq
