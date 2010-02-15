@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-23 19:12+0100\n"
+"POT-Creation-Date: 2010-02-15 18:31+0100\n"
 "PO-Revision-Date: 2010-02-14 20:50+0100\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -16,27 +16,27 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: kmagnet.cpp:76 kmagnet.cpp:115
+#: kmagnet.cpp:78 kmagnet.cpp:114
 msgid "Time: 00:00"
 msgstr "Čas: 00:00"
 
-#: kmagnet.cpp:77
+#: kmagnet.cpp:79
 msgid "Movements: 0"
 msgstr "Pohyby: 0"
 
-#: kmagnet.cpp:89
+#: kmagnet.cpp:91
 msgid "Play random"
 msgstr "Hrát náhodně"
 
-#: kmagnet.cpp:105
+#: kmagnet.cpp:104
 msgid "Hard Puzzle 1"
 msgstr "Těžký hlavolam 1"
 
-#: kmagnet.cpp:106
+#: kmagnet.cpp:105
 msgid "Hard Puzzle 2"
 msgstr "Těžký hlavolam 2"
 
-#: kmagnet.cpp:107
+#: kmagnet.cpp:106
 msgid "Hard Puzzle 3"
 msgstr "Těžký hlavolam 3"
 
@@ -48,59 +48,73 @@ msgstr "Režim úprav"
 msgid "Get puzzles!"
 msgstr "Získat hlavolamy"
 
-#: kmagnet.cpp:170 kmagnet.cpp:173
+#: kmagnet.cpp:162
+#, fuzzy
+#| msgid "General"
+msgid "Generate"
+msgstr "Obecné"
+
+#: kmagnet.cpp:185 kmagnet.cpp:188
 msgid "Settings"
 msgstr "Nastavení"
 
-#: kmagnet.cpp:179
+#: kmagnet.cpp:194
 msgid "General"
 msgstr "Obecné"
 
-#: kmagnet.cpp:193
+#: kmagnet.cpp:195
+msgid "Theme"
+msgstr ""
+
+#: kmagnet.cpp:209
 msgid "Load Puzzle"
 msgstr "Nahrát hlavolam"
 
-#: kmagnet.cpp:206
+#: kmagnet.cpp:222
 msgid "Sorry, The file %1 doesn't exist"
 msgstr "Promiňte, ale soubor %1 neexistuje"
 
-#: kmagnet.cpp:207
+#: kmagnet.cpp:223
 msgid "File doesn't exist"
 msgstr "Soubor neexistuje"
 
-#: kmagnet.cpp:214
+#: kmagnet.cpp:230
 msgid "Sorry, This is not a valid kMagnet Puzzle file"
 msgstr "Promiňte, ale toto není platný soubor s hlavolamem kMagnet"
 
-#: kmagnet.cpp:215
+#: kmagnet.cpp:231
 msgid "File Not Valid"
 msgstr "Soubor není platný"
 
-#: kmagnet.cpp:276
+#: kmagnet.cpp:292
 msgid "Time: %1"
 msgstr "Čas: %1"
 
-#: kmagnet.cpp:281
+#: kmagnet.cpp:297
 msgid "Movements: %1"
 msgstr "Pohyby: %1"
 
-#: kmagnet.cpp:304
+#: kmagnet.cpp:320
 msgid "Thanks for playing. Do you want to try again?"
 msgstr "Díky za hru. Chcete to zkusit znovu?"
 
-#: kmagnet.cpp:304
+#: kmagnet.cpp:320
 msgid "Game ended"
 msgstr "Hra skončila"
 
-#: kmagnet.cpp:324
+#: kmagnet.cpp:342
 msgid "Save Puzzle"
 msgstr "Uložit hlavolam"
 
-#: kmagnet.cpp:508
+#: kmagnet.cpp:526
+msgid "Failed to load \"%1\" theme. Please check your installation."
+msgstr ""
+
+#: kmagnet.cpp:542
 msgid "Choose where to load/save puzzles from/to"
 msgstr "Vybrat odkud/kam nahrát/uložit hlavolamy"
 
-#: kmagnet.cpp:520
+#: kmagnet.cpp:554
 msgid "Random predefined"
 msgstr "Přednastaven náhodný"
 
@@ -108,15 +122,13 @@ msgstr "Přednastaven náhodný"
 msgid "A simple puzzle-like game"
 msgstr "Jednoduchá hra na způsob hlavolamu"
 
-#: rc.cpp:3 rc.cpp:12 rc.cpp:21 rc.cpp:27
+#: rc.cpp:3
 msgid "&Play puzzle"
 msgstr "&Hrát hlavolam"
 
-#: rc.cpp:6 rc.cpp:15 rc.cpp:24 rc.cpp:30
+#: rc.cpp:6
 msgid "Main Toolbar"
 msgstr "Hlavní nástrojový pruh"
 
-#: rc.cpp:9 rc.cpp:18
-msgid "Puzzle"
-msgstr "Hlavolam"
-
+#~ msgid "Puzzle"
+#~ msgstr "Hlavolam"

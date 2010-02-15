@@ -39,6 +39,13 @@ int main(int argc, char **argv)
                      KAboutData::License_GPL, ki18n("(C) 2009 Oscar Martinez"), KLocalizedString(), 0, "omllobet@gmail.com");
     about.addAuthor( ki18n("Oscar Martinez"), KLocalizedString(), "omllobet@gmail.com" );
     about.setHomepage( "http://personal.telefonica.terra.es/web/oscarmartinez/v2/");
+    about.setTranslator(ki18nc("NAME OF TRANSLATORS", "Your names"),
+               ki18nc("EMAIL OF TRANSLATORS", "Your emails"));
+    about.addCredit(ki18n("Ryan Rix"), ki18n("Fedora packages and bug reporting."));
+    about.addCredit(ki18n("Josef Spillner"), ki18n("HotNewStuff repository."));
+    about.addCredit(ki18n("Samuli Suominen"), ki18n("Gentoo packages."));
+    about.addCredit(ki18n("Andrea Sciucca"), ki18n("Slackware packages."));   
+
     KCmdLineArgs::init(argc, argv, &about);
 
     KCmdLineOptions options;
