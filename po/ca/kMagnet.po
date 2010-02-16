@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-15 23:50+0100\n"
-"PO-Revision-Date: 2010-02-15 19:11+0100\n"
+"PO-Revision-Date: 2010-02-16 01:26+0100\n"
 "Last-Translator: Oscar Martinez <omllobet@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -125,12 +125,11 @@ msgstr "Un joc tipus trencaclosques senzill"
 
 #: main.cpp:38
 msgid "kMagnet"
-msgstr ""
+msgstr "kMagnet"
 
 #: main.cpp:39
-#, fuzzy
 msgid "(C) 2009-2010 Oscar Martinez"
-msgstr "Oscar Martinez"
+msgstr "(C) 2009-2010 Oscar Martinez"
 
 #: main.cpp:40
 msgid "Oscar Martinez"
@@ -139,16 +138,16 @@ msgstr "Oscar Martinez"
 #: main.cpp:42
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oscar Martinez"
 
 #: main.cpp:43
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "omllobet@gmail.com"
 
 #: main.cpp:44
 msgid "Ryan Rix"
-msgstr ""
+msgstr "Ryan Rix"
 
 #: main.cpp:44
 msgid "Fedora packages and bug reporting."
@@ -156,7 +155,7 @@ msgstr "Paquets per Fedora i informe d'errors."
 
 #: main.cpp:45
 msgid "Josef Spillner"
-msgstr ""
+msgstr "Josef Spillner"
 
 #: main.cpp:45
 msgid "HotNewStuff repository."
@@ -164,7 +163,7 @@ msgstr "Repositori HotNewStuff"
 
 #: main.cpp:46
 msgid "Samuli Suominen"
-msgstr ""
+msgstr "Samuli Suominen"
 
 #: main.cpp:46
 msgid "Gentoo packages."
@@ -172,7 +171,7 @@ msgstr "Paquets Gentoo"
 
 #: main.cpp:47
 msgid "Andrea Sciucca"
-msgstr ""
+msgstr "Andrea Sciucca"
 
 #: main.cpp:47
 msgid "Slackware packages."
