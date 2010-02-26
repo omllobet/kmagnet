@@ -31,11 +31,11 @@ class kmagnetRenderer
      * This class is responsible for rendering all the game graphics.
      * Graphics is rendered from svg file specified by current theme.
      * Only one instance of this class exists during a program run.
-     * It can be accessed with static function KLinesRenderer::self().
+     * It can be accessed with static function kmagnetRenderer::self().
      */
 public:
     /**
-     * Returns one and the only instance of KLinesRenderer
+     * Returns one and the only instance of kmagnetRenderer
      */
     static kmagnetRenderer* self();
     /**
