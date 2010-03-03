@@ -2,7 +2,6 @@
 use the code released in kde-apps: http://www.kde-apps.org/content/show.php?content=109111
 or a package from your distro.
 ->rewrite some things XD
-->use isrunning ok
 ->postocell function?, correct ball position? ok
 ->correct load and save - OK
 ->improve order ok
@@ -15,7 +14,7 @@ or a package from your distro.
 ->put solver in a Qthread or something ok
 ->split scene in scene+board (graphicitem)?
 ->renderer+support themes ok
-->random level generator!!!! on progress
+->random level generator!!!! ok
 ->AI, maybe hillclimbing?
 ->FIX scene glitches->pass the parts of the scene where the animation goes through. m_scene->changed? m_scene->update(rect)? ok
 ->option to configure animation milliseconds?->done
@@ -26,10 +25,10 @@ or a package from your distro.
 ->custom size
 ->nicer ball
 ->difficult
-to version 0.08:
+->use isrunning ok/well not properly done...so...
+to version 0.09:
+    ->custom size
     ->fix animation time!!!
     ->fix isrunning
     ->nicer ball
-to version 0.09:
-    ->custom size
 :wq
