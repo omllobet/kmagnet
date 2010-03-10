@@ -421,8 +421,6 @@ void kmagnet::restart()
     advanceMovements(0);
     m_scene->restart();
     this->action("move_solve")->setEnabled(true);
-    QAction* generate=this->action("generate");
-    if (generate) generate->setEnabled(true);
     KGameDifficulty::setRunning(true);
 }
 
@@ -476,7 +474,6 @@ void kmagnet::solveFunc()
         pauseAction->activate(KAction::Trigger);
     this->action("game_restart")->setEnabled(false);
     this->action("move_solve")->setEnabled(false);
-    this->action("generate")->setEnabled(false);
     //solve
     kmagnetSolver *m_solver= new kmagnetSolver(this);
     connect(m_solver, SIGNAL(sendSolution(QVectorMoves)),this,SLOT(solutionFound(QVectorMoves)));
@@ -523,7 +520,6 @@ void kmagnet::solutionFound(QVectorMoves lm)
     {
         this->action("move_solve")->setEnabled(true);
         this->action("game_restart")->setEnabled(true);
-        this->action("generate")->setEnabled(true);
     }
 }
 
