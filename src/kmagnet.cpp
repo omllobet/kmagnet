@@ -590,6 +590,7 @@ void kmagnet::playRandomPuzzle()
     int low=1;
     int random= qrand() % ((high + 1) - low) + low;
     loadPredefinedPuzzle ("puzzle" + QString::number(random) + ".kmp");
+    KGameDifficulty::setRunning(true);
 }
 
 void kmagnet::loadPredefinedPuzzle(QString name)
