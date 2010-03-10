@@ -110,6 +110,13 @@ const kmagnet::PuzzleItem kmagnet::puzzles [] = {
 
 void kmagnet::newGame()
 {
+    clearBoard(false);
+    generate();
+}
+
+void kmagnet::clearBoard(bool b)
+{
+    Q_UNUSED(b);
     m_gameClock->restart();
     m_gameClock->pause();
     statusBar()->changeItem( i18n("Time: 00:00"), 0);
@@ -123,6 +130,7 @@ void kmagnet::newGame()
     //KGameDifficulty::setRunning(true);
     m_scene->newGame();
 }
+
 
 void kmagnet::showHighscores()
 {
@@ -141,6 +149,9 @@ void kmagnet::setupActions()
     KStandardGameAction::quit(this, SLOT(close()), actionCollection());
     KStandardAction::preferences( this, SLOT( configureSettings()) , actionCollection() );
     KStandardGameAction::pause( this, SLOT( pause(bool ) ), actionCollection() );
+    KAction *clearAction= new KAction(i18n("Clear Board"),this);
+    actionCollection()->addAction("clear", clearAction);
+    connect( clearAction, SIGNAL( triggered(bool) ),this, SLOT( clearBoard(bool) ) );
     KAction *editModeAction= new KAction(i18n("Editor Mode"),this);
     editModeAction->setCheckable(true);
     editModeAction->setShortcut(Qt::CTRL + Qt::Key_T);
@@ -159,12 +170,6 @@ void kmagnet::setupActions()
     hotNewStuffAction->setIcon(KIcon("get-hot-new-stuff"));
     actionCollection()->addAction("hotnewstuff", hotNewStuffAction);
     connect( hotNewStuffAction, SIGNAL( triggered() ),this, SLOT( getHotNewStuff()) );
-    //Generator
-    KAction *generateAction= new KAction(i18n("Generate"),this);
-    generateAction->setShortcut(Qt::CTRL + Qt::Key_X);
-    actionCollection()->addAction("generate", generateAction);
-    connect( generateAction, SIGNAL( triggered() ),this, SLOT( generate()) );
-
 }
 
 void kmagnet::generate()
@@ -243,7 +248,7 @@ void kmagnet::loadfile(QString loadFilename)
         KGameDifficulty::standardLevel level = static_cast<KGameDifficulty::standardLevel>(list.at(0).toInt());
         KGameDifficulty::setLevel(level);
     }
-    newGame();
+    clearBoard(false);
     QAction * editingModeAction = this->action("editmode");
     if (editingModeAction->isChecked())
         editingModeAction->activate(QAction::Trigger);
@@ -416,7 +421,8 @@ void kmagnet::restart()
     advanceMovements(0);
     m_scene->restart();
     this->action("move_solve")->setEnabled(true);
-    this->action("generate")->setEnabled(true);
+    QAction* generate=this->action("generate");
+    if (generate) generate->setEnabled(true);
     KGameDifficulty::setRunning(true);
 }
 

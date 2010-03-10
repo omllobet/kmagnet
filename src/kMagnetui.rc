@@ -1,11 +1,11 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kMagnet" version="4">
+<kpartgui name="kMagnet" version="5">
 <MenuBar>
   <Menu name="game">
+    <Action name="clear" />
     <Menu name="game_play" icon="arrow-right"> <text>&amp;Play puzzle</text>
     <ActionList name="puzzle_list" />
     </Menu>
-	<Action name="generate" />
   </Menu>
   <Menu name="settings">
     <Action name="editmode" />

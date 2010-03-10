@@ -75,6 +75,7 @@ private slots:
     void advanceMovements(int movement);
     void gameOver(bool won);
     void editingMode(bool b);
+    void clearBoard(bool b);
     void save();
     void solveFunc();
     void restart();
@@ -86,14 +87,14 @@ private slots:
     void puzzleSelected();
     void playRandomPuzzle();
     void getHotNewStuff();
-    void generate();
 
 signals:
     void valueChanged(QString newValue);
 
 private:
     void setupActions();
-
+    void generate();
+    
 private:
 
     int ROWS;
