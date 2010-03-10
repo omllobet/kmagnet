@@ -93,6 +93,7 @@ kmagnet::kmagnet() : KXmlGuiWindow()
     connect (puzzleAction, SIGNAL(triggered()), SLOT(playRandomPuzzle()));
     toolBar()->insertAction(action("game_load"), puzzleAction);
     setFocus();
+    playRandomPuzzle();
 }
 
 kmagnet::~kmagnet()
@@ -119,7 +120,7 @@ void kmagnet::newGame()
     QAction * pauseAction = this->action("game_pause");
     if (pauseAction->isChecked())
         pauseAction->activate(KAction::Trigger);
-    KGameDifficulty::setRunning(true);
+    //KGameDifficulty::setRunning(true);
     m_scene->newGame();
 }
 
@@ -211,6 +212,7 @@ void kmagnet::load()
         return;
     }
     loadfile(loadFilename);
+    KGameDifficulty::setRunning(true);
 }
 
 void kmagnet::loadfile(QString loadFilename)
