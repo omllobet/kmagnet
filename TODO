@@ -22,13 +22,11 @@ or a package from your distro.
 ->a proper scene->ok
 ->tunels teltransporte
 ->forat negre
-->custom size
-->nicer ball
-->difficult
-->use isrunning ok/well not properly done...so...
-to version 0.09:
+->fix difficult
+->fix animation time!!! ok
+->fix isrunning ok
+to version 0.09+:
     ->custom size
-    ->fix animation time!!!
-    ->fix isrunning
     ->nicer ball
+    ->new play mode
 :wq

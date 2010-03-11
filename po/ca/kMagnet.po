@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 23:50+0100\n"
+"POT-Creation-Date: 2010-03-11 16:56+0100\n"
 "PO-Revision-Date: 2010-02-16 01:26+0100\n"
 "Last-Translator: Oscar Martinez <omllobet@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: kmagnet.cpp:78 kmagnet.cpp:114
+#: kmagnet.cpp:78 kmagnet.cpp:122
 msgid "Time: 00:00"
 msgstr "Temps: 00:00"
 
@@ -29,93 +29,102 @@ msgstr "Moviments: 0"
 msgid "Play random"
 msgstr "Juga"
 
-#: kmagnet.cpp:104
+#: kmagnet.cpp:105
 msgid "Hard Puzzle 1"
 msgstr "Trencaclosques difícil 1"
 
-#: kmagnet.cpp:105
+#: kmagnet.cpp:106
 msgid "Hard Puzzle 2"
 msgstr "Trencaclosques difícil 2"
 
-#: kmagnet.cpp:106
+#: kmagnet.cpp:107
 msgid "Hard Puzzle 3"
 msgstr "Trencaclosques difícil 3"
 
-#: kmagnet.cpp:143
+#: kmagnet.cpp:152
+msgid "Clear Board"
+msgstr ""
+
+#: kmagnet.cpp:155
 msgid "Editor Mode"
 msgstr "Mode d'edició"
 
-#: kmagnet.cpp:156
+#: kmagnet.cpp:168
 msgid "Get puzzles!"
 msgstr "Aconsegueix trencaclosques!"
 
-#: kmagnet.cpp:162
-msgid "Generate"
-msgstr "Genera"
-
-#: kmagnet.cpp:185 kmagnet.cpp:188
+#: kmagnet.cpp:191 kmagnet.cpp:194
 msgid "Settings"
 msgstr "Configuració"
 
-#: kmagnet.cpp:194
+#: kmagnet.cpp:200
 msgid "General"
 msgstr "General"
 
-#: kmagnet.cpp:195
+#: kmagnet.cpp:201
 msgid "Theme"
 msgstr "Tema"
 
-#: kmagnet.cpp:209
+#: kmagnet.cpp:215
 msgid "Load Puzzle"
 msgstr "Carrega trencaclosques"
 
-#: kmagnet.cpp:222
+#: kmagnet.cpp:229
 msgid "Sorry, The file %1 doesn't exist"
 msgstr "Em sap greu, el fitxer %1 no existeix"
 
-#: kmagnet.cpp:223
+#: kmagnet.cpp:230
 msgid "File doesn't exist"
 msgstr "El fitxer no existeix"
 
-#: kmagnet.cpp:230
+#: kmagnet.cpp:237
 msgid "Sorry, This is not a valid kMagnet Puzzle file"
 msgstr ""
 "Em sap greu, aquest fitxer no sembla un trencaclosques del kMagnet vàlid"
 
-#: kmagnet.cpp:231
+#: kmagnet.cpp:238
 msgid "File Not Valid"
 msgstr "Fitxer no vàlid"
 
-#: kmagnet.cpp:292
+#: kmagnet.cpp:299
 msgid "Time: %1"
 msgstr "Temps: %1"
 
-#: kmagnet.cpp:297
+#: kmagnet.cpp:304
 msgid "Movements: %1"
 msgstr "Moviments: %1"
 
-#: kmagnet.cpp:320
+#: kmagnet.cpp:311
+#, fuzzy
+msgid "Game ended."
+msgstr "Joc finalitzat"
+
+#: kmagnet.cpp:328
 msgid "Thanks for playing. Do you want to try again?"
 msgstr "Gràcies per jugar. Voleu tornar-ho a intentar?"
 
-#: kmagnet.cpp:320
+#: kmagnet.cpp:328
 msgid "Game ended"
 msgstr "Joc finalitzat"
 
-#: kmagnet.cpp:342
+#: kmagnet.cpp:350
 msgid "Save Puzzle"
 msgstr "Desa el trencaclosques"
 
-#: kmagnet.cpp:526
+#: kmagnet.cpp:523
+msgid "No solution found."
+msgstr ""
+
+#: kmagnet.cpp:533
 msgid "Failed to load \"%1\" theme. Please check your installation."
 msgstr ""
 "No s'ha pogut carregar el tema \"%1\". Si us plau comproveu la instal·lació."
 
-#: kmagnet.cpp:542
+#: kmagnet.cpp:549
 msgid "Choose where to load/save puzzles from/to"
 msgstr "Escull d'on carregar/desar els trencaclosques"
 
-#: kmagnet.cpp:554
+#: kmagnet.cpp:561
 msgid "Random predefined"
 msgstr "Predefinit aleatori"
 
@@ -181,7 +190,7 @@ msgstr "Paquets Slackware"
 msgid "Puzzle to open"
 msgstr "Trencaclosques a obrir"
 
-#. i18n: file: kMagnetui.rc:5
+#. i18n: file: kMagnetui.rc:6
 #. i18n: ectx: Menu (game_play)
 #: rc.cpp:3
 msgid "&Play puzzle"
@@ -192,6 +201,9 @@ msgstr "&Juga trencaclosques"
 #: rc.cpp:6
 msgid "Main Toolbar"
 msgstr "Barra d'eines principal"
+
+#~ msgid "Generate"
+#~ msgstr "Genera"
 
 #~ msgid "NAME OF TRANSLATORS"
 #~ msgstr "Oscar Martinez"

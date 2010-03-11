@@ -151,13 +151,20 @@ kmagnetScene::~kmagnetScene()
 
 void kmagnetScene::animateMovement ( Moves::Move mov )
 {
+    uint dist=0;
     nextMove nm= isPossibleMove ( mov );
     if ( !nm.getIsPossible() )
     {
         return;
     };
-    unsigned int pos=nm.getPosition();
-    QTimeLine *timer = new QTimeLine ( Settings::animationTime(), this );//better use heap?
+    uint pos=nm.getPosition();
+    if (mov==Moves::UP || mov==Moves::DOWN)
+    {
+        dist=abs(nm.getPosition()-currentPosition)/COLUMNS;
+    } else {
+        dist=abs(nm.getPosition()%ROWS-currentPosition%ROWS);
+    }
+    QTimeLine *timer = new QTimeLine (Settings::animationTime()+dist*10,this);//Settings::animationTime(), this );//better use heap?
     signalMapper->setMapping(timer,currentPosition+pos*1000);
     connect ( timer, SIGNAL ( finished() ),signalMapper, SLOT ( map() ) );
     timer->setFrameRange ( 0, 150 );

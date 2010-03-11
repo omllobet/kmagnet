@@ -1,5 +1,8 @@
 0.09
 *start in play mode by default
+*animation time fixed
+*isrunning use fixed
+*added more info on the game status
 0.08 alpha
 *Czech translation added
 *some minor improvements

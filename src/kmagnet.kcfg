@@ -17,7 +17,7 @@
     </entry>
     <entry name="animationTime" type="Int">
 	    <label>Animation time (in ms)</label>
-	    <default>500</default>
+	    <default>300</default>
     </entry>
     <entry name="extrapaths" type="Bool">
 	    <label>Create extra paths</label>

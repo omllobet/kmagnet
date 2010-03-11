@@ -16,7 +16,6 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
  *************************************************************************************/
 
-
 #include "kmagnet.h"
 #include "settings.h"
 #include "common.h"
@@ -75,8 +74,9 @@ kmagnet::kmagnet() : KXmlGuiWindow()
 
     setCentralWidget(m_view);
     // add a status bar
-    statusBar()->insertItem( i18n("Time: 00:00"), 0);
-    statusBar()->insertItem( i18n("Movements: 0"), 1);
+    statusBar()->insertItem( "", 0);
+    statusBar()->insertItem( i18n("Time: 00:00"), 1);
+    statusBar()->insertItem( i18n("Movements: 0"), 2);
     statusBar()->show();
 
     // then, setup our actions
@@ -119,7 +119,8 @@ void kmagnet::clearBoard(bool b)
     Q_UNUSED(b);
     m_gameClock->restart();
     m_gameClock->pause();
-    statusBar()->changeItem( i18n("Time: 00:00"), 0);
+    statusBar()->changeItem( i18n("Time: 00:00"), 1);
+    statusBar()->changeItem( "",0);
     advanceMovements(0);
     QAction * editingModeAction = this->action("editmode");
     if (!editingModeAction->isChecked())
@@ -130,7 +131,6 @@ void kmagnet::clearBoard(bool b)
     //KGameDifficulty::setRunning(true);
     m_scene->newGame();
 }
-
 
 void kmagnet::showHighscores()
 {
@@ -296,18 +296,19 @@ void kmagnet::loadfile(QString loadFilename)
 
 void kmagnet::advanceTime(const QString& timeStr)
 {
-    statusBar()->changeItem( i18n("Time: %1", timeStr), 0 );
+    statusBar()->changeItem( i18n("Time: %1", timeStr), 1 );
 }
 
 void kmagnet::advanceMovements(int movement)
 {
-    statusBar()->changeItem( i18n("Movements: %1", movement), 1 );
+    statusBar()->changeItem( i18n("Movements: %1", movement), 2 );
 }
 
 void kmagnet::gameOver(bool won)
 {
     m_gameClock->pause();
     if (won) {
+        statusBar()->changeItem(i18n("Game ended."),0);
         KScoreDialog scoreDialog(KScoreDialog::Name | KScoreDialog::Time, this);
         scoreDialog.setConfigGroup(KGameDifficulty::localizedLevelString());
         //scoreDialog.setConfigGroupWeights(KGameDifficulty::levelWeights());//KDE4.2
@@ -422,6 +423,7 @@ void kmagnet::restart()
     m_scene->restart();
     this->action("move_solve")->setEnabled(true);
     KGameDifficulty::setRunning(true);
+    statusBar()->changeItem("",0);
 }
 
 void kmagnet::pause(bool b)
@@ -518,6 +520,7 @@ void kmagnet::solutionFound(QVectorMoves lm)
     }
     else
     {
+        statusBar()->changeItem(i18n("No solution found."),0);
         this->action("move_solve")->setEnabled(true);
         this->action("game_restart")->setEnabled(true);
     }

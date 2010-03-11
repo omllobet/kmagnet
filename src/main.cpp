@@ -28,7 +28,7 @@
 static const char description[] =
     I18N_NOOP("A simple puzzle-like game");
 
-static const char version[] = "0.08";
+static const char version[] = "0.09";
 
 uint Global::itemSize=20;//size of the cells
 
