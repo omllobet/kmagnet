@@ -7,7 +7,7 @@ or a package from your distro.
 ->improve order ok
 ->improve code ok
 ->convert from std to Qt? ok
-->read Qt documentation
+->read Qt documentation - mmm...XD
 ->why did I put keyboard moves on kmagnet and mouseevents on kmagnetscene? ok
 ->animations - ok
 ->Download puzzles from internet ->knewstuff2 ok
@@ -15,18 +15,21 @@ or a package from your distro.
 ->split scene in scene+board (graphicitem)?
 ->renderer+support themes ok
 ->random level generator!!!! ok
-->AI, maybe hillclimbing?
 ->FIX scene glitches->pass the parts of the scene where the animation goes through. m_scene->changed? m_scene->update(rect)? ok
 ->option to configure animation milliseconds?->done
 ->modificar cmake find libkdegames- ok
 ->a proper scene->ok
-->tunels teltransporte
-->forat negre
-->fix difficult
+->forat negre on perds?...mmm no se jo...
+->que per guanyar s'hagi de passar per totes les flags?->nope
 ->fix animation time!!! ok
 ->fix isrunning ok
+->fix difficult
+->AI for the solver, maybe hillclimbing?
+->plugins system with different puzzles generators?
+->tunels teletransport?
+
 to version 0.09+:
     ->custom size
     ->nicer ball
-    ->new play mode
+    ->new play mode ->black
 :wq

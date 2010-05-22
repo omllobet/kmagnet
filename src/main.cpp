@@ -44,7 +44,8 @@ int main(int argc, char **argv)
     about.addCredit(ki18n("Ryan Rix"), ki18n("Fedora packages and bug reporting."));
     about.addCredit(ki18n("Josef Spillner"), ki18n("HotNewStuff repository."));
     about.addCredit(ki18n("Samuli Suominen"), ki18n("Gentoo packages."));
-    about.addCredit(ki18n("Andrea Sciucca"), ki18n("Slackware packages."));   
+    about.addCredit(ki18n("Andrea Sciucca"), ki18n("Slackware packages."));
+    about.addCredit(ki18n("Dany Martineau"), ki18n("AUR packages."));
 
     KCmdLineArgs::init(argc, argv, &about);
 

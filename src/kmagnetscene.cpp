@@ -160,9 +160,9 @@ void kmagnetScene::animateMovement ( Moves::Move mov )
     uint pos=nm.getPosition();
     if (mov==Moves::UP || mov==Moves::DOWN)
     {
-        dist=abs(nm.getPosition()-currentPosition)/COLUMNS;
+        dist=abs(pos-currentPosition)/COLUMNS;
     } else {
-        dist=abs(nm.getPosition()%ROWS-currentPosition%ROWS);
+        dist=abs(pos%ROWS-currentPosition%ROWS);
     }
     QTimeLine *timer = new QTimeLine (Settings::animationTime()+dist*10,this);//Settings::animationTime(), this );//better use heap?
     signalMapper->setMapping(timer,currentPosition+pos*1000);
