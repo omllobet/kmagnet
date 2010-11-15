@@ -22,7 +22,8 @@
 #include "kmagnetcell.h"
 //#include "kmagnetsolver.h"
 //#include "kmagnetgenerator.h"
-#include <knewstuff2/engine.h>
+//#include <knewstuff2/engine.h>
+#include <KNS3/DownloadDialog>
 
 #include <KConfigDialog>
 #include <KStatusBar>
@@ -610,25 +611,8 @@ void kmagnet::loadPredefinedPuzzle(QString name)
 
 void kmagnet::getHotNewStuff()
 {
-    qDebug() << KGlobal::activeComponent().componentName();
-    KNS::Entry::List entries = KNS::Engine::download();
-    // list of changed entries
-    // qDebug() << QDir::home().path() + "/";
-    foreach(KNS::Entry* entry, entries) {
-        /*  QString path= QDir::home().path() + "/" + ".kMagnet";
-         QDir dir=QDir(path);
-         if (!dir.exists()) dir.mkdir(path);*/
-        //  qDebug() << entry->idNumber();
-        // care only about installed ones
-        if (entry->status() == KNS::Entry::Installed) {
-            // do something with the installed entries
-            //could put an actionlistmenu and update it here
-            //  qDebug() << entry->idNumber();
-            //  qDebug() << entry->installedFiles();
-        }
-    }
-
-    qDeleteAll(entries);
+  KNS3::DownloadDialog dialog(this);
+  dialog.exec();
 }
 
 #include "kmagnet.moc"

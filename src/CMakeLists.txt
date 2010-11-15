@@ -15,7 +15,7 @@ kde4_add_kcfg_files(kmagnet_SRCS settings.kcfgc )
 
 kde4_add_executable(kmagnet ${kmagnet_SRCS})
 
-target_link_libraries(kmagnet ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} ${KDEGAMES_LIBRARY}  )
+target_link_libraries(kmagnet ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} ${KDEGAMES_LIBRARY} ${KDE4_KNEWSTUFF3_LIBS}  )
 
 install(TARGETS kmagnet ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
